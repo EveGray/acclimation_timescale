@@ -383,7 +383,7 @@ colnames(merged_files)
 merge_files_colsel <- merged_files[,c(1:32, 36, 46, 50:56, 59, 61:72, 75:77)]
 colnames(merge_files_colsel)
 
-write.csv(merge_files_colsel, "../../data/licor/licor_cleaned/ts_merged_all.csv", row.names = FALSE)
+write.csv(merge_files_colsel, "../../data/licor/licor_cleaned/ts_merged_all_colsel.csv", row.names = FALSE)
 
 #aci.df <- read.csv("../../data/licor/licor_cleaned/ts_merged_all.csv")
 
