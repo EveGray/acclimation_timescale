@@ -8,14 +8,15 @@ aci.df <- read.csv("../../data/licor/licor_cleaned/ts_merged_all.csv")
 
 aci.df <- tidyr::separate(aci.df, date, into = c("date", "time"), sep = " ", remove = TRUE)
 
+print(aci.df.unique_id)
 
 ## make unique id for each curve
 aci.df$unique_id <- paste(aci.df$id, aci.df$date, sep = '_') # paste together plant id and date for unique id for each curve
-aci.df.unique_id <- aci.df$unique_id # make a sring for each unique curve id
+aci.df.unique_id <- aci.df$unique_id # make a string for each unique curve id
 
 ## fit curves
-curve1_data <- subset(aci.df, unique_id == aci.df.unique_id[1]) # find correct data from full dataframe
-plot(curve1_data$A~curve1_data$Ci)
+curve5_data <- subset(aci.df, unique_id == aci.df.unique_id[5]) # find correct data from full dataframe
+plot(curve5_data$A~curve5_data$Ci)
 
 
 ##########################################################
@@ -3388,28 +3389,28 @@ curve263 <- aci.df %>%
 aci.coefs[263,] <- c(id = "paul.hl.2.22", doy = "19", baseline = "n", new = "y", t(coef(curve263)))
 
 ## baseline Id:24
-#curve264 <- aci.df %>% 
-#  filter(id == "paul.hl.4.24") %>%
-#  filter(date == "2024-01-19") %>%
-#  fitaci(varnames = list(ALEAF = "A",
-#                         Tleaf = "Tleaf",
-#                         Ci = "Ci",
-#                         PPFD = "Qin"),
-#         fitTPU = TRUE, Tcorrect = FALSE)
-#
-#aci.coefs[264,] <- c(id = "paul.hl.4.24", doy = "19", baseline = "n", new = "y", t(coef(curve264)))
+curve264 <- aci.df %>% 
+  filter(id == "paul.hl.4.24") %>%
+  filter(date == "2024-01-19") %>%
+  fitaci(varnames = list(ALEAF = "A",
+                         Tleaf = "Tleaf",
+                         Ci = "Ci",
+                         PPFD = "Qin"),
+         fitTPU = TRUE, Tcorrect = FALSE)
+
+aci.coefs[264,] <- c(id = "paul.hl.4.24", doy = "19", baseline = "n", new = "y", t(coef(curve264)))
 
 ## baseline Id:33
-#curve265 <- aci.df %>% 
-#  filter(id == "ryan.hc.1.33") %>%
-#  filter(date == "2024-01-19") %>%
-#  fitaci(varnames = list(ALEAF = "A",
-#                         Tleaf = "Tleaf",
-#                         Ci = "Ci",
-#                         PPFD = "Qin"),
-#         fitTPU = TRUE, Tcorrect = FALSE)
-#
-#aci.coefs[265,] <- c(id = "ryan.hc.1.33", doy = "19", baseline = "n", new = "y", t(coef(curve265)))
+curve265 <- aci.df %>% 
+  filter(id == "ryan.hc.1.33") %>%
+  filter(date == "2024-01-19") %>%
+  fitaci(varnames = list(ALEAF = "A",
+                         Tleaf = "Tleaf",
+                         Ci = "Ci",
+                         PPFD = "Qin"),
+         fitTPU = TRUE, Tcorrect = FALSE)
+
+aci.coefs[265,] <- c(id = "ryan.hc.1.33", doy = "19", baseline = "n", new = "y", t(coef(curve265)))
 
 ## baseline Id:34
 curve266 <- aci.df %>% 
@@ -3433,6 +3434,8 @@ curve267 <- aci.df %>%
                          Ci = "Ci",
                          PPFD = "Qin"),
          fitTPU = TRUE, Tcorrect = FALSE, citransition = 400)
+
+plot(curve267)
 
 aci.coefs[267,] <- c(id = "ryan.hc.3.35", doy = "19", baseline = "n", new = "y", t(coef(curve267)))
 
@@ -3536,19 +3539,21 @@ curve275 <- aci.df %>%
                          PPFD = "Qin"),
          fitTPU = TRUE, Tcorrect = FALSE, citransition = 500)
 
+plot(curve275)
+
 aci.coefs[275,] <- c(id = "brit.hl.3.7", doy = "21", baseline = "n", new = "y", t(coef(curve275)))
 
 ## baseline Id:41
-#curve276 <- aci.df %>% 
-#  filter(id == "ryan.lc.1.41") %>%
-#  filter(date == "2024-01-21") %>%
-#  fitaci(varnames = list(ALEAF = "A",
-#                         Tleaf = "Tleaf",
-#                         Ci = "Ci",
-#                         PPFD = "Qin"),
-#         fitTPU = TRUE, Tcorrect = FALSE)
-#
-#aci.coefs[276,] <- c(id = "ryan.lc.1.41", doy = "21", baseline = "n", new = "y", t(coef(curve276)))
+curve276 <- aci.df %>% 
+  filter(id == "ryan.lc.1.41") %>%
+  filter(date == "2024-01-21") %>%
+  fitaci(varnames = list(ALEAF = "A",
+                         Tleaf = "Tleaf",
+                         Ci = "Ci",
+                         PPFD = "Qin"),
+         fitTPU = TRUE, Tcorrect = FALSE)
+
+aci.coefs[276,] <- c(id = "ryan.lc.1.41", doy = "21", baseline = "n", new = "y", t(coef(curve276)))
 
 ## baseline Id:43
 curve277 <- aci.df %>% 
@@ -3571,6 +3576,8 @@ curve278 <- aci.df %>%
                          Ci = "Ci",
                          PPFD = "Qin"),
          fitTPU = TRUE, Tcorrect = FALSE, citransition = 400)
+
+plot(curve278)
 
 aci.coefs[278,] <- c(id = "ryan.lc.4.44", doy = "21", baseline = "n", new = "y", t(coef(curve278)))
 
