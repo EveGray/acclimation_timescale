@@ -4,19 +4,30 @@ library(plantecophys)
 library(dplyr)
 ######################
 
+## read in the data
 aci.df <- read.csv("../../data/licor/licor_cleaned/ts_merged_all.csv")
+head(aci.df)
 
-aci.df <- tidyr::separate(aci.df, date, into = c("date", "time"), sep = " ", remove = TRUE)
+## make new columns in aci.df for each of date and time
+aci.df <- tidyr::separate(aci.df, date, into = c("day", "time"), sep = " ", remove = TRUE)
 
-print(aci.df.unique_id)
-
-## make unique id for each curve
-aci.df$unique_id <- paste(aci.df$id, aci.df$date, sep = '_') # paste together plant id and date for unique id for each curve
+## make unique id for each curve based on id and day
+aci.df$unique_id <- paste(aci.df$id, aci.df$day, sep = '_') # paste together plant id and date for unique id for each curve
 aci.df.unique_id <- aci.df$unique_id # make a string for each unique curve id
 
 ## fit curves
-curve5_data <- subset(aci.df, unique_id == aci.df.unique_id[5]) # find correct data from full dataframe
-plot(curve5_data$A~curve5_data$Ci)
+
+### curve1_data
+curve1_data <- subset(aci.df, unique_id == aci.df.unique_id[1]) # find correct curve from full dataframe and make new object
+plot(curve1_data$A~curve1_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+curve1_fit <- fitaci(curve1_data, varnames = list(ALEAF = "A", # fit the curves
+                                     Tleaf = "Tleaf",
+                                     Ci = "Ci",
+                                     PPFD = "Qin"),
+                     fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(curve1_fit) # take a look at fitted values, adjust as needed
+plot(curve1_fit) # plot the fitted curves over the raw data, adjust as needed
+curve1_fits ### pick up here!!!!! (May 29, 2024)
 
 
 ##########################################################
