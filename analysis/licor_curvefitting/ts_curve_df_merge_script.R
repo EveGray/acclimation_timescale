@@ -6809,6 +6809,2808 @@ colnames(Curve193_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
                                'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
 all_curve_fits <- rbind(all_curve_fits, Curve193_output) # add the curve fits to the larger data frame
 
+### Curve194_data
+Curve194_data <- subset(aci.df, unique_id == aci.df.unique_id[194]) # find correct curve from full dataframe and make new object
+plot(Curve194_data$A~Curve194_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve194_fit <- fitaci(Curve194_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve194_fit) # take a look at fitted values, adjust as needed
+plot(Curve194_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve194_output <- cbind('Curve194', Curve194_data$id[1], Curve194_data$unique_id[1], Curve194_data$machine[1], Curve194_data$baseline_yn[1],
+                         Curve194_data$A[1], Curve194_data$Ci[1], Curve194_data$gsw[1],
+                         mean(Curve194_data$VPDleaf, na.rm = T), mean(Curve194_data$Tleaf, na.rm = T), mean(Curve194_data$Qin, na.rm = T),
+                         Curve194_fit[[2]][1,1], Curve194_fit[[2]][1,2],
+                         Curve194_fit[[2]][2,1], Curve194_fit[[2]][2,2],
+                         Curve194_fit[[2]][3,1], Curve194_fit[[2]][3,2],
+                         Curve194_fit$RMSE,
+                         Curve194_fit$Ci_transition,
+                         Curve194_fit$citransition,
+                         Curve194_fit$Km,
+                         Curve194_fit$GammaStar,
+                         Curve194_fit$fitmethod,
+                         Curve194_fit$Tcorrect,
+                         Curve194_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve194_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve194_output) # add the curve fits to the larger data frame
+
+### Curve195_data
+Curve195_data <- subset(aci.df, unique_id == aci.df.unique_id[195]) # find correct curve from full dataframe and make new object
+plot(Curve195_data$A~Curve195_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve195_fit <- fitaci(Curve195_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve195_fit) # take a look at fitted values, adjust as needed
+plot(Curve195_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve195_output <- cbind('Curve195', Curve195_data$id[1], Curve195_data$unique_id[1], Curve195_data$machine[1], Curve195_data$baseline_yn[1],
+                         Curve195_data$A[1], Curve195_data$Ci[1], Curve195_data$gsw[1],
+                         mean(Curve195_data$VPDleaf, na.rm = T), mean(Curve195_data$Tleaf, na.rm = T), mean(Curve195_data$Qin, na.rm = T),
+                         Curve195_fit[[2]][1,1], Curve195_fit[[2]][1,2],
+                         Curve195_fit[[2]][2,1], Curve195_fit[[2]][2,2],
+                         Curve195_fit[[2]][3,1], Curve195_fit[[2]][3,2],
+                         Curve195_fit$RMSE,
+                         Curve195_fit$Ci_transition,
+                         Curve195_fit$citransition,
+                         Curve195_fit$Km,
+                         Curve195_fit$GammaStar,
+                         Curve195_fit$fitmethod,
+                         Curve195_fit$Tcorrect,
+                         Curve195_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve195_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve195_output) # add the curve fits to the larger data frame
+
+### Curve196_data
+Curve196_data <- subset(aci.df, unique_id == aci.df.unique_id[196]) # find correct curve from full dataframe and make new object
+plot(Curve196_data$A~Curve196_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve196_fit <- fitaci(Curve196_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve196_fit) # take a look at fitted values, adjust as needed
+plot(Curve196_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve196_output <- cbind('Curve196', Curve196_data$id[1], Curve196_data$unique_id[1], Curve196_data$machine[1], Curve196_data$baseline_yn[1],
+                         Curve196_data$A[1], Curve196_data$Ci[1], Curve196_data$gsw[1],
+                         mean(Curve196_data$VPDleaf, na.rm = T), mean(Curve196_data$Tleaf, na.rm = T), mean(Curve196_data$Qin, na.rm = T),
+                         Curve196_fit[[2]][1,1], Curve196_fit[[2]][1,2],
+                         Curve196_fit[[2]][2,1], Curve196_fit[[2]][2,2],
+                         Curve196_fit[[2]][3,1], Curve196_fit[[2]][3,2],
+                         Curve196_fit$RMSE,
+                         Curve196_fit$Ci_transition,
+                         Curve196_fit$citransition,
+                         Curve196_fit$Km,
+                         Curve196_fit$GammaStar,
+                         Curve196_fit$fitmethod,
+                         Curve196_fit$Tcorrect,
+                         Curve196_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve196_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve196_output) # add the curve fits to the larger data frame
+
+### Curve197_data
+Curve197_data <- subset(aci.df, unique_id == aci.df.unique_id[197]) # find correct curve from full dataframe and make new object
+plot(Curve197_data$A~Curve197_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve197_fit <- fitaci(Curve197_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve197_fit) # take a look at fitted values, adjust as needed
+plot(Curve197_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve197_output <- cbind('Curve197', Curve197_data$id[1], Curve197_data$unique_id[1], Curve197_data$machine[1], Curve197_data$baseline_yn[1],
+                         Curve197_data$A[1], Curve197_data$Ci[1], Curve197_data$gsw[1],
+                         mean(Curve197_data$VPDleaf, na.rm = T), mean(Curve197_data$Tleaf, na.rm = T), mean(Curve197_data$Qin, na.rm = T),
+                         Curve197_fit[[2]][1,1], Curve197_fit[[2]][1,2],
+                         Curve197_fit[[2]][2,1], Curve197_fit[[2]][2,2],
+                         Curve197_fit[[2]][3,1], Curve197_fit[[2]][3,2],
+                         Curve197_fit$RMSE,
+                         Curve197_fit$Ci_transition,
+                         Curve197_fit$citransition,
+                         Curve197_fit$Km,
+                         Curve197_fit$GammaStar,
+                         Curve197_fit$fitmethod,
+                         Curve197_fit$Tcorrect,
+                         Curve197_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve197_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve197_output) # add the curve fits to the larger data frame
+
+### Curve198_data
+Curve198_data <- subset(aci.df, unique_id == aci.df.unique_id[198]) # find correct curve from full dataframe and make new object
+plot(Curve198_data$A~Curve198_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve198_fit <- fitaci(Curve198_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve198_fit) # take a look at fitted values, adjust as needed
+plot(Curve198_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve198_output <- cbind('Curve198', Curve198_data$id[1], Curve198_data$unique_id[1], Curve198_data$machine[1], Curve198_data$baseline_yn[1],
+                         Curve198_data$A[1], Curve198_data$Ci[1], Curve198_data$gsw[1],
+                         mean(Curve198_data$VPDleaf, na.rm = T), mean(Curve198_data$Tleaf, na.rm = T), mean(Curve198_data$Qin, na.rm = T),
+                         Curve198_fit[[2]][1,1], Curve198_fit[[2]][1,2],
+                         Curve198_fit[[2]][2,1], Curve198_fit[[2]][2,2],
+                         Curve198_fit[[2]][3,1], Curve198_fit[[2]][3,2],
+                         Curve198_fit$RMSE,
+                         Curve198_fit$Ci_transition,
+                         Curve198_fit$citransition,
+                         Curve198_fit$Km,
+                         Curve198_fit$GammaStar,
+                         Curve198_fit$fitmethod,
+                         Curve198_fit$Tcorrect,
+                         Curve198_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve198_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve198_output) # add the curve fits to the larger data frame
+
+### Curve199_data
+Curve199_data <- subset(aci.df, unique_id == aci.df.unique_id[199]) # find correct curve from full dataframe and make new object
+plot(Curve199_data$A~Curve199_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve199_fit <- fitaci(Curve199_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve199_fit) # take a look at fitted values, adjust as needed
+plot(Curve199_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve199_output <- cbind('Curve199', Curve199_data$id[1], Curve199_data$unique_id[1], Curve199_data$machine[1], Curve199_data$baseline_yn[1],
+                         Curve199_data$A[1], Curve199_data$Ci[1], Curve199_data$gsw[1],
+                         mean(Curve199_data$VPDleaf, na.rm = T), mean(Curve199_data$Tleaf, na.rm = T), mean(Curve199_data$Qin, na.rm = T),
+                         Curve199_fit[[2]][1,1], Curve199_fit[[2]][1,2],
+                         Curve199_fit[[2]][2,1], Curve199_fit[[2]][2,2],
+                         Curve199_fit[[2]][3,1], Curve199_fit[[2]][3,2],
+                         Curve199_fit$RMSE,
+                         Curve199_fit$Ci_transition,
+                         Curve199_fit$citransition,
+                         Curve199_fit$Km,
+                         Curve199_fit$GammaStar,
+                         Curve199_fit$fitmethod,
+                         Curve199_fit$Tcorrect,
+                         Curve199_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve199_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve199_output) # add the curve fits to the larger data frame
+
+### Curve199_data
+Curve199_data <- subset(aci.df, unique_id == aci.df.unique_id[200]) # find correct curve from full dataframe and make new object
+plot(Curve199_data$A~Curve199_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve199_fit <- fitaci(Curve199_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve199_fit) # take a look at fitted values, adjust as needed
+plot(Curve199_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve199_output <- cbind('Curve199', Curve199_data$id[1], Curve199_data$unique_id[1], Curve199_data$machine[1], Curve199_data$baseline_yn[1],
+                         Curve199_data$A[1], Curve199_data$Ci[1], Curve199_data$gsw[1],
+                         mean(Curve199_data$VPDleaf, na.rm = T), mean(Curve199_data$Tleaf, na.rm = T), mean(Curve199_data$Qin, na.rm = T),
+                         Curve199_fit[[2]][1,1], Curve199_fit[[2]][1,2],
+                         Curve199_fit[[2]][2,1], Curve199_fit[[2]][2,2],
+                         Curve199_fit[[2]][3,1], Curve199_fit[[2]][3,2],
+                         Curve199_fit$RMSE,
+                         Curve199_fit$Ci_transition,
+                         Curve199_fit$citransition,
+                         Curve199_fit$Km,
+                         Curve199_fit$GammaStar,
+                         Curve199_fit$fitmethod,
+                         Curve199_fit$Tcorrect,
+                         Curve199_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve199_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve199_output) # add the curve fits to the larger data frame
+
+### Curve200_data
+Curve200_data <- subset(aci.df, unique_id == aci.df.unique_id[200]) # find correct curve from full dataframe and make new object
+plot(Curve200_data$A~Curve200_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve200_fit <- fitaci(Curve200_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve200_fit) # take a look at fitted values, adjust as needed
+plot(Curve200_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve200_output <- cbind('Curve200', Curve200_data$id[1], Curve200_data$unique_id[1], Curve200_data$machine[1], Curve200_data$baseline_yn[1],
+                         Curve200_data$A[1], Curve200_data$Ci[1], Curve200_data$gsw[1],
+                         mean(Curve200_data$VPDleaf, na.rm = T), mean(Curve200_data$Tleaf, na.rm = T), mean(Curve200_data$Qin, na.rm = T),
+                         Curve200_fit[[2]][1,1], Curve200_fit[[2]][1,2],
+                         Curve200_fit[[2]][2,1], Curve200_fit[[2]][2,2],
+                         Curve200_fit[[2]][3,1], Curve200_fit[[2]][3,2],
+                         Curve200_fit$RMSE,
+                         Curve200_fit$Ci_transition,
+                         Curve200_fit$citransition,
+                         Curve200_fit$Km,
+                         Curve200_fit$GammaStar,
+                         Curve200_fit$fitmethod,
+                         Curve200_fit$Tcorrect,
+                         Curve200_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve200_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve200_output) # add the curve fits to the larger data frame
+
+### Curve201_data
+Curve201_data <- subset(aci.df, unique_id == aci.df.unique_id[201]) # find correct curve from full dataframe and make new object
+plot(Curve201_data$A~Curve201_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve201_fit <- fitaci(Curve201_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve201_fit) # take a look at fitted values, adjust as needed
+plot(Curve201_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve201_output <- cbind('Curve201', Curve201_data$id[1], Curve201_data$unique_id[1], Curve201_data$machine[1], Curve201_data$baseline_yn[1],
+                         Curve201_data$A[1], Curve201_data$Ci[1], Curve201_data$gsw[1],
+                         mean(Curve201_data$VPDleaf, na.rm = T), mean(Curve201_data$Tleaf, na.rm = T), mean(Curve201_data$Qin, na.rm = T),
+                         Curve201_fit[[2]][1,1], Curve201_fit[[2]][1,2],
+                         Curve201_fit[[2]][2,1], Curve201_fit[[2]][2,2],
+                         Curve201_fit[[2]][3,1], Curve201_fit[[2]][3,2],
+                         Curve201_fit$RMSE,
+                         Curve201_fit$Ci_transition,
+                         Curve201_fit$citransition,
+                         Curve201_fit$Km,
+                         Curve201_fit$GammaStar,
+                         Curve201_fit$fitmethod,
+                         Curve201_fit$Tcorrect,
+                         Curve201_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve201_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve201_output) # add the curve fits to the larger data frame
+
+### Curve202_data
+Curve202_data <- subset(aci.df, unique_id == aci.df.unique_id[202]) # find correct curve from full dataframe and make new object
+plot(Curve202_data$A~Curve202_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve202_fit <- fitaci(Curve202_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve202_fit) # take a look at fitted values, adjust as needed
+plot(Curve202_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve202_output <- cbind('Curve202', Curve202_data$id[1], Curve202_data$unique_id[1], Curve202_data$machine[1], Curve202_data$baseline_yn[1],
+                         Curve202_data$A[1], Curve202_data$Ci[1], Curve202_data$gsw[1],
+                         mean(Curve202_data$VPDleaf, na.rm = T), mean(Curve202_data$Tleaf, na.rm = T), mean(Curve202_data$Qin, na.rm = T),
+                         Curve202_fit[[2]][1,1], Curve202_fit[[2]][1,2],
+                         Curve202_fit[[2]][2,1], Curve202_fit[[2]][2,2],
+                         Curve202_fit[[2]][3,1], Curve202_fit[[2]][3,2],
+                         Curve202_fit$RMSE,
+                         Curve202_fit$Ci_transition,
+                         Curve202_fit$citransition,
+                         Curve202_fit$Km,
+                         Curve202_fit$GammaStar,
+                         Curve202_fit$fitmethod,
+                         Curve202_fit$Tcorrect,
+                         Curve202_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve202_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve202_output) # add the curve fits to the larger data frame
+
+### Curve203_data
+Curve203_data <- subset(aci.df, unique_id == aci.df.unique_id[203]) # find correct curve from full dataframe and make new object
+plot(Curve203_data$A~Curve203_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve203_fit <- fitaci(Curve203_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve203_fit) # take a look at fitted values, adjust as needed
+plot(Curve203_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve203_output <- cbind('Curve203', Curve203_data$id[1], Curve203_data$unique_id[1], Curve203_data$machine[1], Curve203_data$baseline_yn[1],
+                         Curve203_data$A[1], Curve203_data$Ci[1], Curve203_data$gsw[1],
+                         mean(Curve203_data$VPDleaf, na.rm = T), mean(Curve203_data$Tleaf, na.rm = T), mean(Curve203_data$Qin, na.rm = T),
+                         Curve203_fit[[2]][1,1], Curve203_fit[[2]][1,2],
+                         Curve203_fit[[2]][2,1], Curve203_fit[[2]][2,2],
+                         Curve203_fit[[2]][3,1], Curve203_fit[[2]][3,2],
+                         Curve203_fit$RMSE,
+                         Curve203_fit$Ci_transition,
+                         Curve203_fit$citransition,
+                         Curve203_fit$Km,
+                         Curve203_fit$GammaStar,
+                         Curve203_fit$fitmethod,
+                         Curve203_fit$Tcorrect,
+                         Curve203_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve203_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve203_output) # add the curve fits to the larger data frame
+
+### Curve204_data
+Curve204_data <- subset(aci.df, unique_id == aci.df.unique_id[204]) # find correct curve from full dataframe and make new object
+plot(Curve204_data$A~Curve204_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve204_fit <- fitaci(Curve204_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve204_fit) # take a look at fitted values, adjust as needed
+plot(Curve204_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve204_output <- cbind('Curve204', Curve204_data$id[1], Curve204_data$unique_id[1], Curve204_data$machine[1], Curve204_data$baseline_yn[1],
+                         Curve204_data$A[1], Curve204_data$Ci[1], Curve204_data$gsw[1],
+                         mean(Curve204_data$VPDleaf, na.rm = T), mean(Curve204_data$Tleaf, na.rm = T), mean(Curve204_data$Qin, na.rm = T),
+                         Curve204_fit[[2]][1,1], Curve204_fit[[2]][1,2],
+                         Curve204_fit[[2]][2,1], Curve204_fit[[2]][2,2],
+                         Curve204_fit[[2]][3,1], Curve204_fit[[2]][3,2],
+                         Curve204_fit$RMSE,
+                         Curve204_fit$Ci_transition,
+                         Curve204_fit$citransition,
+                         Curve204_fit$Km,
+                         Curve204_fit$GammaStar,
+                         Curve204_fit$fitmethod,
+                         Curve204_fit$Tcorrect,
+                         Curve204_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve204_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve204_output) # add the curve fits to the larger data frame
+
+### Curve205_data
+Curve205_data <- subset(aci.df, unique_id == aci.df.unique_id[205]) # find correct curve from full dataframe and make new object
+plot(Curve205_data$A~Curve205_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve205_fit <- fitaci(Curve205_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve205_fit) # take a look at fitted values, adjust as needed
+plot(Curve205_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve205_output <- cbind('Curve205', Curve205_data$id[1], Curve205_data$unique_id[1], Curve205_data$machine[1], Curve205_data$baseline_yn[1],
+                         Curve205_data$A[1], Curve205_data$Ci[1], Curve205_data$gsw[1],
+                         mean(Curve205_data$VPDleaf, na.rm = T), mean(Curve205_data$Tleaf, na.rm = T), mean(Curve205_data$Qin, na.rm = T),
+                         Curve205_fit[[2]][1,1], Curve205_fit[[2]][1,2],
+                         Curve205_fit[[2]][2,1], Curve205_fit[[2]][2,2],
+                         Curve205_fit[[2]][3,1], Curve205_fit[[2]][3,2],
+                         Curve205_fit$RMSE,
+                         Curve205_fit$Ci_transition,
+                         Curve205_fit$citransition,
+                         Curve205_fit$Km,
+                         Curve205_fit$GammaStar,
+                         Curve205_fit$fitmethod,
+                         Curve205_fit$Tcorrect,
+                         Curve205_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve205_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve205_output) # add the curve fits to the larger data frame
+
+### Curve206_data
+Curve206_data <- subset(aci.df, unique_id == aci.df.unique_id[206]) # find correct curve from full dataframe and make new object
+plot(Curve206_data$A~Curve206_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve206_fit <- fitaci(Curve206_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve206_fit) # take a look at fitted values, adjust as needed
+plot(Curve206_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve206_output <- cbind('Curve206', Curve206_data$id[1], Curve206_data$unique_id[1], Curve206_data$machine[1], Curve206_data$baseline_yn[1],
+                         Curve206_data$A[1], Curve206_data$Ci[1], Curve206_data$gsw[1],
+                         mean(Curve206_data$VPDleaf, na.rm = T), mean(Curve206_data$Tleaf, na.rm = T), mean(Curve206_data$Qin, na.rm = T),
+                         Curve206_fit[[2]][1,1], Curve206_fit[[2]][1,2],
+                         Curve206_fit[[2]][2,1], Curve206_fit[[2]][2,2],
+                         Curve206_fit[[2]][3,1], Curve206_fit[[2]][3,2],
+                         Curve206_fit$RMSE,
+                         Curve206_fit$Ci_transition,
+                         Curve206_fit$citransition,
+                         Curve206_fit$Km,
+                         Curve206_fit$GammaStar,
+                         Curve206_fit$fitmethod,
+                         Curve206_fit$Tcorrect,
+                         Curve206_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve206_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve206_output) # add the curve fits to the larger data frame
+
+### Curve207_data
+Curve207_data <- subset(aci.df, unique_id == aci.df.unique_id[207]) # find correct curve from full dataframe and make new object
+plot(Curve207_data$A~Curve207_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve207_fit <- fitaci(Curve207_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve207_fit) # take a look at fitted values, adjust as needed
+plot(Curve207_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve207_output <- cbind('Curve207', Curve207_data$id[1], Curve207_data$unique_id[1], Curve207_data$machine[1], Curve207_data$baseline_yn[1],
+                         Curve207_data$A[1], Curve207_data$Ci[1], Curve207_data$gsw[1],
+                         mean(Curve207_data$VPDleaf, na.rm = T), mean(Curve207_data$Tleaf, na.rm = T), mean(Curve207_data$Qin, na.rm = T),
+                         Curve207_fit[[2]][1,1], Curve207_fit[[2]][1,2],
+                         Curve207_fit[[2]][2,1], Curve207_fit[[2]][2,2],
+                         Curve207_fit[[2]][3,1], Curve207_fit[[2]][3,2],
+                         Curve207_fit$RMSE,
+                         Curve207_fit$Ci_transition,
+                         Curve207_fit$citransition,
+                         Curve207_fit$Km,
+                         Curve207_fit$GammaStar,
+                         Curve207_fit$fitmethod,
+                         Curve207_fit$Tcorrect,
+                         Curve207_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve207_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve207_output) # add the curve fits to the larger data frame
+
+### Curve208_data
+Curve208_data <- subset(aci.df, unique_id == aci.df.unique_id[208]) # find correct curve from full dataframe and make new object
+plot(Curve208_data$A~Curve208_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve208_fit <- fitaci(Curve208_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve208_fit) # take a look at fitted values, adjust as needed
+plot(Curve208_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve208_output <- cbind('Curve208', Curve208_data$id[1], Curve208_data$unique_id[1], Curve208_data$machine[1], Curve208_data$baseline_yn[1],
+                         Curve208_data$A[1], Curve208_data$Ci[1], Curve208_data$gsw[1],
+                         mean(Curve208_data$VPDleaf, na.rm = T), mean(Curve208_data$Tleaf, na.rm = T), mean(Curve208_data$Qin, na.rm = T),
+                         Curve208_fit[[2]][1,1], Curve208_fit[[2]][1,2],
+                         Curve208_fit[[2]][2,1], Curve208_fit[[2]][2,2],
+                         Curve208_fit[[2]][3,1], Curve208_fit[[2]][3,2],
+                         Curve208_fit$RMSE,
+                         Curve208_fit$Ci_transition,
+                         Curve208_fit$citransition,
+                         Curve208_fit$Km,
+                         Curve208_fit$GammaStar,
+                         Curve208_fit$fitmethod,
+                         Curve208_fit$Tcorrect,
+                         Curve208_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve208_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve208_output) # add the curve fits to the larger data frame
+
+### Curve209_data
+Curve209_data <- subset(aci.df, unique_id == aci.df.unique_id[209]) # find correct curve from full dataframe and make new object
+plot(Curve209_data$A~Curve209_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve209_fit <- fitaci(Curve209_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve209_fit) # take a look at fitted values, adjust as needed
+plot(Curve209_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve209_output <- cbind('Curve209', Curve209_data$id[1], Curve209_data$unique_id[1], Curve209_data$machine[1], Curve209_data$baseline_yn[1],
+                         Curve209_data$A[1], Curve209_data$Ci[1], Curve209_data$gsw[1],
+                         mean(Curve209_data$VPDleaf, na.rm = T), mean(Curve209_data$Tleaf, na.rm = T), mean(Curve209_data$Qin, na.rm = T),
+                         Curve209_fit[[2]][1,1], Curve209_fit[[2]][1,2],
+                         Curve209_fit[[2]][2,1], Curve209_fit[[2]][2,2],
+                         Curve209_fit[[2]][3,1], Curve209_fit[[2]][3,2],
+                         Curve209_fit$RMSE,
+                         Curve209_fit$Ci_transition,
+                         Curve209_fit$citransition,
+                         Curve209_fit$Km,
+                         Curve209_fit$GammaStar,
+                         Curve209_fit$fitmethod,
+                         Curve209_fit$Tcorrect,
+                         Curve209_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve209_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve209_output) # add the curve fits to the larger data frame
+
+### Curve210_data
+Curve210_data <- subset(aci.df, unique_id == aci.df.unique_id[210]) # find correct curve from full dataframe and make new object
+plot(Curve210_data$A~Curve210_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve210_fit <- fitaci(Curve210_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve210_fit) # take a look at fitted values, adjust as needed
+plot(Curve210_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve210_output <- cbind('Curve210', Curve210_data$id[1], Curve210_data$unique_id[1], Curve210_data$machine[1], Curve210_data$baseline_yn[1],
+                         Curve210_data$A[1], Curve210_data$Ci[1], Curve210_data$gsw[1],
+                         mean(Curve210_data$VPDleaf, na.rm = T), mean(Curve210_data$Tleaf, na.rm = T), mean(Curve210_data$Qin, na.rm = T),
+                         Curve210_fit[[2]][1,1], Curve210_fit[[2]][1,2],
+                         Curve210_fit[[2]][2,1], Curve210_fit[[2]][2,2],
+                         Curve210_fit[[2]][3,1], Curve210_fit[[2]][3,2],
+                         Curve210_fit$RMSE,
+                         Curve210_fit$Ci_transition,
+                         Curve210_fit$citransition,
+                         Curve210_fit$Km,
+                         Curve210_fit$GammaStar,
+                         Curve210_fit$fitmethod,
+                         Curve210_fit$Tcorrect,
+                         Curve210_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve210_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve210_output) # add the curve fits to the larger data frame
+
+### Curve211_data
+Curve211_data <- subset(aci.df, unique_id == aci.df.unique_id[211]) # find correct curve from full dataframe and make new object
+plot(Curve211_data$A~Curve211_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve211_fit <- fitaci(Curve211_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve211_fit) # take a look at fitted values, adjust as needed
+plot(Curve211_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve211_output <- cbind('Curve211', Curve211_data$id[1], Curve211_data$unique_id[1], Curve211_data$machine[1], Curve211_data$baseline_yn[1],
+                         Curve211_data$A[1], Curve211_data$Ci[1], Curve211_data$gsw[1],
+                         mean(Curve211_data$VPDleaf, na.rm = T), mean(Curve211_data$Tleaf, na.rm = T), mean(Curve211_data$Qin, na.rm = T),
+                         Curve211_fit[[2]][1,1], Curve211_fit[[2]][1,2],
+                         Curve211_fit[[2]][2,1], Curve211_fit[[2]][2,2],
+                         Curve211_fit[[2]][3,1], Curve211_fit[[2]][3,2],
+                         Curve211_fit$RMSE,
+                         Curve211_fit$Ci_transition,
+                         Curve211_fit$citransition,
+                         Curve211_fit$Km,
+                         Curve211_fit$GammaStar,
+                         Curve211_fit$fitmethod,
+                         Curve211_fit$Tcorrect,
+                         Curve211_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve211_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve211_output) # add the curve fits to the larger data frame
+
+### Curve212_data
+Curve212_data <- subset(aci.df, unique_id == aci.df.unique_id[212]) # find correct curve from full dataframe and make new object
+plot(Curve212_data$A~Curve212_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve212_fit <- fitaci(Curve212_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve212_fit) # take a look at fitted values, adjust as needed
+plot(Curve212_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve212_output <- cbind('Curve212', Curve212_data$id[1], Curve212_data$unique_id[1], Curve212_data$machine[1], Curve212_data$baseline_yn[1],
+                         Curve212_data$A[1], Curve212_data$Ci[1], Curve212_data$gsw[1],
+                         mean(Curve212_data$VPDleaf, na.rm = T), mean(Curve212_data$Tleaf, na.rm = T), mean(Curve212_data$Qin, na.rm = T),
+                         Curve212_fit[[2]][1,1], Curve212_fit[[2]][1,2],
+                         Curve212_fit[[2]][2,1], Curve212_fit[[2]][2,2],
+                         Curve212_fit[[2]][3,1], Curve212_fit[[2]][3,2],
+                         Curve212_fit$RMSE,
+                         Curve212_fit$Ci_transition,
+                         Curve212_fit$citransition,
+                         Curve212_fit$Km,
+                         Curve212_fit$GammaStar,
+                         Curve212_fit$fitmethod,
+                         Curve212_fit$Tcorrect,
+                         Curve212_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve212_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve212_output) # add the curve fits to the larger data frame
+
+### Curve213_data
+Curve213_data <- subset(aci.df, unique_id == aci.df.unique_id[213]) # find correct curve from full dataframe and make new object
+plot(Curve213_data$A~Curve213_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve213_fit <- fitaci(Curve213_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve213_fit) # take a look at fitted values, adjust as needed
+plot(Curve213_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve213_output <- cbind('Curve213', Curve213_data$id[1], Curve213_data$unique_id[1], Curve213_data$machine[1], Curve213_data$baseline_yn[1],
+                         Curve213_data$A[1], Curve213_data$Ci[1], Curve213_data$gsw[1],
+                         mean(Curve213_data$VPDleaf, na.rm = T), mean(Curve213_data$Tleaf, na.rm = T), mean(Curve213_data$Qin, na.rm = T),
+                         Curve213_fit[[2]][1,1], Curve213_fit[[2]][1,2],
+                         Curve213_fit[[2]][2,1], Curve213_fit[[2]][2,2],
+                         Curve213_fit[[2]][3,1], Curve213_fit[[2]][3,2],
+                         Curve213_fit$RMSE,
+                         Curve213_fit$Ci_transition,
+                         Curve213_fit$citransition,
+                         Curve213_fit$Km,
+                         Curve213_fit$GammaStar,
+                         Curve213_fit$fitmethod,
+                         Curve213_fit$Tcorrect,
+                         Curve213_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve213_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve213_output) # add the curve fits to the larger data frame
+
+### Curve214_data
+Curve214_data <- subset(aci.df, unique_id == aci.df.unique_id[214]) # find correct curve from full dataframe and make new object
+plot(Curve214_data$A~Curve214_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve214_fit <- fitaci(Curve214_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve214_fit) # take a look at fitted values, adjust as needed
+plot(Curve214_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve214_output <- cbind('Curve214', Curve214_data$id[1], Curve214_data$unique_id[1], Curve214_data$machine[1], Curve214_data$baseline_yn[1],
+                         Curve214_data$A[1], Curve214_data$Ci[1], Curve214_data$gsw[1],
+                         mean(Curve214_data$VPDleaf, na.rm = T), mean(Curve214_data$Tleaf, na.rm = T), mean(Curve214_data$Qin, na.rm = T),
+                         Curve214_fit[[2]][1,1], Curve214_fit[[2]][1,2],
+                         Curve214_fit[[2]][2,1], Curve214_fit[[2]][2,2],
+                         Curve214_fit[[2]][3,1], Curve214_fit[[2]][3,2],
+                         Curve214_fit$RMSE,
+                         Curve214_fit$Ci_transition,
+                         Curve214_fit$citransition,
+                         Curve214_fit$Km,
+                         Curve214_fit$GammaStar,
+                         Curve214_fit$fitmethod,
+                         Curve214_fit$Tcorrect,
+                         Curve214_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve214_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve214_output) # add the curve fits to the larger data frame
+
+### Curve215_data
+Curve215_data <- subset(aci.df, unique_id == aci.df.unique_id[215]) # find correct curve from full dataframe and make new object
+plot(Curve215_data$A~Curve215_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve215_fit <- fitaci(Curve215_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve215_fit) # take a look at fitted values, adjust as needed
+plot(Curve215_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve215_output <- cbind('Curve215', Curve215_data$id[1], Curve215_data$unique_id[1], Curve215_data$machine[1], Curve215_data$baseline_yn[1],
+                         Curve215_data$A[1], Curve215_data$Ci[1], Curve215_data$gsw[1],
+                         mean(Curve215_data$VPDleaf, na.rm = T), mean(Curve215_data$Tleaf, na.rm = T), mean(Curve215_data$Qin, na.rm = T),
+                         Curve215_fit[[2]][1,1], Curve215_fit[[2]][1,2],
+                         Curve215_fit[[2]][2,1], Curve215_fit[[2]][2,2],
+                         Curve215_fit[[2]][3,1], Curve215_fit[[2]][3,2],
+                         Curve215_fit$RMSE,
+                         Curve215_fit$Ci_transition,
+                         Curve215_fit$citransition,
+                         Curve215_fit$Km,
+                         Curve215_fit$GammaStar,
+                         Curve215_fit$fitmethod,
+                         Curve215_fit$Tcorrect,
+                         Curve215_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve215_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve215_output) # add the curve fits to the larger data frame
+
+### Curve215_data
+Curve215_data <- subset(aci.df, unique_id == aci.df.unique_id[215]) # find correct curve from full dataframe and make new object
+plot(Curve215_data$A~Curve215_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve215_fit <- fitaci(Curve215_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve215_fit) # take a look at fitted values, adjust as needed
+plot(Curve215_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve215_output <- cbind('Curve215', Curve215_data$id[1], Curve215_data$unique_id[1], Curve215_data$machine[1], Curve215_data$baseline_yn[1],
+                         Curve215_data$A[1], Curve215_data$Ci[1], Curve215_data$gsw[1],
+                         mean(Curve215_data$VPDleaf, na.rm = T), mean(Curve215_data$Tleaf, na.rm = T), mean(Curve215_data$Qin, na.rm = T),
+                         Curve215_fit[[2]][1,1], Curve215_fit[[2]][1,2],
+                         Curve215_fit[[2]][2,1], Curve215_fit[[2]][2,2],
+                         Curve215_fit[[2]][3,1], Curve215_fit[[2]][3,2],
+                         Curve215_fit$RMSE,
+                         Curve215_fit$Ci_transition,
+                         Curve215_fit$citransition,
+                         Curve215_fit$Km,
+                         Curve215_fit$GammaStar,
+                         Curve215_fit$fitmethod,
+                         Curve215_fit$Tcorrect,
+                         Curve215_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve215_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve215_output) # add the curve fits to the larger data frame
+
+### Curve216_data
+Curve216_data <- subset(aci.df, unique_id == aci.df.unique_id[216]) # find correct curve from full dataframe and make new object
+plot(Curve216_data$A~Curve216_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve216_fit <- fitaci(Curve216_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve216_fit) # take a look at fitted values, adjust as needed
+plot(Curve216_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve216_output <- cbind('Curve216', Curve216_data$id[1], Curve216_data$unique_id[1], Curve216_data$machine[1], Curve216_data$baseline_yn[1],
+                         Curve216_data$A[1], Curve216_data$Ci[1], Curve216_data$gsw[1],
+                         mean(Curve216_data$VPDleaf, na.rm = T), mean(Curve216_data$Tleaf, na.rm = T), mean(Curve216_data$Qin, na.rm = T),
+                         Curve216_fit[[2]][1,1], Curve216_fit[[2]][1,2],
+                         Curve216_fit[[2]][2,1], Curve216_fit[[2]][2,2],
+                         Curve216_fit[[2]][3,1], Curve216_fit[[2]][3,2],
+                         Curve216_fit$RMSE,
+                         Curve216_fit$Ci_transition,
+                         Curve216_fit$citransition,
+                         Curve216_fit$Km,
+                         Curve216_fit$GammaStar,
+                         Curve216_fit$fitmethod,
+                         Curve216_fit$Tcorrect,
+                         Curve216_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve216_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve216_output) # add the curve fits to the larger data frame
+
+### Curve217_data
+Curve217_data <- subset(aci.df, unique_id == aci.df.unique_id[217]) # find correct curve from full dataframe and make new object
+plot(Curve217_data$A~Curve217_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve217_fit <- fitaci(Curve217_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve217_fit) # take a look at fitted values, adjust as needed
+plot(Curve217_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve217_output <- cbind('Curve217', Curve217_data$id[1], Curve217_data$unique_id[1], Curve217_data$machine[1], Curve217_data$baseline_yn[1],
+                         Curve217_data$A[1], Curve217_data$Ci[1], Curve217_data$gsw[1],
+                         mean(Curve217_data$VPDleaf, na.rm = T), mean(Curve217_data$Tleaf, na.rm = T), mean(Curve217_data$Qin, na.rm = T),
+                         Curve217_fit[[2]][1,1], Curve217_fit[[2]][1,2],
+                         Curve217_fit[[2]][2,1], Curve217_fit[[2]][2,2],
+                         Curve217_fit[[2]][3,1], Curve217_fit[[2]][3,2],
+                         Curve217_fit$RMSE,
+                         Curve217_fit$Ci_transition,
+                         Curve217_fit$citransition,
+                         Curve217_fit$Km,
+                         Curve217_fit$GammaStar,
+                         Curve217_fit$fitmethod,
+                         Curve217_fit$Tcorrect,
+                         Curve217_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve217_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve217_output) # add the curve fits to the larger data frame
+
+### Curve218_data
+Curve218_data <- subset(aci.df, unique_id == aci.df.unique_id[218]) # find correct curve from full dataframe and make new object
+plot(Curve218_data$A~Curve218_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve218_fit <- fitaci(Curve218_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve218_fit) # take a look at fitted values, adjust as needed
+plot(Curve218_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve218_output <- cbind('Curve218', Curve218_data$id[1], Curve218_data$unique_id[1], Curve218_data$machine[1], Curve218_data$baseline_yn[1],
+                         Curve218_data$A[1], Curve218_data$Ci[1], Curve218_data$gsw[1],
+                         mean(Curve218_data$VPDleaf, na.rm = T), mean(Curve218_data$Tleaf, na.rm = T), mean(Curve218_data$Qin, na.rm = T),
+                         Curve218_fit[[2]][1,1], Curve218_fit[[2]][1,2],
+                         Curve218_fit[[2]][2,1], Curve218_fit[[2]][2,2],
+                         Curve218_fit[[2]][3,1], Curve218_fit[[2]][3,2],
+                         Curve218_fit$RMSE,
+                         Curve218_fit$Ci_transition,
+                         Curve218_fit$citransition,
+                         Curve218_fit$Km,
+                         Curve218_fit$GammaStar,
+                         Curve218_fit$fitmethod,
+                         Curve218_fit$Tcorrect,
+                         Curve218_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve218_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve218_output) # add the curve fits to the larger data frame
+
+### Curve219_data
+Curve219_data <- subset(aci.df, unique_id == aci.df.unique_id[219] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve219_data$A~Curve219_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve219_fit <- fitaci(Curve219_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve219_fit) # take a look at fitted values, adjust as needed
+plot(Curve219_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve219_output <- cbind('Curve219', Curve219_data$id[1], Curve219_data$unique_id[1], Curve219_data$machine[1], Curve219_data$baseline_yn[1],
+                         Curve219_data$A[1], Curve219_data$Ci[1], Curve219_data$gsw[1],
+                         mean(Curve219_data$VPDleaf, na.rm = T), mean(Curve219_data$Tleaf, na.rm = T), mean(Curve219_data$Qin, na.rm = T),
+                         Curve219_fit[[2]][1,1], Curve219_fit[[2]][1,2],
+                         Curve219_fit[[2]][2,1], Curve219_fit[[2]][2,2],
+                         Curve219_fit[[2]][3,1], Curve219_fit[[2]][3,2],
+                         Curve219_fit$RMSE,
+                         Curve219_fit$Ci_transition,
+                         Curve219_fit$citransition,
+                         Curve219_fit$Km,
+                         Curve219_fit$GammaStar,
+                         Curve219_fit$fitmethod,
+                         Curve219_fit$Tcorrect,
+                         Curve219_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve219_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve219_output) # add the curve fits to the larger data frame
+
+### Curve220_data
+Curve220_data <- subset(aci.df, unique_id == aci.df.unique_id[220]) # find correct curve from full dataframe and make new object
+plot(Curve220_data$A~Curve220_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve220_fit <- fitaci(Curve220_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve220_fit) # take a look at fitted values, adjust as needed
+plot(Curve220_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve220_output <- cbind('Curve220', Curve220_data$id[1], Curve220_data$unique_id[1], Curve220_data$machine[1], Curve220_data$baseline_yn[1],
+                         Curve220_data$A[1], Curve220_data$Ci[1], Curve220_data$gsw[1],
+                         mean(Curve220_data$VPDleaf, na.rm = T), mean(Curve220_data$Tleaf, na.rm = T), mean(Curve220_data$Qin, na.rm = T),
+                         Curve220_fit[[2]][1,1], Curve220_fit[[2]][1,2],
+                         Curve220_fit[[2]][2,1], Curve220_fit[[2]][2,2],
+                         Curve220_fit[[2]][3,1], Curve220_fit[[2]][3,2],
+                         Curve220_fit$RMSE,
+                         Curve220_fit$Ci_transition,
+                         Curve220_fit$citransition,
+                         Curve220_fit$Km,
+                         Curve220_fit$GammaStar,
+                         Curve220_fit$fitmethod,
+                         Curve220_fit$Tcorrect,
+                         Curve220_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve220_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve220_output) # add the curve fits to the larger data frame
+
+### Curve221_data
+Curve221_data <- subset(aci.df, unique_id == aci.df.unique_id[221] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve221_data$A~Curve221_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve221_fit <- fitaci(Curve221_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve221_fit) # take a look at fitted values, adjust as needed
+plot(Curve221_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve221_output <- cbind('Curve221', Curve221_data$id[1], Curve221_data$unique_id[1], Curve221_data$machine[1], Curve221_data$baseline_yn[1],
+                         Curve221_data$A[1], Curve221_data$Ci[1], Curve221_data$gsw[1],
+                         mean(Curve221_data$VPDleaf, na.rm = T), mean(Curve221_data$Tleaf, na.rm = T), mean(Curve221_data$Qin, na.rm = T),
+                         Curve221_fit[[2]][1,1], Curve221_fit[[2]][1,2],
+                         Curve221_fit[[2]][2,1], Curve221_fit[[2]][2,2],
+                         Curve221_fit[[2]][3,1], Curve221_fit[[2]][3,2],
+                         Curve221_fit$RMSE,
+                         Curve221_fit$Ci_transition,
+                         Curve221_fit$citransition,
+                         Curve221_fit$Km,
+                         Curve221_fit$GammaStar,
+                         Curve221_fit$fitmethod,
+                         Curve221_fit$Tcorrect,
+                         Curve221_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve221_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve221_output) # add the curve fits to the larger data frame
+
+### Curve222_data
+Curve222_data <- subset(aci.df, unique_id == aci.df.unique_id[222] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve222_data$A~Curve222_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve222_fit <- fitaci(Curve222_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve222_fit) # take a look at fitted values, adjust as needed
+plot(Curve222_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve222_output <- cbind('Curve222', Curve222_data$id[1], Curve222_data$unique_id[1], Curve222_data$machine[1], Curve222_data$baseline_yn[1],
+                         Curve222_data$A[1], Curve222_data$Ci[1], Curve222_data$gsw[1],
+                         mean(Curve222_data$VPDleaf, na.rm = T), mean(Curve222_data$Tleaf, na.rm = T), mean(Curve222_data$Qin, na.rm = T),
+                         Curve222_fit[[2]][1,1], Curve222_fit[[2]][1,2],
+                         Curve222_fit[[2]][2,1], Curve222_fit[[2]][2,2],
+                         Curve222_fit[[2]][3,1], Curve222_fit[[2]][3,2],
+                         Curve222_fit$RMSE,
+                         Curve222_fit$Ci_transition,
+                         Curve222_fit$citransition,
+                         Curve222_fit$Km,
+                         Curve222_fit$GammaStar,
+                         Curve222_fit$fitmethod,
+                         Curve222_fit$Tcorrect,
+                         Curve222_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve222_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve222_output) # add the curve fits to the larger data frame
+
+### Curve223_data
+Curve223_data <- subset(aci.df, unique_id == aci.df.unique_id[223]) # find correct curve from full dataframe and make new object
+plot(Curve223_data$A~Curve223_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve223_fit <- fitaci(Curve223_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve223_fit) # take a look at fitted values, adjust as needed
+plot(Curve223_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve223_output <- cbind('Curve223', Curve223_data$id[1], Curve223_data$unique_id[1], Curve223_data$machine[1], Curve223_data$baseline_yn[1],
+                         Curve223_data$A[1], Curve223_data$Ci[1], Curve223_data$gsw[1],
+                         mean(Curve223_data$VPDleaf, na.rm = T), mean(Curve223_data$Tleaf, na.rm = T), mean(Curve223_data$Qin, na.rm = T),
+                         Curve223_fit[[2]][1,1], Curve223_fit[[2]][1,2],
+                         Curve223_fit[[2]][2,1], Curve223_fit[[2]][2,2],
+                         Curve223_fit[[2]][3,1], Curve223_fit[[2]][3,2],
+                         Curve223_fit$RMSE,
+                         Curve223_fit$Ci_transition,
+                         Curve223_fit$citransition,
+                         Curve223_fit$Km,
+                         Curve223_fit$GammaStar,
+                         Curve223_fit$fitmethod,
+                         Curve223_fit$Tcorrect,
+                         Curve223_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve223_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve223_output) # add the curve fits to the larger data frame
+
+### Curve224_data
+Curve224_data <- subset(aci.df, unique_id == aci.df.unique_id[224] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve224_data$A~Curve224_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve224_fit <- fitaci(Curve224_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve224_fit) # take a look at fitted values, adjust as needed
+plot(Curve224_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve224_output <- cbind('Curve224', Curve224_data$id[1], Curve224_data$unique_id[1], Curve224_data$machine[1], Curve224_data$baseline_yn[1],
+                         Curve224_data$A[1], Curve224_data$Ci[1], Curve224_data$gsw[1],
+                         mean(Curve224_data$VPDleaf, na.rm = T), mean(Curve224_data$Tleaf, na.rm = T), mean(Curve224_data$Qin, na.rm = T),
+                         Curve224_fit[[2]][1,1], Curve224_fit[[2]][1,2],
+                         Curve224_fit[[2]][2,1], Curve224_fit[[2]][2,2],
+                         Curve224_fit[[2]][3,1], Curve224_fit[[2]][3,2],
+                         Curve224_fit$RMSE,
+                         Curve224_fit$Ci_transition,
+                         Curve224_fit$citransition,
+                         Curve224_fit$Km,
+                         Curve224_fit$GammaStar,
+                         Curve224_fit$fitmethod,
+                         Curve224_fit$Tcorrect,
+                         Curve224_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve224_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve224_output) # add the curve fits to the larger data frame
+
+### Curve225_data
+Curve225_data <- subset(aci.df, unique_id == aci.df.unique_id[225] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve225_data$A~Curve225_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve225_fit <- fitaci(Curve225_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve225_fit) # take a look at fitted values, adjust as needed
+plot(Curve225_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve225_output <- cbind('Curve225', Curve225_data$id[1], Curve225_data$unique_id[1], Curve225_data$machine[1], Curve225_data$baseline_yn[1],
+                         Curve225_data$A[1], Curve225_data$Ci[1], Curve225_data$gsw[1],
+                         mean(Curve225_data$VPDleaf, na.rm = T), mean(Curve225_data$Tleaf, na.rm = T), mean(Curve225_data$Qin, na.rm = T),
+                         Curve225_fit[[2]][1,1], Curve225_fit[[2]][1,2],
+                         Curve225_fit[[2]][2,1], Curve225_fit[[2]][2,2],
+                         Curve225_fit[[2]][3,1], Curve225_fit[[2]][3,2],
+                         Curve225_fit$RMSE,
+                         Curve225_fit$Ci_transition,
+                         Curve225_fit$citransition,
+                         Curve225_fit$Km,
+                         Curve225_fit$GammaStar,
+                         Curve225_fit$fitmethod,
+                         Curve225_fit$Tcorrect,
+                         Curve225_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve225_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve225_output) # add the curve fits to the larger data frame
+
+### Curve226_data
+Curve226_data <- subset(aci.df, unique_id == aci.df.unique_id[226] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve226_data$A~Curve226_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve226_fit <- fitaci(Curve226_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve226_fit) # take a look at fitted values, adjust as needed
+plot(Curve226_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve226_output <- cbind('Curve226', Curve226_data$id[1], Curve226_data$unique_id[1], Curve226_data$machine[1], Curve226_data$baseline_yn[1],
+                         Curve226_data$A[1], Curve226_data$Ci[1], Curve226_data$gsw[1],
+                         mean(Curve226_data$VPDleaf, na.rm = T), mean(Curve226_data$Tleaf, na.rm = T), mean(Curve226_data$Qin, na.rm = T),
+                         Curve226_fit[[2]][1,1], Curve226_fit[[2]][1,2],
+                         Curve226_fit[[2]][2,1], Curve226_fit[[2]][2,2],
+                         Curve226_fit[[2]][3,1], Curve226_fit[[2]][3,2],
+                         Curve226_fit$RMSE,
+                         Curve226_fit$Ci_transition,
+                         Curve226_fit$citransition,
+                         Curve226_fit$Km,
+                         Curve226_fit$GammaStar,
+                         Curve226_fit$fitmethod,
+                         Curve226_fit$Tcorrect,
+                         Curve226_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve226_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve226_output) # add the curve fits to the larger data frame
+
+### Curve227_data
+Curve227_data <- subset(aci.df, unique_id == aci.df.unique_id[227] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve227_data$A~Curve227_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve227_fit <- fitaci(Curve227_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve227_fit) # take a look at fitted values, adjust as needed
+plot(Curve227_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve227_output <- cbind('Curve227', Curve227_data$id[1], Curve227_data$unique_id[1], Curve227_data$machine[1], Curve227_data$baseline_yn[1],
+                         Curve227_data$A[1], Curve227_data$Ci[1], Curve227_data$gsw[1],
+                         mean(Curve227_data$VPDleaf, na.rm = T), mean(Curve227_data$Tleaf, na.rm = T), mean(Curve227_data$Qin, na.rm = T),
+                         Curve227_fit[[2]][1,1], Curve227_fit[[2]][1,2],
+                         Curve227_fit[[2]][2,1], Curve227_fit[[2]][2,2],
+                         Curve227_fit[[2]][3,1], Curve227_fit[[2]][3,2],
+                         Curve227_fit$RMSE,
+                         Curve227_fit$Ci_transition,
+                         Curve227_fit$citransition,
+                         Curve227_fit$Km,
+                         Curve227_fit$GammaStar,
+                         Curve227_fit$fitmethod,
+                         Curve227_fit$Tcorrect,
+                         Curve227_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve227_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve227_output) # add the curve fits to the larger data frame
+
+### Curve228_data
+Curve228_data <- subset(aci.df, unique_id == aci.df.unique_id[228]) # find correct curve from full dataframe and make new object
+plot(Curve228_data$A~Curve228_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve228_fit <- fitaci(Curve228_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve228_fit) # take a look at fitted values, adjust as needed
+plot(Curve228_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve228_output <- cbind('Curve228', Curve228_data$id[1], Curve228_data$unique_id[1], Curve228_data$machine[1], Curve228_data$baseline_yn[1],
+                         Curve228_data$A[1], Curve228_data$Ci[1], Curve228_data$gsw[1],
+                         mean(Curve228_data$VPDleaf, na.rm = T), mean(Curve228_data$Tleaf, na.rm = T), mean(Curve228_data$Qin, na.rm = T),
+                         Curve228_fit[[2]][1,1], Curve228_fit[[2]][1,2],
+                         Curve228_fit[[2]][2,1], Curve228_fit[[2]][2,2],
+                         Curve228_fit[[2]][3,1], Curve228_fit[[2]][3,2],
+                         Curve228_fit$RMSE,
+                         Curve228_fit$Ci_transition,
+                         Curve228_fit$citransition,
+                         Curve228_fit$Km,
+                         Curve228_fit$GammaStar,
+                         Curve228_fit$fitmethod,
+                         Curve228_fit$Tcorrect,
+                         Curve228_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve228_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve228_output) # add the curve fits to the larger data frame
+
+### Curve229_data
+Curve229_data <- subset(aci.df, unique_id == aci.df.unique_id[229]) # find correct curve from full dataframe and make new object
+plot(Curve229_data$A~Curve229_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve229_fit <- fitaci(Curve229_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve229_fit) # take a look at fitted values, adjust as needed
+plot(Curve229_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve229_output <- cbind('Curve229', Curve229_data$id[1], Curve229_data$unique_id[1], Curve229_data$machine[1], Curve229_data$baseline_yn[1],
+                         Curve229_data$A[1], Curve229_data$Ci[1], Curve229_data$gsw[1],
+                         mean(Curve229_data$VPDleaf, na.rm = T), mean(Curve229_data$Tleaf, na.rm = T), mean(Curve229_data$Qin, na.rm = T),
+                         Curve229_fit[[2]][1,1], Curve229_fit[[2]][1,2],
+                         Curve229_fit[[2]][2,1], Curve229_fit[[2]][2,2],
+                         Curve229_fit[[2]][3,1], Curve229_fit[[2]][3,2],
+                         Curve229_fit$RMSE,
+                         Curve229_fit$Ci_transition,
+                         Curve229_fit$citransition,
+                         Curve229_fit$Km,
+                         Curve229_fit$GammaStar,
+                         Curve229_fit$fitmethod,
+                         Curve229_fit$Tcorrect,
+                         Curve229_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve229_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve229_output) # add the curve fits to the larger data frame
+
+### Curve230_data
+Curve230_data <- subset(aci.df, unique_id == aci.df.unique_id[230]) # find correct curve from full dataframe and make new object
+plot(Curve230_data$A~Curve230_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve230_fit <- fitaci(Curve230_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve230_fit) # take a look at fitted values, adjust as needed
+plot(Curve230_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve230_output <- cbind('Curve230', Curve230_data$id[1], Curve230_data$unique_id[1], Curve230_data$machine[1], Curve230_data$baseline_yn[1],
+                         Curve230_data$A[1], Curve230_data$Ci[1], Curve230_data$gsw[1],
+                         mean(Curve230_data$VPDleaf, na.rm = T), mean(Curve230_data$Tleaf, na.rm = T), mean(Curve230_data$Qin, na.rm = T),
+                         Curve230_fit[[2]][1,1], Curve230_fit[[2]][1,2],
+                         Curve230_fit[[2]][2,1], Curve230_fit[[2]][2,2],
+                         Curve230_fit[[2]][3,1], Curve230_fit[[2]][3,2],
+                         Curve230_fit$RMSE,
+                         Curve230_fit$Ci_transition,
+                         Curve230_fit$citransition,
+                         Curve230_fit$Km,
+                         Curve230_fit$GammaStar,
+                         Curve230_fit$fitmethod,
+                         Curve230_fit$Tcorrect,
+                         Curve230_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve230_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve230_output) # add the curve fits to the larger data frame
+
+### Curve231_data
+Curve231_data <- subset(aci.df, unique_id == aci.df.unique_id[231] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve231_data$A~Curve231_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve231_fit <- fitaci(Curve231_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve231_fit) # take a look at fitted values, adjust as needed
+plot(Curve231_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve231_output <- cbind('Curve231', Curve231_data$id[1], Curve231_data$unique_id[1], Curve231_data$machine[1], Curve231_data$baseline_yn[1],
+                         Curve231_data$A[1], Curve231_data$Ci[1], Curve231_data$gsw[1],
+                         mean(Curve231_data$VPDleaf, na.rm = T), mean(Curve231_data$Tleaf, na.rm = T), mean(Curve231_data$Qin, na.rm = T),
+                         Curve231_fit[[2]][1,1], Curve231_fit[[2]][1,2],
+                         Curve231_fit[[2]][2,1], Curve231_fit[[2]][2,2],
+                         Curve231_fit[[2]][3,1], Curve231_fit[[2]][3,2],
+                         Curve231_fit$RMSE,
+                         Curve231_fit$Ci_transition,
+                         Curve231_fit$citransition,
+                         Curve231_fit$Km,
+                         Curve231_fit$GammaStar,
+                         Curve231_fit$fitmethod,
+                         Curve231_fit$Tcorrect,
+                         Curve231_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve231_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve231_output) # add the curve fits to the larger data frame
+
+### Curve232_data
+Curve232_data <- subset(aci.df, unique_id == aci.df.unique_id[232]) # find correct curve from full dataframe and make new object
+plot(Curve232_data$A~Curve232_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve232_fit <- fitaci(Curve232_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve232_fit) # take a look at fitted values, adjust as needed
+plot(Curve232_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve232_output <- cbind('Curve232', Curve232_data$id[1], Curve232_data$unique_id[1], Curve232_data$machine[1], Curve232_data$baseline_yn[1],
+                         Curve232_data$A[1], Curve232_data$Ci[1], Curve232_data$gsw[1],
+                         mean(Curve232_data$VPDleaf, na.rm = T), mean(Curve232_data$Tleaf, na.rm = T), mean(Curve232_data$Qin, na.rm = T),
+                         Curve232_fit[[2]][1,1], Curve232_fit[[2]][1,2],
+                         Curve232_fit[[2]][2,1], Curve232_fit[[2]][2,2],
+                         Curve232_fit[[2]][3,1], Curve232_fit[[2]][3,2],
+                         Curve232_fit$RMSE,
+                         Curve232_fit$Ci_transition,
+                         Curve232_fit$citransition,
+                         Curve232_fit$Km,
+                         Curve232_fit$GammaStar,
+                         Curve232_fit$fitmethod,
+                         Curve232_fit$Tcorrect,
+                         Curve232_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve232_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve232_output) # add the curve fits to the larger data frame
+
+### Curve233_data
+Curve233_data <- subset(aci.df, unique_id == aci.df.unique_id[233]) # find correct curve from full dataframe and make new object
+plot(Curve233_data$A~Curve233_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve233_fit <- fitaci(Curve233_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve233_fit) # take a look at fitted values, adjust as needed
+plot(Curve233_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve233_output <- cbind('Curve233', Curve233_data$id[1], Curve233_data$unique_id[1], Curve233_data$machine[1], Curve233_data$baseline_yn[1],
+                         Curve233_data$A[1], Curve233_data$Ci[1], Curve233_data$gsw[1],
+                         mean(Curve233_data$VPDleaf, na.rm = T), mean(Curve233_data$Tleaf, na.rm = T), mean(Curve233_data$Qin, na.rm = T),
+                         Curve233_fit[[2]][1,1], Curve233_fit[[2]][1,2],
+                         Curve233_fit[[2]][2,1], Curve233_fit[[2]][2,2],
+                         Curve233_fit[[2]][3,1], Curve233_fit[[2]][3,2],
+                         Curve233_fit$RMSE,
+                         Curve233_fit$Ci_transition,
+                         Curve233_fit$citransition,
+                         Curve233_fit$Km,
+                         Curve233_fit$GammaStar,
+                         Curve233_fit$fitmethod,
+                         Curve233_fit$Tcorrect,
+                         Curve233_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve233_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve233_output) # add the curve fits to the larger data frame
+
+### Curve234_data
+Curve234_data <- subset(aci.df, unique_id == aci.df.unique_id[234]) # find correct curve from full dataframe and make new object
+plot(Curve234_data$A~Curve234_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve234_fit <- fitaci(Curve234_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve234_fit) # take a look at fitted values, adjust as needed
+plot(Curve234_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve234_output <- cbind('Curve234', Curve234_data$id[1], Curve234_data$unique_id[1], Curve234_data$machine[1], Curve234_data$baseline_yn[1],
+                         Curve234_data$A[1], Curve234_data$Ci[1], Curve234_data$gsw[1],
+                         mean(Curve234_data$VPDleaf, na.rm = T), mean(Curve234_data$Tleaf, na.rm = T), mean(Curve234_data$Qin, na.rm = T),
+                         Curve234_fit[[2]][1,1], Curve234_fit[[2]][1,2],
+                         Curve234_fit[[2]][2,1], Curve234_fit[[2]][2,2],
+                         Curve234_fit[[2]][3,1], Curve234_fit[[2]][3,2],
+                         Curve234_fit$RMSE,
+                         Curve234_fit$Ci_transition,
+                         Curve234_fit$citransition,
+                         Curve234_fit$Km,
+                         Curve234_fit$GammaStar,
+                         Curve234_fit$fitmethod,
+                         Curve234_fit$Tcorrect,
+                         Curve234_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve234_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve234_output) # add the curve fits to the larger data frame
+
+### Curve235_data
+Curve235_data <- subset(aci.df, unique_id == aci.df.unique_id[235]) # find correct curve from full dataframe and make new object
+plot(Curve235_data$A~Curve235_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve235_fit <- fitaci(Curve235_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve235_fit) # take a look at fitted values, adjust as needed
+plot(Curve235_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve235_output <- cbind('Curve235', Curve235_data$id[1], Curve235_data$unique_id[1], Curve235_data$machine[1], Curve235_data$baseline_yn[1],
+                         Curve235_data$A[1], Curve235_data$Ci[1], Curve235_data$gsw[1],
+                         mean(Curve235_data$VPDleaf, na.rm = T), mean(Curve235_data$Tleaf, na.rm = T), mean(Curve235_data$Qin, na.rm = T),
+                         Curve235_fit[[2]][1,1], Curve235_fit[[2]][1,2],
+                         Curve235_fit[[2]][2,1], Curve235_fit[[2]][2,2],
+                         Curve235_fit[[2]][3,1], Curve235_fit[[2]][3,2],
+                         Curve235_fit$RMSE,
+                         Curve235_fit$Ci_transition,
+                         Curve235_fit$citransition,
+                         Curve235_fit$Km,
+                         Curve235_fit$GammaStar,
+                         Curve235_fit$fitmethod,
+                         Curve235_fit$Tcorrect,
+                         Curve235_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve235_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve235_output) # add the curve fits to the larger data frame
+
+### Curve236_data
+Curve236_data <- subset(aci.df, unique_id == aci.df.unique_id[236]) # find correct curve from full dataframe and make new object
+plot(Curve236_data$A~Curve236_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve236_fit <- fitaci(Curve236_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve236_fit) # take a look at fitted values, adjust as needed
+plot(Curve236_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve236_output <- cbind('Curve236', Curve236_data$id[1], Curve236_data$unique_id[1], Curve236_data$machine[1], Curve236_data$baseline_yn[1],
+                         Curve236_data$A[1], Curve236_data$Ci[1], Curve236_data$gsw[1],
+                         mean(Curve236_data$VPDleaf, na.rm = T), mean(Curve236_data$Tleaf, na.rm = T), mean(Curve236_data$Qin, na.rm = T),
+                         Curve236_fit[[2]][1,1], Curve236_fit[[2]][1,2],
+                         Curve236_fit[[2]][2,1], Curve236_fit[[2]][2,2],
+                         Curve236_fit[[2]][3,1], Curve236_fit[[2]][3,2],
+                         Curve236_fit$RMSE,
+                         Curve236_fit$Ci_transition,
+                         Curve236_fit$citransition,
+                         Curve236_fit$Km,
+                         Curve236_fit$GammaStar,
+                         Curve236_fit$fitmethod,
+                         Curve236_fit$Tcorrect,
+                         Curve236_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve236_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve236_output) # add the curve fits to the larger data frame
+
+### Curve237_data
+Curve237_data <- subset(aci.df, unique_id == aci.df.unique_id[237]) # find correct curve from full dataframe and make new object
+plot(Curve237_data$A~Curve237_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve237_fit <- fitaci(Curve237_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve237_fit) # take a look at fitted values, adjust as needed
+plot(Curve237_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve237_output <- cbind('Curve237', Curve237_data$id[1], Curve237_data$unique_id[1], Curve237_data$machine[1], Curve237_data$baseline_yn[1],
+                         Curve237_data$A[1], Curve237_data$Ci[1], Curve237_data$gsw[1],
+                         mean(Curve237_data$VPDleaf, na.rm = T), mean(Curve237_data$Tleaf, na.rm = T), mean(Curve237_data$Qin, na.rm = T),
+                         Curve237_fit[[2]][1,1], Curve237_fit[[2]][1,2],
+                         Curve237_fit[[2]][2,1], Curve237_fit[[2]][2,2],
+                         Curve237_fit[[2]][3,1], Curve237_fit[[2]][3,2],
+                         Curve237_fit$RMSE,
+                         Curve237_fit$Ci_transition,
+                         Curve237_fit$citransition,
+                         Curve237_fit$Km,
+                         Curve237_fit$GammaStar,
+                         Curve237_fit$fitmethod,
+                         Curve237_fit$Tcorrect,
+                         Curve237_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve237_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve237_output) # add the curve fits to the larger data frame
+
+### Curve238_data
+Curve238_data <- subset(aci.df, unique_id == aci.df.unique_id[238]) # find correct curve from full dataframe and make new object
+plot(Curve238_data$A~Curve238_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve238_fit <- fitaci(Curve238_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve238_fit) # take a look at fitted values, adjust as needed
+plot(Curve238_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve238_output <- cbind('Curve238', Curve238_data$id[1], Curve238_data$unique_id[1], Curve238_data$machine[1], Curve238_data$baseline_yn[1],
+                         Curve238_data$A[1], Curve238_data$Ci[1], Curve238_data$gsw[1],
+                         mean(Curve238_data$VPDleaf, na.rm = T), mean(Curve238_data$Tleaf, na.rm = T), mean(Curve238_data$Qin, na.rm = T),
+                         Curve238_fit[[2]][1,1], Curve238_fit[[2]][1,2],
+                         Curve238_fit[[2]][2,1], Curve238_fit[[2]][2,2],
+                         Curve238_fit[[2]][3,1], Curve238_fit[[2]][3,2],
+                         Curve238_fit$RMSE,
+                         Curve238_fit$Ci_transition,
+                         Curve238_fit$citransition,
+                         Curve238_fit$Km,
+                         Curve238_fit$GammaStar,
+                         Curve238_fit$fitmethod,
+                         Curve238_fit$Tcorrect,
+                         Curve238_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve238_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve238_output) # add the curve fits to the larger data frame
+
+### Curve239_data
+Curve239_data <- subset(aci.df, unique_id == aci.df.unique_id[239] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve239_data$A~Curve239_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve239_fit <- fitaci(Curve239_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve239_fit) # take a look at fitted values, adjust as needed
+plot(Curve239_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve239_output <- cbind('Curve239', Curve239_data$id[1], Curve239_data$unique_id[1], Curve239_data$machine[1], Curve239_data$baseline_yn[1],
+                         Curve239_data$A[1], Curve239_data$Ci[1], Curve239_data$gsw[1],
+                         mean(Curve239_data$VPDleaf, na.rm = T), mean(Curve239_data$Tleaf, na.rm = T), mean(Curve239_data$Qin, na.rm = T),
+                         Curve239_fit[[2]][1,1], Curve239_fit[[2]][1,2],
+                         Curve239_fit[[2]][2,1], Curve239_fit[[2]][2,2],
+                         Curve239_fit[[2]][3,1], Curve239_fit[[2]][3,2],
+                         Curve239_fit$RMSE,
+                         Curve239_fit$Ci_transition,
+                         Curve239_fit$citransition,
+                         Curve239_fit$Km,
+                         Curve239_fit$GammaStar,
+                         Curve239_fit$fitmethod,
+                         Curve239_fit$Tcorrect,
+                         Curve239_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve239_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve239_output) # add the curve fits to the larger data frame
+
+### Curve240_data
+Curve240_data <- subset(aci.df, unique_id == aci.df.unique_id[240]) # find correct curve from full dataframe and make new object
+plot(Curve240_data$A~Curve240_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve240_fit <- fitaci(Curve240_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve240_fit) # take a look at fitted values, adjust as needed
+plot(Curve240_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve240_output <- cbind('Curve240', Curve240_data$id[1], Curve240_data$unique_id[1], Curve240_data$machine[1], Curve240_data$baseline_yn[1],
+                         Curve240_data$A[1], Curve240_data$Ci[1], Curve240_data$gsw[1],
+                         mean(Curve240_data$VPDleaf, na.rm = T), mean(Curve240_data$Tleaf, na.rm = T), mean(Curve240_data$Qin, na.rm = T),
+                         Curve240_fit[[2]][1,1], Curve240_fit[[2]][1,2],
+                         Curve240_fit[[2]][2,1], Curve240_fit[[2]][2,2],
+                         Curve240_fit[[2]][3,1], Curve240_fit[[2]][3,2],
+                         Curve240_fit$RMSE,
+                         Curve240_fit$Ci_transition,
+                         Curve240_fit$citransition,
+                         Curve240_fit$Km,
+                         Curve240_fit$GammaStar,
+                         Curve240_fit$fitmethod,
+                         Curve240_fit$Tcorrect,
+                         Curve240_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve240_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve240_output) # add the curve fits to the larger data frame
+
+### Curve241_data
+Curve241_data <- subset(aci.df, unique_id == aci.df.unique_id[241]) # find correct curve from full dataframe and make new object
+plot(Curve241_data$A~Curve241_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve241_fit <- fitaci(Curve241_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve241_fit) # take a look at fitted values, adjust as needed
+plot(Curve241_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve241_output <- cbind('Curve241', Curve241_data$id[1], Curve241_data$unique_id[1], Curve241_data$machine[1], Curve241_data$baseline_yn[1],
+                         Curve241_data$A[1], Curve241_data$Ci[1], Curve241_data$gsw[1],
+                         mean(Curve241_data$VPDleaf, na.rm = T), mean(Curve241_data$Tleaf, na.rm = T), mean(Curve241_data$Qin, na.rm = T),
+                         Curve241_fit[[2]][1,1], Curve241_fit[[2]][1,2],
+                         Curve241_fit[[2]][2,1], Curve241_fit[[2]][2,2],
+                         Curve241_fit[[2]][3,1], Curve241_fit[[2]][3,2],
+                         Curve241_fit$RMSE,
+                         Curve241_fit$Ci_transition,
+                         Curve241_fit$citransition,
+                         Curve241_fit$Km,
+                         Curve241_fit$GammaStar,
+                         Curve241_fit$fitmethod,
+                         Curve241_fit$Tcorrect,
+                         Curve241_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve241_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve241_output) # add the curve fits to the larger data frame
+
+### Curve242_data
+Curve242_data <- subset(aci.df, unique_id == aci.df.unique_id[242]) # find correct curve from full dataframe and make new object
+plot(Curve242_data$A~Curve242_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve242_fit <- fitaci(Curve242_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve242_fit) # take a look at fitted values, adjust as needed
+plot(Curve242_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve242_output <- cbind('Curve242', Curve242_data$id[1], Curve242_data$unique_id[1], Curve242_data$machine[1], Curve242_data$baseline_yn[1],
+                         Curve242_data$A[1], Curve242_data$Ci[1], Curve242_data$gsw[1],
+                         mean(Curve242_data$VPDleaf, na.rm = T), mean(Curve242_data$Tleaf, na.rm = T), mean(Curve242_data$Qin, na.rm = T),
+                         Curve242_fit[[2]][1,1], Curve242_fit[[2]][1,2],
+                         Curve242_fit[[2]][2,1], Curve242_fit[[2]][2,2],
+                         Curve242_fit[[2]][3,1], Curve242_fit[[2]][3,2],
+                         Curve242_fit$RMSE,
+                         Curve242_fit$Ci_transition,
+                         Curve242_fit$citransition,
+                         Curve242_fit$Km,
+                         Curve242_fit$GammaStar,
+                         Curve242_fit$fitmethod,
+                         Curve242_fit$Tcorrect,
+                         Curve242_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve242_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve242_output) # add the curve fits to the larger data frame
+
+### Curve243_data
+Curve243_data <- subset(aci.df, unique_id == aci.df.unique_id[243]) # find correct curve from full dataframe and make new object
+plot(Curve243_data$A~Curve243_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve243_fit <- fitaci(Curve243_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve243_fit) # take a look at fitted values, adjust as needed
+plot(Curve243_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve243_output <- cbind('Curve243', Curve243_data$id[1], Curve243_data$unique_id[1], Curve243_data$machine[1], Curve243_data$baseline_yn[1],
+                         Curve243_data$A[1], Curve243_data$Ci[1], Curve243_data$gsw[1],
+                         mean(Curve243_data$VPDleaf, na.rm = T), mean(Curve243_data$Tleaf, na.rm = T), mean(Curve243_data$Qin, na.rm = T),
+                         Curve243_fit[[2]][1,1], Curve243_fit[[2]][1,2],
+                         Curve243_fit[[2]][2,1], Curve243_fit[[2]][2,2],
+                         Curve243_fit[[2]][3,1], Curve243_fit[[2]][3,2],
+                         Curve243_fit$RMSE,
+                         Curve243_fit$Ci_transition,
+                         Curve243_fit$citransition,
+                         Curve243_fit$Km,
+                         Curve243_fit$GammaStar,
+                         Curve243_fit$fitmethod,
+                         Curve243_fit$Tcorrect,
+                         Curve243_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve243_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve243_output) # add the curve fits to the larger data frame
+
+### Curve244_data
+Curve244_data <- subset(aci.df, unique_id == aci.df.unique_id[244]) # find correct curve from full dataframe and make new object
+plot(Curve244_data$A~Curve244_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve244_fit <- fitaci(Curve244_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve244_fit) # take a look at fitted values, adjust as needed
+plot(Curve244_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve244_output <- cbind('Curve244', Curve244_data$id[1], Curve244_data$unique_id[1], Curve244_data$machine[1], Curve244_data$baseline_yn[1],
+                         Curve244_data$A[1], Curve244_data$Ci[1], Curve244_data$gsw[1],
+                         mean(Curve244_data$VPDleaf, na.rm = T), mean(Curve244_data$Tleaf, na.rm = T), mean(Curve244_data$Qin, na.rm = T),
+                         Curve244_fit[[2]][1,1], Curve244_fit[[2]][1,2],
+                         Curve244_fit[[2]][2,1], Curve244_fit[[2]][2,2],
+                         Curve244_fit[[2]][3,1], Curve244_fit[[2]][3,2],
+                         Curve244_fit$RMSE,
+                         Curve244_fit$Ci_transition,
+                         Curve244_fit$citransition,
+                         Curve244_fit$Km,
+                         Curve244_fit$GammaStar,
+                         Curve244_fit$fitmethod,
+                         Curve244_fit$Tcorrect,
+                         Curve244_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve244_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve244_output) # add the curve fits to the larger data frame
+
+### Curve245_data
+Curve245_data <- subset(aci.df, unique_id == aci.df.unique_id[245]) # find correct curve from full dataframe and make new object
+plot(Curve245_data$A~Curve245_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve245_fit <- fitaci(Curve245_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve245_fit) # take a look at fitted values, adjust as needed
+plot(Curve245_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve245_output <- cbind('Curve245', Curve245_data$id[1], Curve245_data$unique_id[1], Curve245_data$machine[1], Curve245_data$baseline_yn[1],
+                         Curve245_data$A[1], Curve245_data$Ci[1], Curve245_data$gsw[1],
+                         mean(Curve245_data$VPDleaf, na.rm = T), mean(Curve245_data$Tleaf, na.rm = T), mean(Curve245_data$Qin, na.rm = T),
+                         Curve245_fit[[2]][1,1], Curve245_fit[[2]][1,2],
+                         Curve245_fit[[2]][2,1], Curve245_fit[[2]][2,2],
+                         Curve245_fit[[2]][3,1], Curve245_fit[[2]][3,2],
+                         Curve245_fit$RMSE,
+                         Curve245_fit$Ci_transition,
+                         Curve245_fit$citransition,
+                         Curve245_fit$Km,
+                         Curve245_fit$GammaStar,
+                         Curve245_fit$fitmethod,
+                         Curve245_fit$Tcorrect,
+                         Curve245_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve245_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve245_output) # add the curve fits to the larger data frame
+
+### Curve246_data
+Curve246_data <- subset(aci.df, unique_id == aci.df.unique_id[246] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve246_data$A~Curve246_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve246_fit <- fitaci(Curve246_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve246_fit) # take a look at fitted values, adjust as needed
+plot(Curve246_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve246_output <- cbind('Curve246', Curve246_data$id[1], Curve246_data$unique_id[1], Curve246_data$machine[1], Curve246_data$baseline_yn[1],
+                         Curve246_data$A[1], Curve246_data$Ci[1], Curve246_data$gsw[1],
+                         mean(Curve246_data$VPDleaf, na.rm = T), mean(Curve246_data$Tleaf, na.rm = T), mean(Curve246_data$Qin, na.rm = T),
+                         Curve246_fit[[2]][1,1], Curve246_fit[[2]][1,2],
+                         Curve246_fit[[2]][2,1], Curve246_fit[[2]][2,2],
+                         Curve246_fit[[2]][3,1], Curve246_fit[[2]][3,2],
+                         Curve246_fit$RMSE,
+                         Curve246_fit$Ci_transition,
+                         Curve246_fit$citransition,
+                         Curve246_fit$Km,
+                         Curve246_fit$GammaStar,
+                         Curve246_fit$fitmethod,
+                         Curve246_fit$Tcorrect,
+                         Curve246_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve246_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve246_output) # add the curve fits to the larger data frame
+
+### Curve247_data
+Curve247_data <- subset(aci.df, unique_id == aci.df.unique_id[247]) # find correct curve from full dataframe and make new object
+plot(Curve247_data$A~Curve247_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve247_fit <- fitaci(Curve247_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve247_fit) # take a look at fitted values, adjust as needed
+plot(Curve247_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve247_output <- cbind('Curve247', Curve247_data$id[1], Curve247_data$unique_id[1], Curve247_data$machine[1], Curve247_data$baseline_yn[1],
+                         Curve247_data$A[1], Curve247_data$Ci[1], Curve247_data$gsw[1],
+                         mean(Curve247_data$VPDleaf, na.rm = T), mean(Curve247_data$Tleaf, na.rm = T), mean(Curve247_data$Qin, na.rm = T),
+                         Curve247_fit[[2]][1,1], Curve247_fit[[2]][1,2],
+                         Curve247_fit[[2]][2,1], Curve247_fit[[2]][2,2],
+                         Curve247_fit[[2]][3,1], Curve247_fit[[2]][3,2],
+                         Curve247_fit$RMSE,
+                         Curve247_fit$Ci_transition,
+                         Curve247_fit$citransition,
+                         Curve247_fit$Km,
+                         Curve247_fit$GammaStar,
+                         Curve247_fit$fitmethod,
+                         Curve247_fit$Tcorrect,
+                         Curve247_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve247_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve247_output) # add the curve fits to the larger data frame
+
+### Curve248_data
+Curve248_data <- subset(aci.df, unique_id == aci.df.unique_id[248]) # find correct curve from full dataframe and make new object
+plot(Curve248_data$A~Curve248_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve248_fit <- fitaci(Curve248_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve248_fit) # take a look at fitted values, adjust as needed
+plot(Curve248_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve248_output <- cbind('Curve248', Curve248_data$id[1], Curve248_data$unique_id[1], Curve248_data$machine[1], Curve248_data$baseline_yn[1],
+                         Curve248_data$A[1], Curve248_data$Ci[1], Curve248_data$gsw[1],
+                         mean(Curve248_data$VPDleaf, na.rm = T), mean(Curve248_data$Tleaf, na.rm = T), mean(Curve248_data$Qin, na.rm = T),
+                         Curve248_fit[[2]][1,1], Curve248_fit[[2]][1,2],
+                         Curve248_fit[[2]][2,1], Curve248_fit[[2]][2,2],
+                         Curve248_fit[[2]][3,1], Curve248_fit[[2]][3,2],
+                         Curve248_fit$RMSE,
+                         Curve248_fit$Ci_transition,
+                         Curve248_fit$citransition,
+                         Curve248_fit$Km,
+                         Curve248_fit$GammaStar,
+                         Curve248_fit$fitmethod,
+                         Curve248_fit$Tcorrect,
+                         Curve248_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve248_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve248_output) # add the curve fits to the larger data frame
+
+### Curve249_data
+Curve249_data <- subset(aci.df, unique_id == aci.df.unique_id[249] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve249_data$A~Curve249_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve249_fit <- fitaci(Curve249_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve249_fit) # take a look at fitted values, adjust as needed
+plot(Curve249_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve249_output <- cbind('Curve249', Curve249_data$id[1], Curve249_data$unique_id[1], Curve249_data$machine[1], Curve249_data$baseline_yn[1],
+                         Curve249_data$A[1], Curve249_data$Ci[1], Curve249_data$gsw[1],
+                         mean(Curve249_data$VPDleaf, na.rm = T), mean(Curve249_data$Tleaf, na.rm = T), mean(Curve249_data$Qin, na.rm = T),
+                         Curve249_fit[[2]][1,1], Curve249_fit[[2]][1,2],
+                         Curve249_fit[[2]][2,1], Curve249_fit[[2]][2,2],
+                         Curve249_fit[[2]][3,1], Curve249_fit[[2]][3,2],
+                         Curve249_fit$RMSE,
+                         Curve249_fit$Ci_transition,
+                         Curve249_fit$citransition,
+                         Curve249_fit$Km,
+                         Curve249_fit$GammaStar,
+                         Curve249_fit$fitmethod,
+                         Curve249_fit$Tcorrect,
+                         Curve249_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve249_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve249_output) # add the curve fits to the larger data frame
+
+### Curve250_data
+Curve250_data <- subset(aci.df, unique_id == aci.df.unique_id[250] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve250_data$A~Curve250_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve250_fit <- fitaci(Curve250_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve250_fit) # take a look at fitted values, adjust as needed
+plot(Curve250_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve250_output <- cbind('Curve250', Curve250_data$id[1], Curve250_data$unique_id[1], Curve250_data$machine[1], Curve250_data$baseline_yn[1],
+                         Curve250_data$A[1], Curve250_data$Ci[1], Curve250_data$gsw[1],
+                         mean(Curve250_data$VPDleaf, na.rm = T), mean(Curve250_data$Tleaf, na.rm = T), mean(Curve250_data$Qin, na.rm = T),
+                         Curve250_fit[[2]][1,1], Curve250_fit[[2]][1,2],
+                         Curve250_fit[[2]][2,1], Curve250_fit[[2]][2,2],
+                         Curve250_fit[[2]][3,1], Curve250_fit[[2]][3,2],
+                         Curve250_fit$RMSE,
+                         Curve250_fit$Ci_transition,
+                         Curve250_fit$citransition,
+                         Curve250_fit$Km,
+                         Curve250_fit$GammaStar,
+                         Curve250_fit$fitmethod,
+                         Curve250_fit$Tcorrect,
+                         Curve250_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve250_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve250_output) # add the curve fits to the larger data frame
+
+### Curve251_data
+Curve251_data <- subset(aci.df, unique_id == aci.df.unique_id[251] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve251_data$A~Curve251_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve251_fit <- fitaci(Curve251_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve251_fit) # take a look at fitted values, adjust as needed
+plot(Curve251_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve251_output <- cbind('Curve251', Curve251_data$id[1], Curve251_data$unique_id[1], Curve251_data$machine[1], Curve251_data$baseline_yn[1],
+                         Curve251_data$A[1], Curve251_data$Ci[1], Curve251_data$gsw[1],
+                         mean(Curve251_data$VPDleaf, na.rm = T), mean(Curve251_data$Tleaf, na.rm = T), mean(Curve251_data$Qin, na.rm = T),
+                         Curve251_fit[[2]][1,1], Curve251_fit[[2]][1,2],
+                         Curve251_fit[[2]][2,1], Curve251_fit[[2]][2,2],
+                         Curve251_fit[[2]][3,1], Curve251_fit[[2]][3,2],
+                         Curve251_fit$RMSE,
+                         Curve251_fit$Ci_transition,
+                         Curve251_fit$citransition,
+                         Curve251_fit$Km,
+                         Curve251_fit$GammaStar,
+                         Curve251_fit$fitmethod,
+                         Curve251_fit$Tcorrect,
+                         Curve251_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve251_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve251_output) # add the curve fits to the larger data frame
+
+### Curve252_data
+Curve252_data <- subset(aci.df, unique_id == aci.df.unique_id[252]) # find correct curve from full dataframe and make new object
+plot(Curve252_data$A~Curve252_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve252_fit <- fitaci(Curve252_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve252_fit) # take a look at fitted values, adjust as needed
+plot(Curve252_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve252_output <- cbind('Curve252', Curve252_data$id[1], Curve252_data$unique_id[1], Curve252_data$machine[1], Curve252_data$baseline_yn[1],
+                         Curve252_data$A[1], Curve252_data$Ci[1], Curve252_data$gsw[1],
+                         mean(Curve252_data$VPDleaf, na.rm = T), mean(Curve252_data$Tleaf, na.rm = T), mean(Curve252_data$Qin, na.rm = T),
+                         Curve252_fit[[2]][1,1], Curve252_fit[[2]][1,2],
+                         Curve252_fit[[2]][2,1], Curve252_fit[[2]][2,2],
+                         Curve252_fit[[2]][3,1], Curve252_fit[[2]][3,2],
+                         Curve252_fit$RMSE,
+                         Curve252_fit$Ci_transition,
+                         Curve252_fit$citransition,
+                         Curve252_fit$Km,
+                         Curve252_fit$GammaStar,
+                         Curve252_fit$fitmethod,
+                         Curve252_fit$Tcorrect,
+                         Curve252_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve252_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve252_output) # add the curve fits to the larger data frame
+
+### Curve253_data
+Curve253_data <- subset(aci.df, unique_id == aci.df.unique_id[253]) # find correct curve from full dataframe and make new object
+plot(Curve253_data$A~Curve253_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve253_fit <- fitaci(Curve253_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve253_fit) # take a look at fitted values, adjust as needed
+plot(Curve253_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve253_output <- cbind('Curve253', Curve253_data$id[1], Curve253_data$unique_id[1], Curve253_data$machine[1], Curve253_data$baseline_yn[1],
+                         Curve253_data$A[1], Curve253_data$Ci[1], Curve253_data$gsw[1],
+                         mean(Curve253_data$VPDleaf, na.rm = T), mean(Curve253_data$Tleaf, na.rm = T), mean(Curve253_data$Qin, na.rm = T),
+                         Curve253_fit[[2]][1,1], Curve253_fit[[2]][1,2],
+                         Curve253_fit[[2]][2,1], Curve253_fit[[2]][2,2],
+                         Curve253_fit[[2]][3,1], Curve253_fit[[2]][3,2],
+                         Curve253_fit$RMSE,
+                         Curve253_fit$Ci_transition,
+                         Curve253_fit$citransition,
+                         Curve253_fit$Km,
+                         Curve253_fit$GammaStar,
+                         Curve253_fit$fitmethod,
+                         Curve253_fit$Tcorrect,
+                         Curve253_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve253_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve253_output) # add the curve fits to the larger data frame
+
+### Curve254_data
+Curve254_data <- subset(aci.df, unique_id == aci.df.unique_id[254]) # find correct curve from full dataframe and make new object
+plot(Curve254_data$A~Curve254_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve254_fit <- fitaci(Curve254_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve254_fit) # take a look at fitted values, adjust as needed
+plot(Curve254_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve254_output <- cbind('Curve254', Curve254_data$id[1], Curve254_data$unique_id[1], Curve254_data$machine[1], Curve254_data$baseline_yn[1],
+                         Curve254_data$A[1], Curve254_data$Ci[1], Curve254_data$gsw[1],
+                         mean(Curve254_data$VPDleaf, na.rm = T), mean(Curve254_data$Tleaf, na.rm = T), mean(Curve254_data$Qin, na.rm = T),
+                         Curve254_fit[[2]][1,1], Curve254_fit[[2]][1,2],
+                         Curve254_fit[[2]][2,1], Curve254_fit[[2]][2,2],
+                         Curve254_fit[[2]][3,1], Curve254_fit[[2]][3,2],
+                         Curve254_fit$RMSE,
+                         Curve254_fit$Ci_transition,
+                         Curve254_fit$citransition,
+                         Curve254_fit$Km,
+                         Curve254_fit$GammaStar,
+                         Curve254_fit$fitmethod,
+                         Curve254_fit$Tcorrect,
+                         Curve254_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve254_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve254_output) # add the curve fits to the larger data frame
+
+### Curve255_data
+Curve255_data <- subset(aci.df, unique_id == aci.df.unique_id[255] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve255_data$A~Curve255_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve255_fit <- fitaci(Curve255_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve255_fit) # take a look at fitted values, adjust as needed
+plot(Curve255_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve255_output <- cbind('Curve255', Curve255_data$id[1], Curve255_data$unique_id[1], Curve255_data$machine[1], Curve255_data$baseline_yn[1],
+                         Curve255_data$A[1], Curve255_data$Ci[1], Curve255_data$gsw[1],
+                         mean(Curve255_data$VPDleaf, na.rm = T), mean(Curve255_data$Tleaf, na.rm = T), mean(Curve255_data$Qin, na.rm = T),
+                         Curve255_fit[[2]][1,1], Curve255_fit[[2]][1,2],
+                         Curve255_fit[[2]][2,1], Curve255_fit[[2]][2,2],
+                         Curve255_fit[[2]][3,1], Curve255_fit[[2]][3,2],
+                         Curve255_fit$RMSE,
+                         Curve255_fit$Ci_transition,
+                         Curve255_fit$citransition,
+                         Curve255_fit$Km,
+                         Curve255_fit$GammaStar,
+                         Curve255_fit$fitmethod,
+                         Curve255_fit$Tcorrect,
+                         Curve255_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve255_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve255_output) # add the curve fits to the larger data frame
+
+### Curve256_data
+Curve256_data <- subset(aci.df, unique_id == aci.df.unique_id[256]) # find correct curve from full dataframe and make new object
+plot(Curve256_data$A~Curve256_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve256_fit <- fitaci(Curve256_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve256_fit) # take a look at fitted values, adjust as needed
+plot(Curve256_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve256_output <- cbind('Curve256', Curve256_data$id[1], Curve256_data$unique_id[1], Curve256_data$machine[1], Curve256_data$baseline_yn[1],
+                         Curve256_data$A[1], Curve256_data$Ci[1], Curve256_data$gsw[1],
+                         mean(Curve256_data$VPDleaf, na.rm = T), mean(Curve256_data$Tleaf, na.rm = T), mean(Curve256_data$Qin, na.rm = T),
+                         Curve256_fit[[2]][1,1], Curve256_fit[[2]][1,2],
+                         Curve256_fit[[2]][2,1], Curve256_fit[[2]][2,2],
+                         Curve256_fit[[2]][3,1], Curve256_fit[[2]][3,2],
+                         Curve256_fit$RMSE,
+                         Curve256_fit$Ci_transition,
+                         Curve256_fit$citransition,
+                         Curve256_fit$Km,
+                         Curve256_fit$GammaStar,
+                         Curve256_fit$fitmethod,
+                         Curve256_fit$Tcorrect,
+                         Curve256_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve256_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve256_output) # add the curve fits to the larger data frame
+
+### Curve257_data
+Curve257_data <- subset(aci.df, unique_id == aci.df.unique_id[257] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve257_data$A~Curve257_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve257_fit <- fitaci(Curve257_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve257_fit) # take a look at fitted values, adjust as needed
+plot(Curve257_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve257_output <- cbind('Curve257', Curve257_data$id[1], Curve257_data$unique_id[1], Curve257_data$machine[1], Curve257_data$baseline_yn[1],
+                         Curve257_data$A[1], Curve257_data$Ci[1], Curve257_data$gsw[1],
+                         mean(Curve257_data$VPDleaf, na.rm = T), mean(Curve257_data$Tleaf, na.rm = T), mean(Curve257_data$Qin, na.rm = T),
+                         Curve257_fit[[2]][1,1], Curve257_fit[[2]][1,2],
+                         Curve257_fit[[2]][2,1], Curve257_fit[[2]][2,2],
+                         Curve257_fit[[2]][3,1], Curve257_fit[[2]][3,2],
+                         Curve257_fit$RMSE,
+                         Curve257_fit$Ci_transition,
+                         Curve257_fit$citransition,
+                         Curve257_fit$Km,
+                         Curve257_fit$GammaStar,
+                         Curve257_fit$fitmethod,
+                         Curve257_fit$Tcorrect,
+                         Curve257_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve257_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve257_output) # add the curve fits to the larger data frame
+
+### Curve258_data
+Curve258_data <- subset(aci.df, unique_id == aci.df.unique_id[258]) # find correct curve from full dataframe and make new object
+plot(Curve258_data$A~Curve258_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve258_fit <- fitaci(Curve258_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve258_fit) # take a look at fitted values, adjust as needed
+plot(Curve258_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve258_output <- cbind('Curve258', Curve258_data$id[1], Curve258_data$unique_id[1], Curve258_data$machine[1], Curve258_data$baseline_yn[1],
+                         Curve258_data$A[1], Curve258_data$Ci[1], Curve258_data$gsw[1],
+                         mean(Curve258_data$VPDleaf, na.rm = T), mean(Curve258_data$Tleaf, na.rm = T), mean(Curve258_data$Qin, na.rm = T),
+                         Curve258_fit[[2]][1,1], Curve258_fit[[2]][1,2],
+                         Curve258_fit[[2]][2,1], Curve258_fit[[2]][2,2],
+                         Curve258_fit[[2]][3,1], Curve258_fit[[2]][3,2],
+                         Curve258_fit$RMSE,
+                         Curve258_fit$Ci_transition,
+                         Curve258_fit$citransition,
+                         Curve258_fit$Km,
+                         Curve258_fit$GammaStar,
+                         Curve258_fit$fitmethod,
+                         Curve258_fit$Tcorrect,
+                         Curve258_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve258_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve258_output) # add the curve fits to the larger data frame
+
+### Curve260_data
+Curve260_data <- subset(aci.df, unique_id == aci.df.unique_id[260]) # find correct curve from full dataframe and make new object
+plot(Curve260_data$A~Curve260_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve260_fit <- fitaci(Curve260_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve260_fit) # take a look at fitted values, adjust as needed
+plot(Curve260_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve260_output <- cbind('Curve260', Curve260_data$id[1], Curve260_data$unique_id[1], Curve260_data$machine[1], Curve260_data$baseline_yn[1],
+                         Curve260_data$A[1], Curve260_data$Ci[1], Curve260_data$gsw[1],
+                         mean(Curve260_data$VPDleaf, na.rm = T), mean(Curve260_data$Tleaf, na.rm = T), mean(Curve260_data$Qin, na.rm = T),
+                         Curve260_fit[[2]][1,1], Curve260_fit[[2]][1,2],
+                         Curve260_fit[[2]][2,1], Curve260_fit[[2]][2,2],
+                         Curve260_fit[[2]][3,1], Curve260_fit[[2]][3,2],
+                         Curve260_fit$RMSE,
+                         Curve260_fit$Ci_transition,
+                         Curve260_fit$citransition,
+                         Curve260_fit$Km,
+                         Curve260_fit$GammaStar,
+                         Curve260_fit$fitmethod,
+                         Curve260_fit$Tcorrect,
+                         Curve260_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve260_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve260_output) # add the curve fits to the larger data frame
+
+### Curve261_data
+Curve261_data <- subset(aci.df, unique_id == aci.df.unique_id[261]) # find correct curve from full dataframe and make new object
+plot(Curve261_data$A~Curve261_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve261_fit <- fitaci(Curve261_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve261_fit) # take a look at fitted values, adjust as needed
+plot(Curve261_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve261_output <- cbind('Curve261', Curve261_data$id[1], Curve261_data$unique_id[1], Curve261_data$machine[1], Curve261_data$baseline_yn[1],
+                         Curve261_data$A[1], Curve261_data$Ci[1], Curve261_data$gsw[1],
+                         mean(Curve261_data$VPDleaf, na.rm = T), mean(Curve261_data$Tleaf, na.rm = T), mean(Curve261_data$Qin, na.rm = T),
+                         Curve261_fit[[2]][1,1], Curve261_fit[[2]][1,2],
+                         Curve261_fit[[2]][2,1], Curve261_fit[[2]][2,2],
+                         Curve261_fit[[2]][3,1], Curve261_fit[[2]][3,2],
+                         Curve261_fit$RMSE,
+                         Curve261_fit$Ci_transition,
+                         Curve261_fit$citransition,
+                         Curve261_fit$Km,
+                         Curve261_fit$GammaStar,
+                         Curve261_fit$fitmethod,
+                         Curve261_fit$Tcorrect,
+                         Curve261_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve261_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve261_output) # add the curve fits to the larger data frame
+
+### Curve262_data
+Curve262_data <- subset(aci.df, unique_id == aci.df.unique_id[262]) # find correct curve from full dataframe and make new object
+plot(Curve262_data$A~Curve262_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve262_fit <- fitaci(Curve262_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve262_fit) # take a look at fitted values, adjust as needed
+plot(Curve262_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve262_output <- cbind('Curve262', Curve262_data$id[1], Curve262_data$unique_id[1], Curve262_data$machine[1], Curve262_data$baseline_yn[1],
+                         Curve262_data$A[1], Curve262_data$Ci[1], Curve262_data$gsw[1],
+                         mean(Curve262_data$VPDleaf, na.rm = T), mean(Curve262_data$Tleaf, na.rm = T), mean(Curve262_data$Qin, na.rm = T),
+                         Curve262_fit[[2]][1,1], Curve262_fit[[2]][1,2],
+                         Curve262_fit[[2]][2,1], Curve262_fit[[2]][2,2],
+                         Curve262_fit[[2]][3,1], Curve262_fit[[2]][3,2],
+                         Curve262_fit$RMSE,
+                         Curve262_fit$Ci_transition,
+                         Curve262_fit$citransition,
+                         Curve262_fit$Km,
+                         Curve262_fit$GammaStar,
+                         Curve262_fit$fitmethod,
+                         Curve262_fit$Tcorrect,
+                         Curve262_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve262_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve262_output) # add the curve fits to the larger data frame
+
+### Curve263_data
+Curve263_data <- subset(aci.df, unique_id == aci.df.unique_id[263]) # find correct curve from full dataframe and make new object
+plot(Curve263_data$A~Curve263_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve263_fit <- fitaci(Curve263_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve263_fit) # take a look at fitted values, adjust as needed
+plot(Curve263_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve263_output <- cbind('Curve263', Curve263_data$id[1], Curve263_data$unique_id[1], Curve263_data$machine[1], Curve263_data$baseline_yn[1],
+                         Curve263_data$A[1], Curve263_data$Ci[1], Curve263_data$gsw[1],
+                         mean(Curve263_data$VPDleaf, na.rm = T), mean(Curve263_data$Tleaf, na.rm = T), mean(Curve263_data$Qin, na.rm = T),
+                         Curve263_fit[[2]][1,1], Curve263_fit[[2]][1,2],
+                         Curve263_fit[[2]][2,1], Curve263_fit[[2]][2,2],
+                         Curve263_fit[[2]][3,1], Curve263_fit[[2]][3,2],
+                         Curve263_fit$RMSE,
+                         Curve263_fit$Ci_transition,
+                         Curve263_fit$citransition,
+                         Curve263_fit$Km,
+                         Curve263_fit$GammaStar,
+                         Curve263_fit$fitmethod,
+                         Curve263_fit$Tcorrect,
+                         Curve263_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve263_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve263_output) # add the curve fits to the larger data frame
+
+### Curve264_data
+Curve264_data <- subset(aci.df, unique_id == aci.df.unique_id[264]) # find correct curve from full dataframe and make new object
+plot(Curve264_data$A~Curve264_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve264_fit <- fitaci(Curve264_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve264_fit) # take a look at fitted values, adjust as needed
+plot(Curve264_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve264_output <- cbind('Curve264', Curve264_data$id[1], Curve264_data$unique_id[1], Curve264_data$machine[1], Curve264_data$baseline_yn[1],
+                         Curve264_data$A[1], Curve264_data$Ci[1], Curve264_data$gsw[1],
+                         mean(Curve264_data$VPDleaf, na.rm = T), mean(Curve264_data$Tleaf, na.rm = T), mean(Curve264_data$Qin, na.rm = T),
+                         Curve264_fit[[2]][1,1], Curve264_fit[[2]][1,2],
+                         Curve264_fit[[2]][2,1], Curve264_fit[[2]][2,2],
+                         Curve264_fit[[2]][3,1], Curve264_fit[[2]][3,2],
+                         Curve264_fit$RMSE,
+                         Curve264_fit$Ci_transition,
+                         Curve264_fit$citransition,
+                         Curve264_fit$Km,
+                         Curve264_fit$GammaStar,
+                         Curve264_fit$fitmethod,
+                         Curve264_fit$Tcorrect,
+                         Curve264_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve264_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve264_output) # add the curve fits to the larger data frame
+
+### Curve265_data
+Curve265_data <- subset(aci.df, unique_id == aci.df.unique_id[265] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve265_data$A~Curve265_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve265_fit <- fitaci(Curve265_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve265_fit) # take a look at fitted values, adjust as needed
+plot(Curve265_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve265_output <- cbind('Curve265', Curve265_data$id[1], Curve265_data$unique_id[1], Curve265_data$machine[1], Curve265_data$baseline_yn[1],
+                         Curve265_data$A[1], Curve265_data$Ci[1], Curve265_data$gsw[1],
+                         mean(Curve265_data$VPDleaf, na.rm = T), mean(Curve265_data$Tleaf, na.rm = T), mean(Curve265_data$Qin, na.rm = T),
+                         Curve265_fit[[2]][1,1], Curve265_fit[[2]][1,2],
+                         Curve265_fit[[2]][2,1], Curve265_fit[[2]][2,2],
+                         Curve265_fit[[2]][3,1], Curve265_fit[[2]][3,2],
+                         Curve265_fit$RMSE,
+                         Curve265_fit$Ci_transition,
+                         Curve265_fit$citransition,
+                         Curve265_fit$Km,
+                         Curve265_fit$GammaStar,
+                         Curve265_fit$fitmethod,
+                         Curve265_fit$Tcorrect,
+                         Curve265_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve265_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve265_output) # add the curve fits to the larger data frame
+
+### Curve266_data
+Curve266_data <- subset(aci.df, unique_id == aci.df.unique_id[266]) # find correct curve from full dataframe and make new object
+plot(Curve266_data$A~Curve266_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve266_fit <- fitaci(Curve266_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve266_fit) # take a look at fitted values, adjust as needed
+plot(Curve266_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve266_output <- cbind('Curve266', Curve266_data$id[1], Curve266_data$unique_id[1], Curve266_data$machine[1], Curve266_data$baseline_yn[1],
+                         Curve266_data$A[1], Curve266_data$Ci[1], Curve266_data$gsw[1],
+                         mean(Curve266_data$VPDleaf, na.rm = T), mean(Curve266_data$Tleaf, na.rm = T), mean(Curve266_data$Qin, na.rm = T),
+                         Curve266_fit[[2]][1,1], Curve266_fit[[2]][1,2],
+                         Curve266_fit[[2]][2,1], Curve266_fit[[2]][2,2],
+                         Curve266_fit[[2]][3,1], Curve266_fit[[2]][3,2],
+                         Curve266_fit$RMSE,
+                         Curve266_fit$Ci_transition,
+                         Curve266_fit$citransition,
+                         Curve266_fit$Km,
+                         Curve266_fit$GammaStar,
+                         Curve266_fit$fitmethod,
+                         Curve266_fit$Tcorrect,
+                         Curve266_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve266_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve266_output) # add the curve fits to the larger data frame
+
+### Curve267_data
+Curve267_data <- subset(aci.df, unique_id == aci.df.unique_id[267]) # find correct curve from full dataframe and make new object
+plot(Curve267_data$A~Curve267_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve267_fit <- fitaci(Curve267_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve267_fit) # take a look at fitted values, adjust as needed
+plot(Curve267_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve267_output <- cbind('Curve267', Curve267_data$id[1], Curve267_data$unique_id[1], Curve267_data$machine[1], Curve267_data$baseline_yn[1],
+                         Curve267_data$A[1], Curve267_data$Ci[1], Curve267_data$gsw[1],
+                         mean(Curve267_data$VPDleaf, na.rm = T), mean(Curve267_data$Tleaf, na.rm = T), mean(Curve267_data$Qin, na.rm = T),
+                         Curve267_fit[[2]][1,1], Curve267_fit[[2]][1,2],
+                         Curve267_fit[[2]][2,1], Curve267_fit[[2]][2,2],
+                         Curve267_fit[[2]][3,1], Curve267_fit[[2]][3,2],
+                         Curve267_fit$RMSE,
+                         Curve267_fit$Ci_transition,
+                         Curve267_fit$citransition,
+                         Curve267_fit$Km,
+                         Curve267_fit$GammaStar,
+                         Curve267_fit$fitmethod,
+                         Curve267_fit$Tcorrect,
+                         Curve267_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve267_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve267_output) # add the curve fits to the larger data frame
+
+### Curve268_data
+Curve268_data <- subset(aci.df, unique_id == aci.df.unique_id[268] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve268_data$A~Curve268_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve268_fit <- fitaci(Curve268_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve268_fit) # take a look at fitted values, adjust as needed
+plot(Curve268_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve268_output <- cbind('Curve268', Curve268_data$id[1], Curve268_data$unique_id[1], Curve268_data$machine[1], Curve268_data$baseline_yn[1],
+                         Curve268_data$A[1], Curve268_data$Ci[1], Curve268_data$gsw[1],
+                         mean(Curve268_data$VPDleaf, na.rm = T), mean(Curve268_data$Tleaf, na.rm = T), mean(Curve268_data$Qin, na.rm = T),
+                         Curve268_fit[[2]][1,1], Curve268_fit[[2]][1,2],
+                         Curve268_fit[[2]][2,1], Curve268_fit[[2]][2,2],
+                         Curve268_fit[[2]][3,1], Curve268_fit[[2]][3,2],
+                         Curve268_fit$RMSE,
+                         Curve268_fit$Ci_transition,
+                         Curve268_fit$citransition,
+                         Curve268_fit$Km,
+                         Curve268_fit$GammaStar,
+                         Curve268_fit$fitmethod,
+                         Curve268_fit$Tcorrect,
+                         Curve268_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve268_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve268_output) # add the curve fits to the larger data frame
+
+### Curve269_data
+Curve269_data <- subset(aci.df, unique_id == aci.df.unique_id[269]) # find correct curve from full dataframe and make new object
+plot(Curve269_data$A~Curve269_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve269_fit <- fitaci(Curve269_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve269_fit) # take a look at fitted values, adjust as needed
+plot(Curve269_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve269_output <- cbind('Curve269', Curve269_data$id[1], Curve269_data$unique_id[1], Curve269_data$machine[1], Curve269_data$baseline_yn[1],
+                         Curve269_data$A[1], Curve269_data$Ci[1], Curve269_data$gsw[1],
+                         mean(Curve269_data$VPDleaf, na.rm = T), mean(Curve269_data$Tleaf, na.rm = T), mean(Curve269_data$Qin, na.rm = T),
+                         Curve269_fit[[2]][1,1], Curve269_fit[[2]][1,2],
+                         Curve269_fit[[2]][2,1], Curve269_fit[[2]][2,2],
+                         Curve269_fit[[2]][3,1], Curve269_fit[[2]][3,2],
+                         Curve269_fit$RMSE,
+                         Curve269_fit$Ci_transition,
+                         Curve269_fit$citransition,
+                         Curve269_fit$Km,
+                         Curve269_fit$GammaStar,
+                         Curve269_fit$fitmethod,
+                         Curve269_fit$Tcorrect,
+                         Curve269_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve269_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve269_output) # add the curve fits to the larger data frame
+
+### Curve270_data
+Curve270_data <- subset(aci.df, unique_id == aci.df.unique_id[270]) # find correct curve from full dataframe and make new object
+plot(Curve270_data$A~Curve270_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve270_fit <- fitaci(Curve270_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve270_fit) # take a look at fitted values, adjust as needed
+plot(Curve270_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve270_output <- cbind('Curve270', Curve270_data$id[1], Curve270_data$unique_id[1], Curve270_data$machine[1], Curve270_data$baseline_yn[1],
+                         Curve270_data$A[1], Curve270_data$Ci[1], Curve270_data$gsw[1],
+                         mean(Curve270_data$VPDleaf, na.rm = T), mean(Curve270_data$Tleaf, na.rm = T), mean(Curve270_data$Qin, na.rm = T),
+                         Curve270_fit[[2]][1,1], Curve270_fit[[2]][1,2],
+                         Curve270_fit[[2]][2,1], Curve270_fit[[2]][2,2],
+                         Curve270_fit[[2]][3,1], Curve270_fit[[2]][3,2],
+                         Curve270_fit$RMSE,
+                         Curve270_fit$Ci_transition,
+                         Curve270_fit$citransition,
+                         Curve270_fit$Km,
+                         Curve270_fit$GammaStar,
+                         Curve270_fit$fitmethod,
+                         Curve270_fit$Tcorrect,
+                         Curve270_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve270_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve270_output) # add the curve fits to the larger data frame
+
+### Curve271_data
+Curve271_data <- subset(aci.df, unique_id == aci.df.unique_id[271] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve271_data$A~Curve271_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve271_fit <- fitaci(Curve271_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve271_fit) # take a look at fitted values, adjust as needed
+plot(Curve271_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve271_output <- cbind('Curve271', Curve271_data$id[1], Curve271_data$unique_id[1], Curve271_data$machine[1], Curve271_data$baseline_yn[1],
+                         Curve271_data$A[1], Curve271_data$Ci[1], Curve271_data$gsw[1],
+                         mean(Curve271_data$VPDleaf, na.rm = T), mean(Curve271_data$Tleaf, na.rm = T), mean(Curve271_data$Qin, na.rm = T),
+                         Curve271_fit[[2]][1,1], Curve271_fit[[2]][1,2],
+                         Curve271_fit[[2]][2,1], Curve271_fit[[2]][2,2],
+                         Curve271_fit[[2]][3,1], Curve271_fit[[2]][3,2],
+                         Curve271_fit$RMSE,
+                         Curve271_fit$Ci_transition,
+                         Curve271_fit$citransition,
+                         Curve271_fit$Km,
+                         Curve271_fit$GammaStar,
+                         Curve271_fit$fitmethod,
+                         Curve271_fit$Tcorrect,
+                         Curve271_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve271_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve271_output) # add the curve fits to the larger data frame
+
+### Curve272_data
+Curve272_data <- subset(aci.df, unique_id == aci.df.unique_id[272] & Ci < 1000) # find correct curve from full dataframe and make new object
+plot(Curve272_data$A~Curve272_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
+Curve272_fit <- fitaci(Curve272_data, varnames = list(ALEAF = "A", # fit the curves
+                                                      Tleaf = "Tleaf",
+                                                      Ci = "Ci",
+                                                      PPFD = "Qin"),
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+summary(Curve272_fit) # take a look at fitted values, adjust as needed
+plot(Curve272_fit) # plot the fitted curves over the raw data, adjust as needed
+Curve272_output <- cbind('Curve272', Curve272_data$id[1], Curve272_data$unique_id[1], Curve272_data$machine[1], Curve272_data$baseline_yn[1],
+                         Curve272_data$A[1], Curve272_data$Ci[1], Curve272_data$gsw[1],
+                         mean(Curve272_data$VPDleaf, na.rm = T), mean(Curve272_data$Tleaf, na.rm = T), mean(Curve272_data$Qin, na.rm = T),
+                         Curve272_fit[[2]][1,1], Curve272_fit[[2]][1,2],
+                         Curve272_fit[[2]][2,1], Curve272_fit[[2]][2,2],
+                         Curve272_fit[[2]][3,1], Curve272_fit[[2]][3,2],
+                         Curve272_fit$RMSE,
+                         Curve272_fit$Ci_transition,
+                         Curve272_fit$citransition,
+                         Curve272_fit$Km,
+                         Curve272_fit$GammaStar,
+                         Curve272_fit$fitmethod,
+                         Curve272_fit$Tcorrect,
+                         Curve272_fit$fitTPU) # put relevant data together in a vector of values
+colnames(Curve272_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 'baseline_yn',
+                               'anet_420', 'ci_420', 'gs_420',
+                               'vpd_leaf', 'temperature_leaf', 'par_leaf',
+                               'vcmax_tleaf', 'vcmax_tleaf_se',
+                               'jmax_tleaf', 'jmax_tleaf_se', 
+                               'rdfit_tleaf', 'rdfit_tleaf_se',
+                               'aci_RMSE', 'aci_ci_transistion', 'aci_ci_transition_set',
+                               'aci_km', 'aci_gammastar', 'aci_fitmethod',
+                               'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
+all_curve_fits <- rbind(all_curve_fits, Curve272_output) # add the curve fits to the larger data frame
+
+
+
 ##########################################################
 #### 
 #### next step: fit all of the other 270ish curves, checking for any issues along the way
