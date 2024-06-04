@@ -2611,7 +2611,7 @@ colnames(Curve74_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 
 all_curve_fits <- rbind(all_curve_fits, Curve74_output) # add the curve fits to the larger data frame
 
 ### Curve75_data
-Curve75_data <- subset(aci.df, unique_id == aci.df.unique_id[75]) # find correct curve from full dataframe and make new object
+Curve75_data <- subset(aci.df, unique_id == aci.df.unique_id[75] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve75_data$A~Curve75_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve75_fit <- fitaci(Curve75_data, varnames = list(ALEAF = "A", # fit the curves
                                                     Tleaf = "Tleaf",
@@ -4535,7 +4535,7 @@ colnames(Curve129_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve129_output) # add the curve fits to the larger data frame
 
 ### Curve130_data
-Curve130_data <- subset(aci.df, unique_id == aci.df.unique_id[130]) # find correct curve from full dataframe and make new object
+Curve130_data <- subset(aci.df, unique_id == aci.df.unique_id[130]  & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve130_data$A~Curve130_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve130_fit <- fitaci(Curve130_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -4850,7 +4850,7 @@ colnames(Curve138_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve138_output) # add the curve fits to the larger data frame
 
 ### Curve139_data
-Curve139_data <- subset(aci.df, unique_id == aci.df.unique_id[139]) # find correct curve from full dataframe and make new object
+Curve139_data <- subset(aci.df, unique_id == aci.df.unique_id[139] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve139_data$A~Curve139_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve139_fit <- fitaci(Curve139_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -5130,7 +5130,7 @@ colnames(Curve146_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve146_output) # add the curve fits to the larger data frame
 
 ### Curve147_data
-Curve147_data <- subset(aci.df, unique_id == aci.df.unique_id[147]) # find correct curve from full dataframe and make new object
+Curve147_data <- subset(aci.df, unique_id == aci.df.unique_id[147] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve147_data$A~Curve147_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve147_fit <- fitaci(Curve147_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -5200,7 +5200,7 @@ colnames(Curve148_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve148_output) # add the curve fits to the larger data frame
 
 ### Curve149_data
-Curve149_data <- subset(aci.df, unique_id == aci.df.unique_id[149]) # find correct curve from full dataframe and make new object
+Curve149_data <- subset(aci.df, unique_id == aci.df.unique_id[149] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve149_data$A~Curve149_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve149_fit <- fitaci(Curve149_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -5830,7 +5830,7 @@ colnames(Curve166_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve166_output) # add the curve fits to the larger data frame
 
 ### Curve167_data
-Curve167_data <- subset(aci.df, unique_id == aci.df.unique_id[167]) # find correct curve from full dataframe and make new object
+Curve167_data <- subset(aci.df, unique_id == aci.df.unique_id[167] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve167_data$A~Curve167_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve167_fit <- fitaci(Curve167_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -6040,7 +6040,7 @@ colnames(Curve172_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve172_output) # add the curve fits to the larger data frame
 
 ### Curve173_data
-Curve173_data <- subset(aci.df, unique_id == aci.df.unique_id[173]) # find correct curve from full dataframe and make new object
+Curve173_data <- subset(aci.df, unique_id == aci.df.unique_id[173]  & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve173_data$A~Curve173_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve173_fit <- fitaci(Curve173_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -6145,7 +6145,7 @@ colnames(Curve175_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve175_output) # add the curve fits to the larger data frame
 
 ### Curve176_data
-Curve176_data <- subset(aci.df, unique_id == aci.df.unique_id[176]) # find correct curve from full dataframe and make new object
+Curve176_data <- subset(aci.df, unique_id == aci.df.unique_id[176] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve176_data$A~Curve176_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve176_fit <- fitaci(Curve176_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -6530,7 +6530,7 @@ colnames(Curve185_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve185_output) # add the curve fits to the larger data frame
 
 ### Curve186_data
-Curve186_data <- subset(aci.df, unique_id == aci.df.unique_id[186]) # find correct curve from full dataframe and make new object
+Curve186_data <- subset(aci.df, unique_id == aci.df.unique_id[186] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve186_data$A~Curve186_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve186_fit <- fitaci(Curve186_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -6705,7 +6705,7 @@ colnames(Curve190_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve190_output) # add the curve fits to the larger data frame
 
 ### Curve191_data
-Curve191_data <- subset(aci.df, unique_id == aci.df.unique_id[191]) # find correct curve from full dataframe and make new object
+Curve191_data <- subset(aci.df, unique_id == aci.df.unique_id[191] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve191_data$A~Curve191_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve191_fit <- fitaci(Curve191_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -6775,7 +6775,7 @@ colnames(Curve192_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve192_output) # add the curve fits to the larger data frame
 
 ### Curve193_data
-Curve193_data <- subset(aci.df, unique_id == aci.df.unique_id[193]) # find correct curve from full dataframe and make new object
+Curve193_data <- subset(aci.df, unique_id == aci.df.unique_id[193] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve193_data$A~Curve193_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve193_fit <- fitaci(Curve193_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -6810,7 +6810,7 @@ colnames(Curve193_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve193_output) # add the curve fits to the larger data frame
 
 ### Curve194_data
-Curve194_data <- subset(aci.df, unique_id == aci.df.unique_id[194]) # find correct curve from full dataframe and make new object
+Curve194_data <- subset(aci.df, unique_id == aci.df.unique_id[194] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve194_data$A~Curve194_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve194_fit <- fitaci(Curve194_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -7440,7 +7440,7 @@ colnames(Curve210_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve210_output) # add the curve fits to the larger data frame
 
 ### Curve211_data
-Curve211_data <- subset(aci.df, unique_id == aci.df.unique_id[211]) # find correct curve from full dataframe and make new object
+Curve211_data <- subset(aci.df, unique_id == aci.df.unique_id[211] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve211_data$A~Curve211_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve211_fit <- fitaci(Curve211_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -7475,7 +7475,7 @@ colnames(Curve211_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve211_output) # add the curve fits to the larger data frame
 
 ### Curve212_data
-Curve212_data <- subset(aci.df, unique_id == aci.df.unique_id[212]) # find correct curve from full dataframe and make new object
+Curve212_data <- subset(aci.df, unique_id == aci.df.unique_id[212] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve212_data$A~Curve212_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve212_fit <- fitaci(Curve212_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -7894,7 +7894,6 @@ colnames(Curve222_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
                                'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
 all_curve_fits <- rbind(all_curve_fits, Curve222_output) # add the curve fits to the larger data frame
 
-### Curve223_data
 Curve223_data <- subset(aci.df, unique_id == aci.df.unique_id[223]) # find correct curve from full dataframe and make new object
 plot(Curve223_data$A~Curve223_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve223_fit <- fitaci(Curve223_data, varnames = list(ALEAF = "A", # fit the curves
@@ -8210,7 +8209,7 @@ colnames(Curve231_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve231_output) # add the curve fits to the larger data frame
 
 ### Curve232_data
-Curve232_data <- subset(aci.df, unique_id == aci.df.unique_id[232]) # find correct curve from full dataframe and make new object
+Curve232_data <- subset(aci.df, unique_id == aci.df.unique_id[232] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve232_data$A~Curve232_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve232_fit <- fitaci(Curve232_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -8280,7 +8279,7 @@ colnames(Curve233_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve233_output) # add the curve fits to the larger data frame
 
 ### Curve234_data
-Curve234_data <- subset(aci.df, unique_id == aci.df.unique_id[234]) # find correct curve from full dataframe and make new object
+Curve234_data <- subset(aci.df, unique_id == aci.df.unique_id[234] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve234_data$A~Curve234_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve234_fit <- fitaci(Curve234_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -8315,7 +8314,7 @@ colnames(Curve234_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve234_output) # add the curve fits to the larger data frame
 
 ### Curve235_data
-Curve235_data <- subset(aci.df, unique_id == aci.df.unique_id[235]) # find correct curve from full dataframe and make new object
+Curve235_data <- subset(aci.df, unique_id == aci.df.unique_id[235] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve235_data$A~Curve235_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve235_fit <- fitaci(Curve235_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
@@ -8630,7 +8629,7 @@ colnames(Curve243_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve243_output) # add the curve fits to the larger data frame
 
 ### Curve244_data
-Curve244_data <- subset(aci.df, unique_id == aci.df.unique_id[244]) # find correct curve from full dataframe and make new object
+Curve244_data <- subset(aci.df, unique_id == aci.df.unique_id[244] & Ci < 1000) # find correct curve from full dataframe and make new object
 plot(Curve244_data$A~Curve244_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve244_fit <- fitaci(Curve244_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
