@@ -3380,13 +3380,13 @@ colnames(Curve96_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine', 
 all_curve_fits <- rbind(all_curve_fits, Curve96_output) # add the curve fits to the larger data frame
 
 ### Curve97_data
-Curve97_data <- subset(aci.df, unique_id == aci.df.unique_id[97]) # find correct curve from full dataframe and make new object
+Curve97_data <- subset(aci.df, unique_id == aci.df.unique_id[97] & Ci <1000) # find correct curve from full dataframe and make new object
 plot(Curve97_data$A~Curve97_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve97_fit <- fitaci(Curve97_data, varnames = list(ALEAF = "A", # fit the curves
                                                     Tleaf = "Tleaf",
                                                     Ci = "Ci",
                                                     PPFD = "Qin"),
-                      fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                      fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve97_fit) # take a look at fitted values, adjust as needed
 plot(Curve97_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve97_output <- cbind('Curve97', Curve97_data$id[1], Curve97_data$unique_id[1], Curve97_data$machine[1], Curve97_data$baseline_yn[1],
@@ -4156,7 +4156,7 @@ Curve119_fit <- fitaci(Curve119_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve119_fit) # take a look at fitted values, adjust as needed
 plot(Curve119_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve119_output <- cbind('Curve119', Curve119_data$id[1], Curve119_data$unique_id[1], Curve119_data$machine[1], Curve119_data$baseline_yn[1],
@@ -4541,7 +4541,7 @@ Curve130_fit <- fitaci(Curve130_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 400)
 summary(Curve130_fit) # take a look at fitted values, adjust as needed
 plot(Curve130_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve130_output <- cbind('Curve130', Curve130_data$id[1], Curve130_data$unique_id[1], Curve130_data$machine[1], Curve130_data$baseline_yn[1],
@@ -5136,7 +5136,7 @@ Curve147_fit <- fitaci(Curve147_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 400)
 summary(Curve147_fit) # take a look at fitted values, adjust as needed
 plot(Curve147_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve147_output <- cbind('Curve147', Curve147_data$id[1], Curve147_data$unique_id[1], Curve147_data$machine[1], Curve147_data$baseline_yn[1],
@@ -5206,7 +5206,7 @@ Curve149_fit <- fitaci(Curve149_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve149_fit) # take a look at fitted values, adjust as needed
 plot(Curve149_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve149_output <- cbind('Curve149', Curve149_data$id[1], Curve149_data$unique_id[1], Curve149_data$machine[1], Curve149_data$baseline_yn[1],
@@ -5836,7 +5836,7 @@ Curve167_fit <- fitaci(Curve167_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve167_fit) # take a look at fitted values, adjust as needed
 plot(Curve167_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve167_output <- cbind('Curve167', Curve167_data$id[1], Curve167_data$unique_id[1], Curve167_data$machine[1], Curve167_data$baseline_yn[1],
@@ -6046,7 +6046,7 @@ Curve173_fit <- fitaci(Curve173_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve173_fit) # take a look at fitted values, adjust as needed
 plot(Curve173_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve173_output <- cbind('Curve173', Curve173_data$id[1], Curve173_data$unique_id[1], Curve173_data$machine[1], Curve173_data$baseline_yn[1],
@@ -6151,7 +6151,7 @@ Curve176_fit <- fitaci(Curve176_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve176_fit) # take a look at fitted values, adjust as needed
 plot(Curve176_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve176_output <- cbind('Curve176', Curve176_data$id[1], Curve176_data$unique_id[1], Curve176_data$machine[1], Curve176_data$baseline_yn[1],
@@ -6536,7 +6536,7 @@ Curve186_fit <- fitaci(Curve186_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve186_fit) # take a look at fitted values, adjust as needed
 plot(Curve186_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve186_output <- cbind('Curve186', Curve186_data$id[1], Curve186_data$unique_id[1], Curve186_data$machine[1], Curve186_data$baseline_yn[1],
@@ -6711,7 +6711,7 @@ Curve191_fit <- fitaci(Curve191_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve191_fit) # take a look at fitted values, adjust as needed
 plot(Curve191_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve191_output <- cbind('Curve191', Curve191_data$id[1], Curve191_data$unique_id[1], Curve191_data$machine[1], Curve191_data$baseline_yn[1],
@@ -6781,7 +6781,7 @@ Curve193_fit <- fitaci(Curve193_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 400)
 summary(Curve193_fit) # take a look at fitted values, adjust as needed
 plot(Curve193_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve193_output <- cbind('Curve193', Curve193_data$id[1], Curve193_data$unique_id[1], Curve193_data$machine[1], Curve193_data$baseline_yn[1],
@@ -6816,7 +6816,7 @@ Curve194_fit <- fitaci(Curve194_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve194_fit) # take a look at fitted values, adjust as needed
 plot(Curve194_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve194_output <- cbind('Curve194', Curve194_data$id[1], Curve194_data$unique_id[1], Curve194_data$machine[1], Curve194_data$baseline_yn[1],
@@ -7131,7 +7131,7 @@ Curve202_fit <- fitaci(Curve202_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve202_fit) # take a look at fitted values, adjust as needed
 plot(Curve202_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve202_output <- cbind('Curve202', Curve202_data$id[1], Curve202_data$unique_id[1], Curve202_data$machine[1], Curve202_data$baseline_yn[1],
@@ -7411,7 +7411,7 @@ Curve210_fit <- fitaci(Curve210_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve210_fit) # take a look at fitted values, adjust as needed
 plot(Curve210_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve210_output <- cbind('Curve210', Curve210_data$id[1], Curve210_data$unique_id[1], Curve210_data$machine[1], Curve210_data$baseline_yn[1],
@@ -7446,7 +7446,7 @@ Curve211_fit <- fitaci(Curve211_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve211_fit) # take a look at fitted values, adjust as needed
 plot(Curve211_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve211_output <- cbind('Curve211', Curve211_data$id[1], Curve211_data$unique_id[1], Curve211_data$machine[1], Curve211_data$baseline_yn[1],
@@ -7481,7 +7481,7 @@ Curve212_fit <- fitaci(Curve212_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve212_fit) # take a look at fitted values, adjust as needed
 plot(Curve212_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve212_output <- cbind('Curve212', Curve212_data$id[1], Curve212_data$unique_id[1], Curve212_data$machine[1], Curve212_data$baseline_yn[1],
@@ -7866,7 +7866,7 @@ Curve222_fit <- fitaci(Curve222_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve222_fit) # take a look at fitted values, adjust as needed
 plot(Curve222_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve222_output <- cbind('Curve222', Curve222_data$id[1], Curve222_data$unique_id[1], Curve222_data$machine[1], Curve222_data$baseline_yn[1],
@@ -7894,13 +7894,14 @@ colnames(Curve222_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
                                'aci_tcorrect', 'aci_fittpu') # add column names to the vector of values
 all_curve_fits <- rbind(all_curve_fits, Curve222_output) # add the curve fits to the larger data frame
 
+#Curve223_data
 Curve223_data <- subset(aci.df, unique_id == aci.df.unique_id[223]) # find correct curve from full dataframe and make new object
 plot(Curve223_data$A~Curve223_data$Ci) # plot the A/Ci data and look for any weirdness, adjust as needed
 Curve223_fit <- fitaci(Curve223_data, varnames = list(ALEAF = "A", # fit the curves
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve223_fit) # take a look at fitted values, adjust as needed
 plot(Curve223_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve223_output <- cbind('Curve223', Curve223_data$id[1], Curve223_data$unique_id[1], Curve223_data$machine[1], Curve223_data$baseline_yn[1],
@@ -7970,7 +7971,7 @@ Curve225_fit <- fitaci(Curve225_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve225_fit) # take a look at fitted values, adjust as needed
 plot(Curve225_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve225_output <- cbind('Curve225', Curve225_data$id[1], Curve225_data$unique_id[1], Curve225_data$machine[1], Curve225_data$baseline_yn[1],
@@ -8215,7 +8216,7 @@ Curve232_fit <- fitaci(Curve232_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve232_fit) # take a look at fitted values, adjust as needed
 plot(Curve232_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve232_output <- cbind('Curve232', Curve232_data$id[1], Curve232_data$unique_id[1], Curve232_data$machine[1], Curve232_data$baseline_yn[1],
@@ -8250,7 +8251,7 @@ Curve233_fit <- fitaci(Curve233_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve233_fit) # take a look at fitted values, adjust as needed
 plot(Curve233_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve233_output <- cbind('Curve233', Curve233_data$id[1], Curve233_data$unique_id[1], Curve233_data$machine[1], Curve233_data$baseline_yn[1],
@@ -8285,7 +8286,7 @@ Curve234_fit <- fitaci(Curve234_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve234_fit) # take a look at fitted values, adjust as needed
 plot(Curve234_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve234_output <- cbind('Curve234', Curve234_data$id[1], Curve234_data$unique_id[1], Curve234_data$machine[1], Curve234_data$baseline_yn[1],
@@ -8320,7 +8321,7 @@ Curve235_fit <- fitaci(Curve235_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve235_fit) # take a look at fitted values, adjust as needed
 plot(Curve235_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve235_output <- cbind('Curve235', Curve235_data$id[1], Curve235_data$unique_id[1], Curve235_data$machine[1], Curve235_data$baseline_yn[1],
@@ -8635,7 +8636,7 @@ Curve244_fit <- fitaci(Curve244_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve244_fit) # take a look at fitted values, adjust as needed
 plot(Curve244_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve244_output <- cbind('Curve244', Curve244_data$id[1], Curve244_data$unique_id[1], Curve244_data$machine[1], Curve244_data$baseline_yn[1],
@@ -9055,7 +9056,7 @@ Curve256_fit <- fitaci(Curve256_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve256_fit) # take a look at fitted values, adjust as needed
 plot(Curve256_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve256_output <- cbind('Curve256', Curve256_data$id[1], Curve256_data$unique_id[1], Curve256_data$machine[1], Curve256_data$baseline_yn[1],
@@ -9125,7 +9126,7 @@ Curve258_fit <- fitaci(Curve258_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve258_fit) # take a look at fitted values, adjust as needed
 plot(Curve258_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve258_output <- cbind('Curve258', Curve258_data$id[1], Curve258_data$unique_id[1], Curve258_data$machine[1], Curve258_data$baseline_yn[1],
@@ -9405,7 +9406,7 @@ Curve267_fit <- fitaci(Curve267_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve267_fit) # take a look at fitted values, adjust as needed
 plot(Curve267_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve267_output <- cbind('Curve267', Curve267_data$id[1], Curve267_data$unique_id[1], Curve267_data$machine[1], Curve267_data$baseline_yn[1],
@@ -9440,7 +9441,7 @@ Curve268_fit <- fitaci(Curve268_data, varnames = list(ALEAF = "A", # fit the cur
                                                       Tleaf = "Tleaf",
                                                       Ci = "Ci",
                                                       PPFD = "Qin"),
-                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE)
+                       fitTPU = FALSE, Tcorrect = FALSE, useRd = FALSE, citransition = 450)
 summary(Curve268_fit) # take a look at fitted values, adjust as needed
 plot(Curve268_fit) # plot the fitted curves over the raw data, adjust as needed
 Curve268_output <- cbind('Curve268', Curve268_data$id[1], Curve268_data$unique_id[1], Curve268_data$machine[1], Curve268_data$baseline_yn[1],
