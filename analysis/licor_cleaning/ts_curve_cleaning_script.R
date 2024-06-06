@@ -247,7 +247,7 @@ licor54 <- licorData(location = "../../data/licor/licor_raw_text/10_ts_photo_gib
 
 ### End of doy 10 ###
 
-licor55 <- licorData(location = "../../data/licor/licor_raw_text/11_ts_resp_alb_new") 
+licor55 <- licorData(location = "../../data/licor/licor_raw_text/11_ts_photo_alb_new") 
 #write.csv(licor55, "../../data/licor/licor_cleaned/11_ts_resp_alb_new.csv", 
           #row.names = FALSE)
 
