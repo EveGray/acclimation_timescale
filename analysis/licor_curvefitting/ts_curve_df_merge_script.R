@@ -9575,4 +9575,4 @@ colnames(Curve274_output) <- c('curve_fit_number', 'id', 'unique_id', 'machine',
 all_curve_fits <- rbind(all_curve_fits, Curve274_output) # add the curve fits to the larger data frame
 
 ### Write csv file of curve fit data frame
-write.csv(all_curve_fits, file = "all_curve_fits.csv", row.names = FALSE)
+write.csv(all_curve_fits, file = "../../data/aci_output/all_curve_fits.csv", row.names = FALSE)
