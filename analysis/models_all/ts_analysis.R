@@ -26,7 +26,6 @@ multipeq_data$ending_trt[multipeq_data$Treatment == 'LC' | multipeq_data$Treatme
 multipeq_data$ending_trt[multipeq_data$Treatment == 'HC' | multipeq_data$Treatment == 'LH'] <- 'high'
 
 ### assign group numbers
-### assign group numbers
 multipeq_data <- multipeq_data %>%
   mutate(group = case_when(
     Second.number %in% c(9,10,11,12,13,15,16,25,26,27,29,30,31) ~ "group1",
@@ -113,7 +112,6 @@ emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first =
 
 ### Result Q2(b):
 
-
 ### question 3(a): How does SPAD change overtime in the old
 ###  leaf?
 hist(multipeq_data_light$SPAD) # take a look at the dark acclimated FvP_over_FmP data.
@@ -131,7 +129,6 @@ emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
 emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
 
 ### Result 3(a):
-
 
 ### question 3(b): How does SPAD change overtime in the new
 ###  leaf?
@@ -282,6 +279,8 @@ licor_photo_data <- licor_photo_data %>%
 ### make a date adjustment to account for new years
 licor_photo_data$date_multiyear <- licor_photo_data$date
 
+### Make sure columns are numeric 
+
 if (!is.numeric(licor_photo_data$date_multiyear)) {
   licor_photo_data$date_multiyear <- as.numeric(as.character(licor_photo_data$date_multiyear))
 }
@@ -289,6 +288,8 @@ if (!is.numeric(licor_photo_data$date_multiyear)) {
 if (!is.numeric(licor_photo_data$date)) {
   licor_photo_data$date <- as.numeric(as.character(licor_photo_data$date))
 }
+
+### Account for new years
 
 licor_photo_data$date_multiyear[licor_photo_data$date < 300] <- 
   licor_photo_data$date[licor_photo_data$date < 300] + 365
@@ -310,6 +311,8 @@ licor_photo_data <- licor_photo_data %>%
     date %in% c(352, 358, 360, 355, 361, 364, 359, 365, 2, 362, 3, 5, 1, 7, 9, 4, 10, 12) ~ "N",
     date %in% c(11, 14, 16, 15, 17, 19, 18, 21) ~ "Y",
   ))
+
+### Test data frame on vcmax data
 
 hist(licor_photo_data$vcmax_tleaf) 
 vcmax_tleaf_lmer <- lmer(vcmax_tleaf ~ starting_trt * ending_trt * days_since_first + (1|chamber), 
@@ -351,6 +354,8 @@ licor_resp_data <- licor_resp_data %>%
 licor_resp_data <- licor_resp_data %>%
   separate(date, into = c("Date", "time"), sep = " ", remove = FALSE)
 
+### Change dates to Julian dates
+
 licor_resp_data <- licor_resp_data %>%
   mutate(Date = case_when(
     Date == "12/18/2023" ~ "352",
@@ -384,6 +389,8 @@ licor_resp_data <- licor_resp_data %>%
 ### make a date adjustment to account for new years
 licor_resp_data$date_multiyear <- licor_resp_data$Date
 
+### Check to make sure the column is numeric 
+
 if (!is.numeric(licor_resp_data$date_multiyear)) {
   licor_resp_data$date_multiyear <- as.numeric(as.character(licor_resp_data$date_multiyear))
 }
@@ -406,12 +413,14 @@ licor_resp_data$days_since_first <- licor_resp_data$date_multiyear - licor_resp_
 ### create category column for dates
 licor_resp_data$days_since_first_factor <- as.factor(licor_resp_data$days_since_first)
 
-### Seperate old and new measuremnts 
+### Separate old and new measurements 
 licor_resp_data <- licor_resp_data %>%
   mutate(New = case_when(
     Date %in% c(352, 358, 360, 355, 361, 364, 359, 365, 2, 362, 3, 5, 1, 7, 9, 4, 10, 12) ~ "N",
     Date %in% c(11, 14, 16, 15, 17, 19, 18, 21) ~ "Y",
   ))
+
+### Test data frame on A values
 
 hist(licor_resp_data$A) 
 resp_lmer <- lmer(A ~ starting_trt * ending_trt * days_since_first + (1|chamber), 
@@ -426,9 +435,9 @@ emtrends(resp_lmer, ~ending_trt, var = 'days_since_first')
 emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
 emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
 
-#Structual data analysis
+#Structural data analysis
 
-### Seperate out ID intro parts
+### Separate out ID intro parts
 struc_data <- struc_data %>%
   extract(ID, into = c("chamber", "treatment", "first_number", "second_number"),
           regex = "([a-zA-Z]{4})\\.([a-zA-Z]{2})\\.(\\d)\\.(\\d+)", convert = TRUE, remove = FALSE) %>%
@@ -442,15 +451,3 @@ struc_data$starting_trt[struc_data$treatment == 'hc' | struc_data$treatment == '
 struc_data$ending_trt <- NA
 struc_data$ending_trt[struc_data$treatment == 'lc' | struc_data$treatment == 'hl'] <- 'low'
 struc_data$ending_trt[struc_data$treatment == 'hc' | struc_data$treatment == 'lh'] <- 'high'
-
-struc_data <- struc_data %>%
-  mutate(New = case_when(
-    chamber %in% c("brit","paul","ryan") ~ "Y",
-  ))
-
-#################
-### TO DO
-###################
-# look at timescales
-# look at other variables
-# look at new versus old leaves
