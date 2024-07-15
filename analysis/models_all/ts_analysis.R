@@ -133,7 +133,7 @@ emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
 ### question 3(b): How does SPAD change overtime in the new
 ###  leaf?
 hist(multipeq_data_light$SPAD) # take a look at the dark acclimated FvP_over_FmP data.
-SPAD_lmer <- lmer(SPAD ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+SPAD_lmer <- lmer(SPAD ~ starting_trt * ending_trt + (1|Chamber), 
                   data = subset(multipeq_data_light, New == 'Y'))
 plot(resid(SPAD_lmer) ~ fitted(SPAD_lmer))
 summary(SPAD_lmer)
@@ -315,17 +315,28 @@ licor_photo_data <- licor_photo_data %>%
 ### Test data frame on vcmax data
 
 hist(licor_photo_data$vcmax_tleaf) 
-vcmax_tleaf_lmer <- lmer(vcmax_tleaf ~ starting_trt * ending_trt * days_since_first + (1|chamber), 
-                   data = subset(licor_photo_data, New == 'N'))
+vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
+                           (1|chamber) + (1|id), 
+                   data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
 plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
 summary(vcmax_tleaf_lmer)
 Anova(vcmax_tleaf_lmer)
-emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
+emmeans(vcmax_tleaf_lmer, ~starting_trt)
+emmeans(vcmax_tleaf_lmer, ~ending_trt)
 emtrends(vcmax_tleaf_lmer, ~1, var = 'days_since_first')
 emtrends(vcmax_tleaf_lmer, ~starting_trt, var = 'days_since_first')
 emtrends(vcmax_tleaf_lmer, ~ending_trt, var = 'days_since_first') 
 emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
 emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
+
+vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt + 
+                           (1|chamber) + (1|id), 
+                         data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
+plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
+summary(vcmax_tleaf_lmer)
+Anova(vcmax_tleaf_lmer)
+emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
+emmeans(vcmax_tleaf_lmer, ~ending_trt)
 
 ### Resp data analysis
 
