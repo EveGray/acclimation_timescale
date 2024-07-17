@@ -48,6 +48,41 @@ multipeq_data$days_since_first <- multipeq_data$date_multiyear - multipeq_data$f
 ### create category column for dates
 multipeq_data$days_since_first_factor <- as.factor(multipeq_data$days_since_first)
 
+multipeq_data <- multipeq_data %>%
+  mutate(Date = as.character(Date)) %>%
+  mutate(cal_date = case_when(
+    Date == "352" ~ "2023-12-18",
+    Date == "355" ~ "2023-12-21",
+    Date == "358" ~ "2023-12-24",
+    Date == "359" ~ "2023-12-25",
+    Date == "360" ~ "2023-12-26",
+    Date == "361" ~ "2023-12-27",
+    Date == "362" ~ "2023-12-28",
+    Date == "364" ~ "2023-12-30",
+    Date == "365" ~ "2023-12-31",
+    Date == "1" ~ "2024-01-01",
+    Date == "2" ~ "2024-01-02",
+    Date == "3" ~ "2024-01-03",
+    Date == "4" ~ "2024-01-04",
+    Date == "5" ~ "2024-01-05",
+    Date == "7" ~ "2024-01-07",
+    Date == "9" ~ "2024-01-09",
+    Date == "10" ~ "2024-01-10",
+    Date == "11" ~ "2024-01-11",
+    Date == "12" ~ "2024-01-12",
+    Date == "14" ~ "2024-01-14",
+    Date == "15" ~ "2024-01-15",
+    Date == "16" ~ "2024-01-16",
+    Date == "17" ~ "2024-01-17",
+    Date == "18" ~ "2024-01-18",
+    Date == "19" ~ "2024-01-19",
+    Date == "21" ~ "2024-01-21",
+    TRUE ~ Date  
+  ))
+
+multipeq_data$date <- as.Date(multipeq_data$cal_date, format = "%Y-%m-%d")
+
+
 ### create dfs with just light or just dark acclimated data
 multipeq_data_light <- subset(multipeq_data, Type == "Light")
 multipeq_data_dark <- subset(multipeq_data, Type == "Dark")
@@ -55,7 +90,7 @@ multipeq_data_dark <- subset(multipeq_data, Type == "Dark")
 ### question 1: How does non photo chemical quenching change overtime in the old
 ###  leaf?
 hist(multipeq_data_light$NPQt) # take a look at the dark acclimated NPQt data.
-NPQt_lmer <- lmer(NPQt ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+NPQt_lmer <- lmer(log(NPQt) ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
                   data = subset(multipeq_data_light, New == 'N'))
 plot(resid(NPQt_lmer) ~ fitted(NPQt_lmer))
 summary(NPQt_lmer)
@@ -247,7 +282,7 @@ licor_photo_data <- licor_photo_data %>%
   separate(unique_id, into = c("id", "date"), sep = "_", remove = FALSE)
 
 licor_photo_data <- licor_photo_data %>%
-  mutate(date = case_when(
+  mutate(julian_date = case_when(
     date == "2023-12-18" ~ "352",
     date == "2023-12-21" ~ "355",
     date == "2023-12-24" ~ "358",
@@ -277,7 +312,7 @@ licor_photo_data <- licor_photo_data %>%
     TRUE ~ date))
 
 ### make a date adjustment to account for new years
-licor_photo_data$date_multiyear <- licor_photo_data$date
+licor_photo_data$date_multiyear <- licor_photo_data$julian_date
 
 ### Make sure columns are numeric 
 
@@ -285,14 +320,14 @@ if (!is.numeric(licor_photo_data$date_multiyear)) {
   licor_photo_data$date_multiyear <- as.numeric(as.character(licor_photo_data$date_multiyear))
 }
 
-if (!is.numeric(licor_photo_data$date)) {
-  licor_photo_data$date <- as.numeric(as.character(licor_photo_data$date))
+if (!is.numeric(licor_photo_data$julian_date)) {
+  licor_photo_data$julian_date <- as.numeric(as.character(licor_photo_data$julian_date))
 }
 
 ### Account for new years
 
-licor_photo_data$date_multiyear[licor_photo_data$date < 300] <- 
-  licor_photo_data$date[licor_photo_data$date < 300] + 365
+licor_photo_data$date_multiyear[licor_photo_data$julian_date < 300] <- 
+  licor_photo_data$julian_date[licor_photo_data$julian_date < 300] + 365
 
 ### now adjust to days since first measurement
 licor_photo_data$first_msmt_date <- NA
@@ -308,9 +343,11 @@ licor_photo_data$days_since_first_factor <- as.factor(licor_photo_data$days_sinc
 ### Seperate old and new measuremnts 
 licor_photo_data <- licor_photo_data %>%
   mutate(New = case_when(
-    date %in% c(352, 358, 360, 355, 361, 364, 359, 365, 2, 362, 3, 5, 1, 7, 9, 4, 10, 12) ~ "N",
-    date %in% c(11, 14, 16, 15, 17, 19, 18, 21) ~ "Y",
+    julian_date %in% c(352, 358, 360, 355, 361, 364, 359, 365, 2, 362, 3, 5, 1, 7, 9, 4, 10, 12) ~ "N",
+    julian_date %in% c(11, 14, 16, 15, 17, 19, 18, 21) ~ "Y",
   ))
+
+licor_photo_data$date <- as.Date(licor_photo_data$date, format = "%Y-%m-%d")
 
 ### Test data frame on vcmax data
 
@@ -368,7 +405,7 @@ licor_resp_data <- licor_resp_data %>%
 ### Change dates to Julian dates
 
 licor_resp_data <- licor_resp_data %>%
-  mutate(Date = case_when(
+  mutate(julian_date = case_when(
     Date == "12/18/2023" ~ "352",
     Date == "12/21/2023" ~ "355",
     Date == "12/24/2023" ~ "358",
@@ -398,7 +435,7 @@ licor_resp_data <- licor_resp_data %>%
     TRUE ~ Date))
 
 ### make a date adjustment to account for new years
-licor_resp_data$date_multiyear <- licor_resp_data$Date
+licor_resp_data$date_multiyear <- licor_resp_data$julian_date
 
 ### Check to make sure the column is numeric 
 
@@ -406,12 +443,12 @@ if (!is.numeric(licor_resp_data$date_multiyear)) {
   licor_resp_data$date_multiyear <- as.numeric(as.character(licor_resp_data$date_multiyear))
 }
 
-if (!is.numeric(licor_resp_data$Date)) {
-  licor_resp_data$Date <- as.numeric(as.character(licor_resp_data$Date))
+if (!is.numeric(licor_resp_data$julian_date)) {
+  licor_resp_data$julian_date <- as.numeric(as.character(licor_resp_data$julian_date))
 }
 
-licor_resp_data$date_multiyear[licor_resp_data$Date < 300] <- 
-  licor_resp_data$Date[licor_resp_data$Date < 300] + 365
+licor_resp_data$date_multiyear[licor_resp_data$julian_date < 300] <- 
+  licor_resp_data$julian_date[licor_resp_data$julian_date < 300] + 365
 
 ### now adjust to days since first measurement
 licor_resp_data$first_msmt_date <- NA
@@ -427,14 +464,18 @@ licor_resp_data$days_since_first_factor <- as.factor(licor_resp_data$days_since_
 ### Separate old and new measurements 
 licor_resp_data <- licor_resp_data %>%
   mutate(New = case_when(
-    Date %in% c(352, 358, 360, 355, 361, 364, 359, 365, 2, 362, 3, 5, 1, 7, 9, 4, 10, 12) ~ "N",
-    Date %in% c(11, 14, 16, 15, 17, 19, 18, 21) ~ "Y",
+    julian_date %in% c(352, 358, 360, 355, 361, 364, 359, 365, 2, 362, 3, 5, 1, 7, 9, 4, 10, 12) ~ "N",
+    julian_date %in% c(11, 14, 16, 15, 17, 19, 18, 21) ~ "Y",
   ))
+
+licor_resp_data$date_multiyear <- licor_resp_data$julian_date
+
 
 ### Test data frame on A values
 
 hist(licor_resp_data$A) 
-resp_lmer <- lmer(A ~ starting_trt * ending_trt * days_since_first + (1|chamber), 
+resp_lmer <- lmer(A ~ starting_trt * ending_trt + (1|chamber)
+                  + (1|id), 
                          data = subset(licor_resp_data, New == 'N'))
 plot(resid(resp_lmer) ~ fitted(resp_lmer))
 summary(resp_lmer)
@@ -445,6 +486,15 @@ emtrends(resp_lmer, ~starting_trt, var = 'days_since_first')
 emtrends(resp_lmer, ~ending_trt, var = 'days_since_first') 
 emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
 emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
+
+vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt + 
+                           (1|chamber) + (1|id), 
+                         data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
+plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
+summary(vcmax_tleaf_lmer)
+Anova(vcmax_tleaf_lmer)
+emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
+emmeans(vcmax_tleaf_lmer, ~ending_trt)
 
 #Structural data analysis
 
@@ -462,3 +512,111 @@ struc_data$starting_trt[struc_data$treatment == 'hc' | struc_data$treatment == '
 struc_data$ending_trt <- NA
 struc_data$ending_trt[struc_data$treatment == 'lc' | struc_data$treatment == 'hl'] <- 'low'
 struc_data$ending_trt[struc_data$treatment == 'hc' | struc_data$treatment == 'lh'] <- 'high'
+
+### Test boxplot
+
+ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
+  geom_boxplot (size = 0.5) +
+  labs(title = "New leaf Vcmax by treatment",
+       x = "Treatment",
+       y = "Vcmax at 25°C",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+
+### Good plot multi-panel
+ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
+  geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  # Larger points with some transparency
+  geom_smooth(aes(color = treatment), method = "lm", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
+  labs(title = "Old leaf Vcmax by date across all treatments",
+       x = "Days since Baseline",
+       y = "Vcmax at 25°C",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
+  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = (element_text(size = 12)),
+        axis.text.y = (element_text(size = 12))) +
+  facet_wrap(~ treatment, scales = "free_y") 
+
+### Good plot one-panel
+ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
+  geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  # Larger points with some transparency
+  geom_smooth(aes(color = treatment), method = "lm", se = FALSE, size = 1.5) +  # Trend lines with confidence intervals
+  labs(title = "Old leaf Vcmax by date across all treatments",
+       x = "Days since Baseline",
+       y = "Vcmax at 25°C",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
+  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = (element_text(size = 12)),
+        axis.text.y = (element_text(size = 12)))
+
+### Plot for trends with Multispeq data
+ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = FvP_over_FmP)) +
+  geom_point(aes(shape = Treatment), size = 2, alpha = 0.8) +  
+  geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
+  labs(title = "Old leaf SPAD by date across all treatments",
+       x = "Date",
+       y = "Vcmax at 25°C",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +  # Custom shapes for treatments
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +  # Custom colors for lines
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12)) +
+  facet_wrap(~ Treatment, scales = "free_y")
+
+### Plot for trends with Licor data
+ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
+  geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  
+  geom_smooth(aes(color = treatment), method = "loess", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
+  labs(title = "Old leaf SPAD by date across all treatments",
+       x = "Date",
+       y = "Vcmax at 25°C",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
+  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12)) +
+  facet_wrap(~ treatment, scales = "free_y")
