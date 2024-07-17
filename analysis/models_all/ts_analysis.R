@@ -517,7 +517,7 @@ struc_data$ending_trt[struc_data$treatment == 'hc' | struc_data$treatment == 'lh
 
 ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
   geom_boxplot (size = 0.5) +
-  labs(title = "New leaf Vcmax by treatment",
+  labs(title = "Old leaf Vcmax by treatment",
        x = "Treatment",
        y = "Vcmax at 25°C",
        fill = "") +
@@ -576,12 +576,12 @@ ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax
         axis.text.y = (element_text(size = 12)))
 
 ### Plot for trends with Multispeq data
-ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = FvP_over_FmP)) +
+ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = SPAD)) +
   geom_point(aes(shape = Treatment), size = 2, alpha = 0.8) +  
   geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
   labs(title = "Old leaf SPAD by date across all treatments",
        x = "Date",
-       y = "Vcmax at 25°C",
+       y = "SPAD",
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +  # Custom shapes for treatments
@@ -598,12 +598,67 @@ ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = Fv
         axis.text.y = element_text(size = 12)) +
   facet_wrap(~ Treatment, scales = "free_y")
 
+
+### Plotting Phi2,PhiNO, PhiNPQ
+multipeq_data_long <- pivot_longer(
+  subset(multipeq_data_light, New == "N"),
+  cols = c(Phi2, PhiNO, PhiNPQ),
+  names_to = "Variable",
+  values_to = "Value"
+)
+
+ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
+  geom_point(aes(shape = Treatment), size = 2, alpha = 0.8) +
+  geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +
+  labs(title = "Old leaf allocation of incoming light to different processes",
+       x = "Days Since First",
+       y = "Value",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.background = element_rect(fill = "transparent")) +
+  facet_grid(Variable ~ Treatment, scales = "free_y")
+
 ### Plot for trends with Licor data
 ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
   geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  
   geom_smooth(aes(color = treatment), method = "loess", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
-  labs(title = "Old leaf SPAD by date across all treatments",
-       x = "Date",
+  labs(title = "Old leaf vcmax by date across all treatments",
+       x = "Days since first",
+       y = "Vcmax at 25°C",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
+  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12)) +
+  facet_wrap(~ treatment, scales = "free_y")
+
+### Test struc data
+ggplot(struc_data) aes(x = treatment, y = vcmax_tleaf) +
+  geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  
+  geom_smooth(aes(color = treatment), method = "loess", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
+  labs(title = "Old leaf vcmax by date across all treatments",
+       x = "Days since first",
        y = "Vcmax at 25°C",
        shape = "Treatment",
        color = "Treatment") +
