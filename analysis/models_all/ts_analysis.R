@@ -28,13 +28,22 @@ multipeq_data$ending_trt[multipeq_data$Treatment == 'HC' | multipeq_data$Treatme
 ### assign group numbers
 multipeq_data <- multipeq_data %>%
   mutate(group = case_when(
-    Second.number %in% c(9,10,11,12,13,15,16,25,26,27,29,30,31) ~ "group1",
+    Second.number %in% c(9,10,11,13,15,16,25,26,27,29,30,31) ~ "group1",
     Second.number %in% c(1,2,5,6,7,41,43,44,45,47,48) ~ "group2",
     Second.number %in% c(18,19,20,21,22,24,33,34,35,37,38,40) ~ "group3",
   ))
 
 ### make a date adjustment to account for new years
 multipeq_data$date_multiyear <- multipeq_data$Date
+
+if (!is.numeric(multipeq_data$Date)) {
+  multipeq_data$Date <- as.numeric(as.character(multipeq_data$Date))
+}
+
+if (!is.numeric(multipeq_data$date_multiyear)) {
+  multipeq_data$date_multiyear <- as.numeric(as.character(multipeq_data$date_multiyear))
+}
+
 multipeq_data$date_multiyear[multipeq_data$Date < 300] <- multipeq_data$Date[multipeq_data$Date < 300] + 365
 
 ### now adjust to days since first measurement
@@ -599,7 +608,7 @@ ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = SP
   facet_wrap(~ Treatment, scales = "free_y")
 
 
-### Plotting Phi2,PhiNO, PhiNPQ
+### Plotting Phi2,PhiNO, PhiNPQ not combined
 multipeq_data_long <- pivot_longer(
   subset(multipeq_data_light, New == "N"),
   cols = c(Phi2, PhiNO, PhiNPQ),
@@ -630,6 +639,62 @@ ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
         legend.background = element_rect(fill = "transparent")) +
   facet_grid(Variable ~ Treatment, scales = "free_y")
 
+
+### Plotting Phi2,PhiNO, PhiNPQ combined by LC/HL and HC/LH
+multipeq_data_long$trt_group <- ifelse(multipeq_data_long$Treatment %in% c("HC", "LH"), "HC and LH", "LC and HL")
+
+multipeq_data_long <- multipeq_data_long %>%
+  mutate(Variable = factor(Variable, levels = c("Phi2", "PhiNPQ", "PhiNO")))
+
+ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
+  geom_point(aes(shape = Treatment), size = 1, alpha = 0.5) +
+  geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +
+  labs(title = "Old leaf allocation of incoming light to different processes",
+       x = "Days Since First",
+       y = "",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.background = element_rect(fill = "transparent")) +
+  facet_grid(Variable ~ trt_group, scales = "free_y")
+
+###SPAD
+
+ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = SPAD)) +
+  geom_point(aes(shape = Treatment), size = 1, alpha = 0.5) +
+  geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +
+  labs(title = "Old leaf SPAD",
+       x = "Days Since First",
+       y = "SPAD",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.background = element_rect(fill = "transparent")) +
+  facet_grid(scales = "free_y")
+
+
 ### Plot for trends with Licor data
 ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
   geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  
@@ -652,6 +717,58 @@ ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax
         axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12)) +
   facet_wrap(~ treatment, scales = "free_y")
+
+licor_photo_data$trt_group <- ifelse(licor_photo_data$treatment %in% c("hc", "lh"), "hc and lh", "lc and hl")
+
+ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = jmax_tleaf)) +
+  geom_point(aes(shape = treatment), size = 1, alpha = 0.5) +
+  geom_smooth(aes(color = treatment), method = "loess", se = TRUE, size = 1.5) +
+  labs(title = "Old leaf jmax",
+       x = "Days Since First",
+       y = "jmax",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +
+  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.background = element_rect(fill = "transparent")) +
+  facet_grid(~ trt_group, scales = "free_y")
+
+### Test resp data
+
+licor_resp_data$trt_group <- ifelse(licor_resp_data$treatment %in% c("hc", "lh"), "hc and lh", "lc and hl")
+
+ggplot(subset(licor_resp_data, New == "N"), aes(x = days_since_first, y = A)) +
+  geom_point(aes(shape = treatment), size = 1, alpha = 0.5) +
+  geom_smooth(aes(color = treatment), method = "loess", se = TRUE, size = 1.5) +
+  labs(title = "Old leaf resp",
+       x = "Days Since First",
+       y = "Resp",
+       shape = "Treatment",
+       color = "Treatment") +
+  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +
+  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.background = element_rect(fill = "transparent")) +
+  facet_grid(~ trt_group, scales = "free_y")
 
 ### Test struc data
 ggplot(struc_data) aes(x = treatment, y = vcmax_tleaf) +

@@ -2,7 +2,7 @@
 ## file to clean the multispeq data
 
 ## read in data (slightly cleaned)
-multispeq_data <- read.csv('raw/multi_speq_data_raw_all.csv')
+multispeq_data <- read.csv('multi_speq_data_raw_all.csv')
 head(multispeq_data)
 colnames(multispeq_data)
 
