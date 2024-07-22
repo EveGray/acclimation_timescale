@@ -524,11 +524,11 @@ struc_data$ending_trt[struc_data$treatment == 'hc' | struc_data$treatment == 'lh
 
 ### Test boxplot
 
-ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
+ggplot(subset(licor_photo_data, New == "N"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
   geom_boxplot (size = 0.5) +
-  labs(title = "Old leaf Vcmax by treatment",
+  labs(title = "New SPAD by treatment",
        x = "Treatment",
-       y = "Vcmax at 25°C",
+       y = "SPAD",
        fill = "") +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),  
@@ -641,7 +641,7 @@ ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
 
 
 ### Plotting Phi2,PhiNO, PhiNPQ combined by LC/HL and HC/LH
-multipeq_data_long$trt_group <- ifelse(multipeq_data_long$Treatment %in% c("HC", "LH"), "HC and LH", "LC and HL")
+multipeq_data_long$trt_group <- ifelse(multipeq_data_long$Treatment %in% c("HC", "HL"), "HC and HL", "LC and LH")
 
 multipeq_data_long <- multipeq_data_long %>%
   mutate(Variable = factor(Variable, levels = c("Phi2", "PhiNPQ", "PhiNO")))
@@ -671,12 +671,12 @@ ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
 
 ###SPAD
 
-ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = SPAD)) +
+ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = qL)) +
   geom_point(aes(shape = Treatment), size = 1, alpha = 0.5) +
   geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +
-  labs(title = "Old leaf SPAD",
+  labs(title = "Old leaf qL",
        x = "Days Since First",
-       y = "SPAD",
+       y = "qL",
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +
