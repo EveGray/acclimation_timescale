@@ -174,6 +174,8 @@ emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
 
 ### Result 3(a):
 
+
+
 ### question 3(b): How does SPAD change overtime in the new
 ###  leaf?
 hist(multipeq_data_light$SPAD) # take a look at the dark acclimated FvP_over_FmP data.
