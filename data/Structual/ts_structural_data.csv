@@ -1,4 +1,4 @@
-ID,height_cm,leaf_num,focal_weight ,chloro_weight,total_area_chloro,total_area_focal,disc_area,chlA,chlB,chl_content
+ID,height_cm,leaf_num,focal_weight_g ,chloro_weight_g,total_area_chloro_cm,total_area_focal_cm,disc_area_cm,chlA.mmolm2,chlB.mmolm2,chl_content.mmolm2
 brit.hc.1.1,28,15,0.0726,0.0815,26.545,25.505,3.868,0.065976318,0.023505392,0.08948171
 brit.hc.2.2,25.5,19,0.0768,0.0539,17.652,24.546,3.816,0.071707263,0.05896817,0.130675433
 brit.hl.1.5,35,17,0.133,0.1197,36.399,36.879,3.821,0.08290912,0.053762097,0.136671217
