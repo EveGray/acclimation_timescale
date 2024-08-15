@@ -109,13 +109,13 @@ multipeq_data$date <- as.Date(multipeq_data$cal_date, format = "%Y-%m-%d")
 multipeq_data_light <- subset(multipeq_data, Type == "Light")
 multipeq_data_dark <- subset(multipeq_data, Type == "Dark")
 
-hist(multipeq_data_light$PhiNPQ) 
-qL_lmer <- lmer((log(qL)) ~ starting_trt * ending_trt * days_since_first + 
+hist(multipeq_data_light$SPAD) 
+SPAD_lmer <- lmer((log(SPAD)) ~ starting_trt * ending_trt * days_since_first + 
                            (1|Chamber) + (1|Second.number), 
                          data = subset(multipeq_data_light, New == 'N')) # this is the model setup to use for old leaves (ngs)
-plot(resid(qL_lmer) ~ fitted(qL_lmer))
-summary(leaf_thickness_lmer)
-Anova(qL_lmer)
+plot(resid(SPAD_lmer) ~ fitted(SPAD_lmer))
+summary(SPAD_lmer)
+Anova(SPAD_lmer)
 emmeans(SPAD_lmer, ~starting_trt)
 emmeans(SPAD_lmer, ~ending_trt)
 emtrends(SPAD_lmer, ~1, var = 'days_since_first')
@@ -493,34 +493,26 @@ licor_photo_data$date <- as.Date(licor_photo_data$date, format = "%Y-%m-%d")
 
 ### Test data frame on vcmax data
 
-hist(licor_photo_data$vcmax_tleaf) 
-vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
+hist(licor_photo_data$jmax_tleaf) 
+jmax_tleaf_lmer <- lmer(log(jmax_tleaf) ~ starting_trt * ending_trt * days_since_first+ 
                            (1|chamber) + (1|id), 
                    data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
-plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
+plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
 summary(vcmax_tleaf_lmer)
-Anova(vcmax_tleaf_lmer)
-emmeans(vcmax_tleaf_lmer, ~starting_trt)
-emmeans(vcmax_tleaf_lmer, ~ending_trt)
-emtrends(vcmax_tleaf_lmer, ~1, var = 'days_since_first')
-emmeans(vcmax_tleaf_lmer, ~1, at = list(days_since_first = 0))
-emtrends(vcmax_tleaf_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(vcmax_tleaf_lmer, ~ending_trt, var = 'days_since_first') 
-emtrends(vcmax_tleaf_lmer, ~starting_trt * ending_trt, var = 'days_since_first') # M
-data.frame( ts_data <- cld(emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-cld(emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first =0)))
+Anova(jmax_tleaf_lmer)
+emmeans(jmax_tleaf_lmer, ~starting_trt)
+emmeans(jmax_tleaf_lmer, ~ending_trt)
+emtrends(jmax_tleaf_lmer, ~1, var = 'days_since_first')
+emmeans(jmax_tleaf_lmer, ~1, at = list(days_since_first = 0))
+emtrends(jmax_tleaf_lmer, ~starting_trt, var = 'days_since_first')
+emtrends(jmax_tleaf_lmer, ~ending_trt, var = 'days_since_first') 
+emtrends(jmax_tleaf_lmer, ~starting_trt * ending_trt, var = 'days_since_first') # M
+data.frame( ts_data <- cld(emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14)))) ### B
+new_leaf <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
 emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
-vcmax_tleaf_lmer_test <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
-                           (1|chamber) + (1|id), 
-                           data = subset(licor_photo_data, New == 'N' & days_since_first == 11))
 
-emmeans(vcmax_tleaf_lmer_test, list(pairwise ~ starting_trt), adjust = "tukey")
-
-tuk <- glht(vcmax_tleaf_lmer_test, linfct = mcp(ending_trt = "Tukey"))
-tuk.cld <- cld(tuk)
-plot(tuk.cld)
-
+new_leaf <- cld(new_leaf, Letters = letters)
 
 ts_data0 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
 ts_data0 <- cld(ts_data0, Letter = letters)
@@ -596,8 +588,6 @@ ts_data17 <- ts_data17 %>%
   mutate(days_since_first = 17)
 
 
-
-
 ts_data_all <- rbind(ts_data0, ts_data1, ts_data2, ts_data3, ts_data4, 
                        ts_data5, ts_data6, ts_data7, ts_data8, ts_data9, 
                        ts_data10, ts_data11, ts_data12, ts_data13, ts_data14, 
@@ -622,7 +612,7 @@ filtered_data <- ts_data_all %>%
 
 
 # Create the boxplot with confidence intervals
-ggplot(ts_data_all, days_since_first == 0)) 
+ggplot(ts_data_all, days_since_first == 0) 
        aes(x = treatment, y = emmean, fill = treatment) +
   geom_boxplot(alpha = 0.6) +
   labs(title = "Boxplot of Estimated Marginal Means with Confidence Intervals",
@@ -1133,7 +1123,7 @@ ggplot(subset(multipeq_data_light, New == "Y"), aes(x = Treatment, y = SPAD, fil
 
 ###Vcmax
 
-ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = log(vcmax_tleaf), fill = treatment)) +
+ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
   geom_boxplot (size = 0.5) +
   labs(title = "",
        x = "Treatment",
@@ -1147,6 +1137,8 @@ ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = log(vcmax_tl
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
   scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+
+
 
 vcmax0 <- ggplot(subset(licor_photo_data, days_since_first == 0 & New == "N"), 
                 aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
@@ -1165,9 +1157,75 @@ vcmax0 <- ggplot(subset(licor_photo_data, days_since_first == 0 & New == "N"),
         legend.position = "none") +
   scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
 
-# Combine the plots using patchwork
-plot(combined_plot <- vcmax0 + vcmax14 + plot_layout(nrow = 1))
+vcmax14 <- ggplot(subset(licor_photo_data, days_since_first == 14 & New == "N"), 
+                 aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "",
+       x = "Day 14",
+       y = "",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12),
+        legend.position = "none") +
+  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
 
+# Combine the plots using patchwork
+combined_plot <- vcmax0 + vcmax14 + plot_layout(nrow = 1)
+plot(combined_plot)
+
+licor_photo_data$treatment <- factor(licor_photo_data$treatment, levels = c("hc", "lh", "lc", "hl"))
+
+# Create the first plot for day 0
+vcmax0 <- ggplot(subset(licor_photo_data, days_since_first == 0 & New == "N"), 
+                 aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "",
+       x = "Day 0",
+       y = "Vcmax (25°C)",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12),
+        legend.position = "none") +
+        ylim(0,89) +
+  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+
+
+# Create the second plot for day 14
+vcmax14 <- ggplot(subset(licor_photo_data, days_since_first == 14 & New == "N"), 
+                  aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "",
+       x = "Day 14",
+       y = "",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12),
+        legend.position = "none") +
+        ylim(0,89) +
+  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+
+
+
+# Combine the plots using patchwork
+combined_plot <- vcmax0 + vcmax14 + plot_layout(nrow = 1)
+
+# Display the combined plot
+print(combined_plot)
 # Plot for New == "N"
 vcmax_new_N <- ggplot(subset(licor_photo_data, New == "N"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
   geom_boxplot(size = 0.5) +
@@ -1265,8 +1323,8 @@ write.csv(trends, file = "trends.csv")
 
 licor_photo_data <- licor_photo_data %>%
   mutate(broad_group = case_when(
-    treatment %in% c("hc", "lh") ~ "hc and lh",
-    treatment %in% c("hl", "lc") ~ "lc and hl"))
+    treatment %in% c("hc", "hl") ~ "hc and hl",
+    treatment %in% c("lh", "lc") ~ "lc and lh"))
 
 
 ### Vcmax est means plot
