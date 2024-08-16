@@ -109,13 +109,13 @@ multipeq_data$date <- as.Date(multipeq_data$cal_date, format = "%Y-%m-%d")
 multipeq_data_light <- subset(multipeq_data, Type == "Light")
 multipeq_data_dark <- subset(multipeq_data, Type == "Dark")
 
-hist(multipeq_data_light$SPAD) 
-SPAD_lmer <- lmer((log(SPAD)) ~ starting_trt * ending_trt * days_since_first + 
+hist(multipeq_data_light$FvP_over_FmP) 
+FvP_over_FmP_lmer <- lmer((log(FvP_over_FmP)) ~ starting_trt * ending_trt * days_since_first + 
                            (1|Chamber) + (1|Second.number), 
                          data = subset(multipeq_data_light, New == 'N')) # this is the model setup to use for old leaves (ngs)
 plot(resid(SPAD_lmer) ~ fitted(SPAD_lmer))
 summary(SPAD_lmer)
-Anova(SPAD_lmer)
+Anova(FvP_over_FmP_lmer)
 emmeans(SPAD_lmer, ~starting_trt)
 emmeans(SPAD_lmer, ~ending_trt)
 emtrends(SPAD_lmer, ~1, var = 'days_since_first')
@@ -286,19 +286,19 @@ emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first =
 
 ### question 2(b): How does non photo chemical quenching change overtime in the new
 ###  leaf?
-hist(multipeq_data_dark$FvP_over_FmP) # take a look at the light acclimated FvP_over_FmP data.
-FvP_over_FmP_lmer <- lmer(FvP_over_FmP ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+hist(multipeq_data_light$leaf_thickness) # take a look at the light acclimated FvP_over_FmP data.
+leaf_thickness <- lmer(FvP_over_FmP ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
                           data = subset(multipeq_data_light, New == 'N'))
-plot(resid(FvP_over_FmP_lmer) ~ fitted(FvP_over_FmP_lmer))
-summary(FvP_over_FmP_lmer)
-Anova(FvP_over_FmP_lmer)
-emmeans(FvP_over_FmP_lmer, ~starting_trt)
-emmeans(FvP_over_FmP_lmer, ~ending_trt)
-emtrends(FvP_over_FmP_lmer, ~1, var = 'days_since_first')
-emtrends(FvP_over_FmP_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(FvP_over_FmP_lmer, ~ending_trt, var = 'days_since_first')
-emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
+plot(resid(leaf_thickness) ~ fitted(leaf_thickness))
+summary(leaf_thickness)
+Anova(leaf_thickness)
+emmeans(leaf_thickness, ~starting_trt)
+emmeans(leaf_thickness, ~ending_trt)
+emtrends(leaf_thickness, ~1, var = 'days_since_first')
+emtrends(leaf_thickness, ~starting_trt, var = 'days_since_first')
+emtrends(leaf_thickness, ~ending_trt, var = 'days_since_first')
+emmeans(leaf_thickness, ~starting_trt*ending_trt, at =list(days_since_first = 0))
+emmeans(leaf_thickness, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
 ### question 3(a): How does SPAD change overtime in the old
 ###  leaf?
@@ -494,7 +494,7 @@ licor_photo_data$date <- as.Date(licor_photo_data$date, format = "%Y-%m-%d")
 ### Test data frame on vcmax data
 
 hist(licor_photo_data$jmax_tleaf) 
-jmax_tleaf_lmer <- lmer(log(jmax_tleaf) ~ starting_trt * ending_trt * days_since_first+ 
+vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first+ 
                            (1|chamber) + (1|id), 
                    data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
 plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
@@ -511,6 +511,8 @@ data.frame( ts_data <- cld(emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, a
 new_leaf <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
 emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
+
+var.test(jmax_tleaf_lmer)
 
 new_leaf <- cld(new_leaf, Letters = letters)
 
@@ -701,9 +703,9 @@ melted_data <- melted_data %>%
     group %in% c("hl", "lc") ~ "lc and hl"
   ))
 
-vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt + 
-                           (1|chamber) + (1|id), 
-                         data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
+vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
+                          (1|chamber) + (1|id), 
+                        data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
 plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
 summary(vcmax_tleaf_lmer)
 Anova(vcmax_tleaf_lmer)
@@ -715,7 +717,7 @@ emmeans(vcmax_tleaf_lmer, ~ending_trt)
 hist(licor_photo_data$jmax_tleaf) 
 jmax_tleaf_lmer <- lmer(log(jmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
                            (1|chamber) + (1|id), 
-                         data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
+                         data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
 plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
 summary(jmax_tleaf_lmer)
 Anova(jmax_tleaf_lmer)
@@ -1101,6 +1103,71 @@ struc_data$starting_trt[struc_data$treatment == 'hc' | struc_data$treatment == '
 struc_data$ending_trt <- NA
 struc_data$ending_trt[struc_data$treatment == 'lc' | struc_data$treatment == 'hl'] <- 'low'
 struc_data$ending_trt[struc_data$treatment == 'hc' | struc_data$treatment == 'lh'] <- 'high'
+
+struc_data <- struc_data %>%
+  mutate(Chl_a_b_ratio = chlA.mmolm2 / chlB.mmolm2)
+
+struc_data <- struc_data %>%
+  mutate(
+    focal_weight_g = as.numeric(focal_weight_g),
+    chloro_weight_g = as.numeric(chloro_weight_g),
+    total_area_focal_cm = as.numeric(total_area_focal_cm),
+    total_area_chloro_cm = as.numeric(total_area_chloro_cm)
+  )
+
+# Calculate LMA for focal weight and area
+struc_data <- struc_data %>%
+  mutate(LMA_focal = focal_weight_g / total_area_focal_cm)
+
+# Calculate LMA for chlorophyll weight and area
+struc_data <- struc_data %>%
+  mutate(LMA_chloro = chloro_weight_g / total_area_chloro_cm)
+
+# Ensure LMA columns are numeric
+struc_data <- struc_data %>%
+  mutate(
+    LMA_focal = as.numeric(LMA_focal),
+    LMA_chloro = as.numeric(LMA_chloro)
+  )
+
+
+write.csv(struc_data, file = "sorted_struc_data.csv")
+
+hc <- filter(struc_data, treatment == "hc")
+lc <- filter(struc_data, treatment == "lc")
+hl <- filter(struc_data, treatment == "hl")
+lh <- filter(struc_data, treatment == "lh")
+
+# Perform t-tests between each combination
+t_test_hc_lc <- t.test(hc$chl_content.mmolm2, lc$chl_content.mmolm2)
+print(t_test_lc_hl)
+t_test_hc_hl <- t.test(hc$chl_content.mmolm2, hl$chl_content.mmolm2)
+t_test_hc_lh <- t.test(hc$chl_content.mmolm2, lh$chl_content.mmolm2)
+t_test_lc_hl <- t.test(lc$chl_content.mmolm2, hl$chl_content.mmolm2)
+t_test_lc_lh <- t.test(lc$chl_content.mmolm2, lh$chl_content.mmolm2)
+t_test_hl_lh <- t.test(hl$chl_content.mmolm2, lh$chl_content.mmolm2)
+
+t_test_hc_lc_ratio <- t.test(hc$chlA.mmolm2, lc$chlA.mmolm2)
+t_test_hc_hl_ratio <- t.test(hc$chlA.mmolm2, hl$chlA.mmolm2)
+t_test_hc_lh_ratio <- t.test(hc$chlA.mmolm2, lh$chlA.mmolm2)
+t_test_lc_hl_ratio <- t.test(lc$chlA.mmolm2, hl$chlA.mmolm2)
+t_test_lc_lh_ratio <- t.test(lc$chlA.mmolm2, lh$chlA.mmolm2)
+t_test_hl_lh_ratio <- t.test(hl$chlA.mmolm2, lh$chlA.mmolm2)
+
+t_test_hc_lc_LMA <- t.test(hc$LMA_focal, lc$LMA_focal)
+t_test_hc_hl_LMA <- t.test(hc$chlA.mmolm2, hl$chlA.mmolm2)
+t_test_hc_lh_LMA <- t.test(hc$LMA_focal, lh$LMA_focal)
+t_test_lc_hl_LMA <- t.test(lc$LMA_focal, hl$LMA_focal)
+t_test_lc_lh_LMA <- t.test(lc$chlA.mmolm2, lh$chlA.mmolm2)
+t_test_hl_lh_LMA <- t.test(hl$chlA.mmolm2, lh$chlA.mmolm2)
+
+# Print the results
+print(t_test_hc_lc_ratio)
+print(t_test_hc_hl_ratio)
+print(t_test_hc_lh_ratio)
+print(t_test_lc_hl_ratio)
+print(t_test_lc_lh_ratio)
+print(t_test_hl_lh_ratio)
 
 ### Test boxplot
 
