@@ -298,7 +298,7 @@ emtrends(leaf_thickness, ~1, var = 'days_since_first')
 emtrends(leaf_thickness, ~starting_trt, var = 'days_since_first')
 emtrends(leaf_thickness, ~ending_trt, var = 'days_since_first')
 emmeans(leaf_thickness, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(leaf_thickness, ~starting_trt*ending_trt, at =list(days_since_first = 10))
+emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
 ### question 3(a): How does SPAD change overtime in the old
 ###  leaf?
@@ -937,7 +937,7 @@ licor_resp_data$date_multiyear <- licor_resp_data$julian_date
 ### Test data frame on A values
 
 hist(licor_resp_data$A) 
-resp_lmer <- lmer(A ~ starting_trt * ending_trt + (1|chamber)
+resp_lmer <- lmer(A ~ starting_trt * ending_trt * days_since_first + (1|chamber)
                   + (1|id), 
                          data = subset(licor_resp_data, New == 'N'))
 plot(resid(resp_lmer) ~ fitted(resp_lmer))
@@ -948,7 +948,67 @@ emtrends(resp_lmer, ~1, var = 'days_since_first')
 emtrends(resp_lmer, ~starting_trt, var = 'days_since_first')
 emtrends(resp_lmer, ~ending_trt, var = 'days_since_first') 
 emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
+emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
+
+data.frame( tsr_data0 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
+tsr_data0 <- tsr_data0 %>%
+  mutate(days_since_first = 0)
+data.frame( tsr_data1 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1)))) ### B
+tsr_data1 <- tsr_data1 %>%
+  mutate(days_since_first = 1)
+data.frame( tsr_data2 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 2)))) ### B
+tsr_data2 <- tsr_data2 %>%
+  mutate(days_since_first = 2)
+data.frame( tsr_data3 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 3)))) ### B
+tsr_data3 <- tsr_data3 %>%
+  mutate(days_since_first = 3)
+data.frame( tsr_data4 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 4)))) ### B
+tsr_data4 <- tsr_data4 %>%
+  mutate(days_since_first = 4)
+data.frame( tsr_data5 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 5)))) ### B
+tsr_data5 <- tsr_data5 %>%
+  mutate(days_since_first = 5)
+data.frame( tsr_data6 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 6)))) ### B
+tsr_data6 <- tsr_data6 %>%
+  mutate(days_since_first = 6)
+data.frame( tsr_data7 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7)))) ### B
+tsr_data7 <- tsr_data7 %>%
+  mutate(days_since_first = 7)
+data.frame( tsr_data8 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 8)))) ### B
+tsr_data8 <- tsr_data8 %>%
+  mutate(days_since_first = 8)
+data.frame( tsr_data9 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 9)))) ### B
+tsr_data9 <- tsr_data9 %>%
+  mutate(days_since_first = 9)
+data.frame( tsr_data10 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10)))) ### B
+tsr_data10 <- tsr_data10 %>%
+  mutate(days_since_first = 10)
+data.frame( tsr_data11 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 11)))) ### B
+tsr_data11 <- tsr_data11 %>%
+  mutate(days_since_first = 11)
+data.frame( tsr_data12 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 12)))) ### B
+tsr_data12 <- tsr_data12 %>%
+  mutate(days_since_first = 12)
+data.frame( tsr_data13 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 13)))) ### B
+tsr_data13 <- tsr_data13 %>%
+  mutate(days_since_first = 13)
+data.frame( tsr_data14 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14)))) ### B
+tsr_data14 <- tsr_data14 %>%
+  mutate(days_since_first = 14)
+data.frame( tsr_data15 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 15)))) ### B
+tsr_data15 <- tsr_data15 %>%
+  mutate(days_since_first = 15)
+data.frame( tsr_data16 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 16)))) ### B
+tsr_data16 <- tsr_data16 %>%
+  mutate(days_since_first = 16)
+data.frame( tsr_data17 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 17)))) ### B
+tsr_data17 <- tsr_data17 %>%
+  mutate(days_since_first = 17)
+
+tsr_data_all <- rbind(tsr_data0, tsr_data1, tsr_data2, tsr_data3, tsr_data4, 
+                      tsr_data5, tsr_data6, tsr_data7, tsr_data8, tsr_data9, 
+                      tsr_data10, tsr_data11, tsr_data12, tsr_data13, tsr_data14, 
+                      tsr_data15, tsr_data16, tsr_data17)
 
 vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt + 
                            (1|chamber) + (1|id), 
