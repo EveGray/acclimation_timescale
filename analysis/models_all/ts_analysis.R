@@ -255,7 +255,7 @@ ggplot(tsm_data_all, aes(x = days_since_first, y = .group, color = treatment)) +
 ### question 1: How does non photo chemical quenching change overtime in the old
 ###  leaf?
 hist(multipeq_data_light$NPQt) # take a look at the dark acclimated NPQt data.
-NPQt_lmer <- lmer(log(NPQt) ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+NPQt_lmer <- lmer(NPQt ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
                   data = subset(multipeq_data_light, New == 'N'))
 plot(resid(NPQt_lmer) ~ fitted(NPQt_lmer))
 summary(NPQt_lmer)
@@ -271,7 +271,7 @@ emmeans(NPQt_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 ### question 2(a): How does quantum efficiency change overtime in the old
 ###  leaf?
 hist(multipeq_data_light$FvP_over_FmP) # take a look at the dark acclimated FvP_over_FmP data.
-FvP_over_FmP_lmer <- lmer(FvP_over_FmP ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+FvP_over_FmP_lmer <- lmer(log(FvP_over_FmP) ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
                           data = subset(multipeq_data_light, New == 'N'))
 plot(resid(FvP_over_FmP_lmer) ~ fitted(FvP_over_FmP_lmer))
 summary(FvP_over_FmP_lmer)
@@ -287,7 +287,7 @@ emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first =
 ### question 2(b): How does non photo chemical quenching change overtime in the new
 ###  leaf?
 hist(multipeq_data_light$leaf_thickness) # take a look at the light acclimated FvP_over_FmP data.
-leaf_thickness <- lmer(FvP_over_FmP ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+leaf_thickness <- lmer(leaf_thickness ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
                           data = subset(multipeq_data_light, New == 'N'))
 plot(resid(leaf_thickness) ~ fitted(leaf_thickness))
 summary(leaf_thickness)
@@ -303,7 +303,7 @@ emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first =
 ### question 3(a): How does SPAD change overtime in the old
 ###  leaf?
 hist(multipeq_data_light$SPAD) # take a look at the dark acclimated FvP_over_FmP data.
-SPAD_lmer <- lmer(SPAD ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+SPAD_lmer <- lmer(log(SPAD) ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
                   data = subset(multipeq_data_light, New == 'N'))
 plot(resid(SPAD_lmer) ~ fitted(SPAD_lmer))
 summary(SPAD_lmer)
@@ -318,9 +318,9 @@ emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
 
 ### question 3(b): How does SPAD change overtime in the new
 ###  leaf?
-hist(multipeq_data_light$SPAD) # take a look at the dark acclimated FvP_over_FmP data.
-Phi2_lmer <- lmer(SPAD ~ starting_trt * ending_trt + (1|Chamber), 
-                  data = subset(multipeq_data_light, New == 'Y'))
+hist(multipeq_data_light$Phi2) # take a look at the dark acclimated FvP_over_FmP data.
+Phi2_lmer <- lmer(Phi2 ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
+                  data = subset(multipeq_data_light, New == 'N'))
 plot(resid(Phi2_lmer) ~ fitted(Phi2_lmer))
 summary(Phi2_lmer)
 Anova(Phi2_lmer)
@@ -499,7 +499,7 @@ vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_sin
                    data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
 plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
 summary(vcmax_tleaf_lmer)
-Anova(jmax_tleaf_lmer)
+Anova(vcmax_tleaf_lmer)
 emmeans(jmax_tleaf_lmer, ~starting_trt)
 emmeans(jmax_tleaf_lmer, ~ending_trt)
 emtrends(jmax_tleaf_lmer, ~1, var = 'days_since_first')
@@ -717,7 +717,7 @@ emmeans(vcmax_tleaf_lmer, ~ending_trt)
 hist(licor_photo_data$jmax_tleaf) 
 jmax_tleaf_lmer <- lmer(log(jmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
                            (1|chamber) + (1|id), 
-                         data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
+                         data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
 plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
 summary(jmax_tleaf_lmer)
 Anova(jmax_tleaf_lmer)
