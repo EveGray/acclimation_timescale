@@ -4,8 +4,8 @@
 
 #Load in files and make a dataframe
 
-plate1.df <- data.frame(read.csv("eve_timescale_chl/eve_timescale_chl/Gray_chlorophyll_plate1_cleaned.csv"))
-plate2.df <- data.frame(read.csv("eve_timescale_chl/eve_timescale_chl/Gray_chlorophyll_plate2_cleaned.csv"))
+plate1.df <- data.frame(read.csv("Gray_chlorophyll_plate1_cleaned.csv"))
+plate2.df <- data.frame(read.csv("Gray_chlorophyll_plate2_cleaned.csv"))
 
 #merge
 allplates <- rbind(plate1.df,plate2.df)
@@ -23,7 +23,7 @@ chlor.df <- (allplates) %>%
          abs.665 = ifelse(abs.665 < 0, 0, abs.665))
 
 #Isolate disc area
-structual.df <- data.frame(read.csv("structural_data.csv"))
+structual.df <- data.frame(read.csv("ts_structural_data.csv"))
 structual.disc <- data.frame(structual.df$ID, structual.df$disc_area,
                              structual.df$chloro_weight, structual.df$total_area_chloro)
 
@@ -77,7 +77,7 @@ chlorophyll7 <- chlor.disc7 %>%
          chlB.mmolm2 = chlB.gm2 / 907.47 * 1000) %>%
          dplyr::select(id, chlA.ugml:chlB.mmolm2)
 
-chlorophyll7.5 <- chlor.disc7.7 %>% 
+chlorophyll7.5 <- chlor.disc7.5 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
   mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
@@ -194,4 +194,3 @@ chlorophyll.data <- data.frame(rbind(chlorophyll7,chlorophyll7.5,chlorophyll8,
                                      chlorophyll9,chlorophyll10))
 
 write.csv(chlorophyll.data, "ts_chlorophyll_data.csv", row.names = F)
-
