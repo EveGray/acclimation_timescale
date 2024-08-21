@@ -63,7 +63,7 @@ chlor.disc10 <- chlor.disc.all %>% filter(id %in% c("brit.lc.1.9","brit.lc.2.10"
                                                    
 chlorophyll7 <- chlor.disc7 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
@@ -79,7 +79,7 @@ chlorophyll7 <- chlor.disc7 %>%
 
 chlorophyll7.5 <- chlor.disc7.7 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
@@ -95,7 +95,7 @@ chlorophyll7.5 <- chlor.disc7.7 %>%
 
 chlorophyll8 <- chlor.disc8 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
@@ -111,7 +111,7 @@ chlorophyll8 <- chlor.disc8 %>%
 
 chlorophyll8.2 <- chlor.disc8.2 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
@@ -127,7 +127,7 @@ chlorophyll8.2 <- chlor.disc8.2 %>%
 
 chlorophyll8.5 <- chlor.disc8.5 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
@@ -143,7 +143,7 @@ chlorophyll8.5 <- chlor.disc8.5 %>%
 
 chlorophyll8.8 <- chlor.disc8.8 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
@@ -159,7 +159,7 @@ chlorophyll8.8 <- chlor.disc8.8 %>%
 
 chlorophyll9 <- chlor.disc9 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
@@ -175,7 +175,7 @@ chlorophyll9 <- chlor.disc9 %>%
 
 chlorophyll10 <- chlor.disc10 %>% 
   dplyr::select(id, abs.649, abs.665, disc_area) %>%
-  mutate(chlA.ugml = (12.19 * abs.665) - (3.56 * abs.649),
+  mutate(chlA.ugml = (12.19 * abs.665) - (3.45 * abs.649),
          chlB.ugml = (21.99 * abs.649) - (5.32 * abs.665),
          chlA.ugml = ifelse(chlA.ugml < 0, 0, chlA.ugml),
          chlB.ugml = ifelse(chlB.ugml < 0, 0 , chlB.ugml),
