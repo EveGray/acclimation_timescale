@@ -11,12 +11,14 @@ library(car)
 library(multcomp)
 library(ggplot2)
 library(patchwork)
+library(dplyr)
 
 ## load data
 multipeq_data <- read.csv('../../data/multispeq/multi_speq_data_cleaned.csv')
 licor_photo_data <- read.csv('../../data/aci_output/all_curve_fits.csv')
 licor_resp_data <- read.csv('../../data/licor/licor_cleaned/tsrd_merged_all.csv')
 struc_data <- read.csv('../../data/Structual/ts_structural_data.csv')
+nutrient_data <- read.csv("ts_cn_data.csv")
 
 ## multispeq data analysis
 colnames(multipeq_data)
@@ -109,152 +111,9 @@ multipeq_data$date <- as.Date(multipeq_data$cal_date, format = "%Y-%m-%d")
 multipeq_data_light <- subset(multipeq_data, Type == "Light")
 multipeq_data_dark <- subset(multipeq_data, Type == "Dark")
 
-hist(multipeq_data_light$FvP_over_FmP) 
-FvP_over_FmP_lmer <- lmer((log(FvP_over_FmP)) ~ starting_trt * ending_trt * days_since_first + 
-                           (1|Chamber) + (1|Second.number), 
-                         data = subset(multipeq_data_light, New == 'N')) # this is the model setup to use for old leaves (ngs)
-plot(resid(SPAD_lmer) ~ fitted(SPAD_lmer))
-summary(SPAD_lmer)
-Anova(FvP_over_FmP_lmer)
-emmeans(SPAD_lmer, ~starting_trt)
-emmeans(SPAD_lmer, ~ending_trt)
-emtrends(SPAD_lmer, ~1, var = 'days_since_first')
-emmeans(SPAD_lmer, ~1, at = list(days_since_first = 0))
-emtrends(SPAD_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(SPAD_lmer, ~ending_trt, var = 'days_since_first') 
-emtrends(SPAD_lmer, ~starting_trt * ending_trt, var = 'days_since_first') # M
-data.frame( tsm_data <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-cld(emmeans(qL_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 15)))
-emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
-xtrend = seq(0, max(subset(licor_photo_data, New == 'N')$days_since_first), 1) # X
-
-##HC
-hc_y_s =  -0.02645*xtrend + 3.78
-
-###LH
-lh_y_s =    -0.01852*xtrend + 3.75
-
-###HL
-hl_y_s =     -0.00892*xtrend + 3.69
-
-###LC
-lc_y_s =     -0.00366*xtrend + 3.66
-
-trends_s <- as.data.frame(cbind(xtrend, hc_y_s, hl_y_s, lc_y_s, lh_y_s))
-
-melted_s_data <- trends_s %>%
-  pivot_longer(cols = starts_with("h") | starts_with("l"), 
-               names_to = "Treatment", 
-               values_to = "value") 
-
-melted_s_data <- trends_s %>%
-  pivot_longer(cols = c(hc_y_s, hl_y_s, lc_y_s, lh_y_s), 
-               names_to = "Treatment", 
-               values_to = "value")
-# Define the treatment groups
-melted_s_data <- melted_s_data %>%
-  mutate(group = case_when(
-    Treatment == "hc_y_s" ~ "HC",
-    Treatment == "hl_y_s" ~ "HL",
-    Treatment == "lc_y_s" ~ "LC",
-    Treatment == "lh_y_s" ~ "LH"))
-
-melted_s_data <- melted_s_data %>%
-  mutate(broad_group = case_when(
-    group %in% c("HC", "LH") ~ "HC and LH",
-    group %in% c("HL", "LC") ~ "LC and HL"
-  ))
-
-data.frame( tsm_data0 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-tsm_data0 <- tsm_data0 %>%
-  mutate(days_since_first = 0)
-data.frame( tsm_data1 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1)))) ### B
-tsm_data1 <- tsm_data1 %>%
-  mutate(days_since_first = 1)
-data.frame( tsm_data2 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 2)))) ### B
-tsm_data2 <- tsm_data2 %>%
-  mutate(days_since_first = 2)
-data.frame( tsm_data3 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 3)))) ### B
-tsm_data3 <- tsm_data3 %>%
-  mutate(days_since_first = 3)
-data.frame( tsm_data4 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 4)))) ### B
-tsm_data4 <- tsm_data4 %>%
-  mutate(days_since_first = 4)
-data.frame( tsm_data5 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 5)))) ### B
-tsm_data5 <- tsm_data5 %>%
-  mutate(days_since_first = 5)
-data.frame( tsm_data6 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 6)))) ### B
-tsm_data6 <- tsm_data6 %>%
-  mutate(days_since_first = 6)
-data.frame( tsm_data7 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7)))) ### B
-tsm_data7 <- tsm_data7 %>%
-  mutate(days_since_first = 7)
-data.frame( tsm_data8 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 8)))) ### B
-tsm_data8 <- tsm_data8 %>%
-  mutate(days_since_first = 8)
-data.frame( tsm_data9 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 9)))) ### B
-tsm_data9 <- tsm_data9 %>%
-  mutate(days_since_first = 9)
-data.frame( tsm_data10 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10)))) ### B
-tsm_data10 <- tsm_data10 %>%
-  mutate(days_since_first = 10)
-data.frame( tsm_data11 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 11)))) ### B
-tsm_data11 <- tsm_data11 %>%
-  mutate(days_since_first = 11)
-data.frame( tsm_data12 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 12)))) ### B
-tsm_data12 <- tsm_data12 %>%
-  mutate(days_since_first = 12)
-data.frame( tsm_data13 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 13)))) ### B
-tsm_data13 <- tsm_data13 %>%
-  mutate(days_since_first = 13)
-data.frame( tsm_data14 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14)))) ### B
-tsm_data14 <- tsm_data14 %>%
-  mutate(days_since_first = 14)
-data.frame( tsm_data15 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 15)))) ### B
-tsm_data15 <- tsm_data15 %>%
-  mutate(days_since_first = 15)
-data.frame( tsm_data16 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 16)))) ### B
-tsm_data16 <- tsm_data16 %>%
-  mutate(days_since_first = 16)
-data.frame( tsm_data17 <- cld(emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 17)))) ### B
-tsm_data17 <- tsm_data17 %>%
-  mutate(days_since_first = 17)
-
-tsm_data_all <- rbind(tsm_data0, tsm_data1, tsm_data2, tsm_data3, tsm_data4, 
-                     tsm_data5, tsm_data6, tsm_data7, tsm_data8, tsm_data9, 
-                     tsm_data10, tsm_data11, tsm_data12, tsm_data13, tsm_data14, 
-                     tsm_data15, tsm_data16, tsm_data17)
-
-tsm_data_all <- tsm_data_all %>%
-  mutate(treatment = case_when(
-    starting_trt == "low" & ending_trt == "low" ~ "lc",
-    starting_trt == "high" & ending_trt == "high" ~ "hc",
-    starting_trt == "low" & ending_trt == "high" ~ "lh",
-    starting_trt == "high" & ending_trt == "low" ~ "hl"
-  ))
-
-ggplot(tsm_data_all, aes(x = days_since_first, y = .group, color = treatment)) +
-  geom_line() +
-  geom_point(size = 2, alpha = 0.8) +
-  labs(title = "Change in FvP_over_FmP group",
-       x = "Days Since First",
-       y = "group",
-       color = "Treatment") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),
-        strip.text = element_text(size = 12),
-        panel.spacing.x = unit(15, "pt"),
-        axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-
-### question 1: How does non photo chemical quenching change overtime in the old
-###  leaf?
-hist(multipeq_data_light$NPQt) # take a look at the dark acclimated NPQt data.
+# Old leaf NPQt data model
+hist(multipeq_data_light$NPQt) 
 NPQt_lmer <- lmer(NPQt ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
                   data = subset(multipeq_data_light, New == 'N'))
 plot(resid(NPQt_lmer) ~ fitted(NPQt_lmer))
@@ -262,136 +121,174 @@ summary(NPQt_lmer)
 Anova(NPQt_lmer)
 emmeans(NPQt_lmer, ~starting_trt)
 emmeans(NPQt_lmer, ~ending_trt)
+emmeans(NPQt_lmer, ~starting_trt * ending_trt)
 emtrends(NPQt_lmer, ~1, var = 'days_since_first')
 emtrends(NPQt_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(NPQt_lmer, ~ending_trt, var = 'days_since_first')
+emtrends(NPQt_lmer, ~ending_trt * starting_trt, var = 'days_since_first')
 emmeans(NPQt_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(NPQt_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
-### question 2(a): How does quantum efficiency change overtime in the old
-###  leaf?
-hist(multipeq_data_light$FvP_over_FmP) # take a look at the dark acclimated FvP_over_FmP data.
-FvP_over_FmP_lmer <- lmer(log(FvP_over_FmP) ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+# New leaf NPQt data model
+hist(multipeq_data_light$NPQt) 
+NPQt_lmer <- lmer(NPQt ~ starting_trt * ending_trt + (1|Chamber), 
+                  data = subset(multipeq_data_light, New == 'Y'))
+plot(resid(NPQt_lmer) ~ fitted(NPQt_lmer))
+summary(NPQt_lmer)
+Anova(NPQt_lmer)
+emmeans(NPQt_lmer, ~starting_trt)
+emmeans(NPQt_lmer, ~ending_trt)
+cld(emmeans(NPQt_lmer, ~starting_trt * ending_trt))
+
+# Old leaf PhiNPQ data model
+hist(multipeq_data_light$PhiNPQ) 
+PhiNPQ_lmer <- lmer(log(PhiNPQ) ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
+                  data = subset(multipeq_data_light, New == 'N'))
+plot(resid(PhiNPQ_lmer) ~ fitted(PhiNPQ_lmer))
+summary(PhiNPQ_lmer)
+Anova(PhiNPQ_lmer)
+emmeans(PhiNPQ_lmer, ~starting_trt)
+emmeans(PhiNPQ_lmer, ~ending_trt)
+emmeans(PhiNPQ_lmer, ~starting_trt * ending_trt)
+emtrends(PhiNPQ_lmer, ~1, var = 'days_since_first')
+emtrends(PhiNPQ_lmer, ~starting_trt, var = 'days_since_first')
+emtrends(PhiNPQ_lmer, ~ending_trt * starting_trt, var = 'days_since_first')
+emmeans(PhiNPQ_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
+
+# New leaf PhiNPQ data model
+hist(multipeq_data_light$PhiNPQ) 
+PhiNPQ_lmer <- lmer(PhiNPQ_lmer ~ starting_trt * ending_trt + (1|Chamber), 
+                  data = subset(multipeq_data_light, New == 'Y'))
+plot(resid(PhiNPQ_lmer) ~ fitted(PhiNPQ_lmer))
+summary(PhiNPQ_lmer)
+Anova(PhiNPQ_lmer)
+emmeans(PhiNPQ_lmer, ~starting_trt)
+emmeans(PhiNPQ_lmer, ~ending_trt)
+emmeans(PhiNPQ_lmer, ~starting_trt * ending_trt)
+
+# Old leaf FvP_over_FmP data
+hist(multipeq_data_light$FvP_over_FmP) 
+FvP_over_FmP_lmer <- lmer(FvP_over_FmP ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
                           data = subset(multipeq_data_light, New == 'N'))
+plot(resid(FvP_over_FmP_lmer) ~ fitted(FvP_over_FmP_lmer))
+summary(FvP_over_FmP_lmer)
+Anova(FvP_over_FmP_lmer)
+emmeans(FvP_over_FmP_lmer, ~starting_trt * ending_trt)
+emmeans(FvP_over_FmP_lmer, ~ending_trt)
+emtrends(FvP_over_FmP_lmer, ~1, var = 'days_since_first')
+emtrends(FvP_over_FmP_lmer, ~starting_trt, var = 'days_since_first')
+emtrends(FvP_over_FmP_lmer, ~starting_trt * ending_trt, var = 'days_since_first')
+emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
+
+# New leaf FvP_over_FmP data
+hist(multipeq_data_light$FvP_over_FmP) 
+FvP_over_FmP_lmer <- lmer(FvP_over_FmP ~ starting_trt * ending_trt + (1|Chamber), 
+                          data = subset(multipeq_data_light, New == 'Y'))
 plot(resid(FvP_over_FmP_lmer) ~ fitted(FvP_over_FmP_lmer))
 summary(FvP_over_FmP_lmer)
 Anova(FvP_over_FmP_lmer)
 emmeans(FvP_over_FmP_lmer, ~starting_trt)
 emmeans(FvP_over_FmP_lmer, ~ending_trt)
-emtrends(FvP_over_FmP_lmer, ~1, var = 'days_since_first')
-emtrends(FvP_over_FmP_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(FvP_over_FmP_lmer, ~ending_trt, var = 'days_since_first')
-emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
+cld(emmeans(FvP_over_FmP_lmer, ~starting_trt * ending_trt))
 
-### question 2(b): How does non photo chemical quenching change overtime in the new
-###  leaf?
-hist(multipeq_data_light$leaf_thickness) # take a look at the light acclimated FvP_over_FmP data.
+# Old leaf thickness data
+hist(multipeq_data_light$leaf_thickness)
 leaf_thickness <- lmer(leaf_thickness ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
                           data = subset(multipeq_data_light, New == 'N'))
 plot(resid(leaf_thickness) ~ fitted(leaf_thickness))
 summary(leaf_thickness)
 Anova(leaf_thickness)
-emmeans(leaf_thickness, ~starting_trt)
+emmeans(leaf_thickness, ~starting_trt * ending_trt)
 emmeans(leaf_thickness, ~ending_trt)
 emtrends(leaf_thickness, ~1, var = 'days_since_first')
 emtrends(leaf_thickness, ~starting_trt, var = 'days_since_first')
-emtrends(leaf_thickness, ~ending_trt, var = 'days_since_first')
+emtrends(leaf_thickness, ~starting_trt * ending_trt, var = 'days_since_first')
 emmeans(leaf_thickness, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(FvP_over_FmP_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
-### question 3(a): How does SPAD change overtime in the old
-###  leaf?
-hist(multipeq_data_light$SPAD) # take a look at the dark acclimated FvP_over_FmP data.
-SPAD_lmer <- lmer(log(SPAD) ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+# New leaf thickness data
+hist(multipeq_data_light$leaf_thickness)
+leaf_thickness <- lmer(leaf_thickness ~ starting_trt * ending_trt + (1|Chamber), 
+                       data = subset(multipeq_data_light, New == 'N'))
+plot(resid(leaf_thickness) ~ fitted(leaf_thickness))
+summary(leaf_thickness)
+Anova(leaf_thickness)
+emmeans(leaf_thickness, ~starting_trt)
+emmeans(leaf_thickness, ~ending_trt)
+emmeans(leaf_thickness, ~starting_trt * ending_trt)
+
+# Old leaf SPAD data
+hist(multipeq_data_light$SPAD) 
+SPAD_lmer <- lmer(log(SPAD) ~ starting_trt * ending_trt * days_since_first + (1|Chamber)+ (1|Second.number), 
                   data = subset(multipeq_data_light, New == 'N'))
 plot(resid(SPAD_lmer) ~ fitted(SPAD_lmer))
 summary(SPAD_lmer)
 Anova(SPAD_lmer)
+emmeans(SPAD_lmer, ~starting_trt * ending_trt)
 emmeans(SPAD_lmer, ~starting_trt)
 emmeans(SPAD_lmer, ~ending_trt)
 emtrends(SPAD_lmer, ~1, var = 'days_since_first')
 emtrends(SPAD_lmer, ~starting_trt, var = 'days_since_first')
 emtrends(SPAD_lmer, ~ending_trt, var = 'days_since_first')
 emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(SPAD_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
 
-### question 3(b): How does SPAD change overtime in the new
-###  leaf?
-hist(multipeq_data_light$Phi2) # take a look at the dark acclimated FvP_over_FmP data.
+# New leaf SPAD data
+hist(multipeq_data_light$SPAD) 
+SPAD_lmer <- lmer(log(SPAD) ~ starting_trt * ending_trt + (1|Chamber), 
+                  data = subset(multipeq_data_light, New == 'Y'))
+plot(resid(SPAD_lmer) ~ fitted(SPAD_lmer))
+summary(SPAD_lmer)
+Anova(SPAD_lmer)
+emmeans(SPAD_lmer, ~starting_trt)
+emmeans(SPAD_lmer, ~ending_trt)
+cld(emmeans(SPAD_lmer, ~starting_trt * ending_trt))
+
+# Old leaf Phi2 data
+hist(multipeq_data_light$Phi2) 
 Phi2_lmer <- lmer(Phi2 ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
                   data = subset(multipeq_data_light, New == 'N'))
 plot(resid(Phi2_lmer) ~ fitted(Phi2_lmer))
 summary(Phi2_lmer)
 Anova(Phi2_lmer)
-emmeans(Phi2_lmer, ~starting_trt)
+emmeans(Phi2_lmer, ~starting_trt * ending_trt)
 emmeans(Phi2_lmer, ~ending_trt)
 emtrends(Phi2_lmer, ~1, var = 'days_since_first')
 emtrends(Phi2_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(Phi2_lmer, ~ending_trt, var = 'days_since_first')
-emmeans(Phi2_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 18))
-emmeans(Phi2_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 21))
+emtrends(Phi2_lmer, ~starting_trt * ending_trt, var = 'days_since_first')
+emmeans(Phi2_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
 
-### question 4(a): How does qL change overtime in the old
-###  leaf?
-hist(multipeq_data_light$qL) # take a look at the dark acclimated FvP_over_FmP data.
-qL_lmer <- lmer(qL ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
-                data = subset(multipeq_data_light, New == 'N'))
-plot(resid(qL_lmer) ~ fitted(qL_lmer))
-summary(qL_lmer)
-Anova(qL_lmer)
-emmeans(qL_lmer, ~starting_trt)
-emmeans(qL_lmer, ~ending_trt)
-emtrends(qL_lmer, ~1, var = 'days_since_first')
-emtrends(qL_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(qL_lmer, ~ending_trt, var = 'days_since_first')
-emmeans(qL_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(qL_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
-
-### question 4(b): How does qL change overtime in the new
-###  leaf?
-hist(multipeq_data_dark$qL) # take a look at the dark acclimated FvP_over_FmP data.
-qL_lmer <- lmer(qL ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
-                data = subset(multipeq_data_light, New == 'Y'))
-plot(resid(qL_lmer) ~ fitted(qL_lmer))
-summary(qL_lmer)
-Anova(qL_lmer)
-emmeans(qL_lmer, ~starting_trt)
-emmeans(qL_lmer, ~ending_trt)
-emtrends(qL_lmer, ~1, var = 'days_since_first')
-emtrends(qL_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(qL_lmer, ~ending_trt, var = 'days_since_first')
-emmeans(qL_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 18))
-emmeans(qL_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 20))
-
-### question 2: how does linear electron flow vary with time and treatment? Just looking at old leaves
-hist(multipeq_data_light$LEF) # take a look at the light acclimated phi2 data, looks okay!
-LEF_lmer <- lmer(LEF ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
-                  data = subset(multipeq_data_light, New == 'N'))
-plot(resid(LEF_lmer) ~ fitted(LEF_lmer))
-summary(LEF_lmer)
-Anova(LEF_lmer)
-emmeans(LEF_lmer, ~starting_trt*ending_trt)
-emtrends(LEF_lmer, ~1, var = 'days_since_first')
-emtrends(LEF_lmer, ~starting_trt, var = 'days_since_first')
-
-emtrends(LEF_lmer, ~ending_trt, var = 'days_since_first') 
-emmeans(LEF_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1))
-emmeans(LEF_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 2))
-emmeans(LEF_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 20))
-
-hist(multipeq_data_light$leaf_thickness) # take a look at the light acclimated leaf thicknes data, looks okay!
-leafw_lmer <- lmer(leaf_thickness ~ starting_trt * ending_trt * days_since_first + (1|Chamber), 
+# New leaf Phi2 data
+hist(multipeq_data_light$Phi2) 
+Phi2_lmer <- lmer(Phi2 ~ starting_trt * ending_trt + (1|Chamber), 
                   data = subset(multipeq_data_light, New == 'Y'))
-plot(resid(leafw_lmer) ~ fitted(leafw_lmer))
-summary(leafw_lmer)
-Anova(leafw_lmer)
-emmeans(leafw_lmer, ~starting_trt*ending_trt)
-emtrends(leafw_lmer, ~1, var = 'days_since_first')
-emtrends(leafw_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(leafw_lmer, ~ending_trt, var = 'days_since_first') 
-emmeans(leafw_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 21))
-emmeans(leafw_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
+plot(resid(Phi2_lmer) ~ fitted(Phi2_lmer))
+summary(Phi2_lmer)
+Anova(Phi2_lmer)
+emmeans(Phi2_lmer, ~starting_trt)
+emmeans(Phi2_lmer, ~ending_trt)
+cld(emmeans(Phi2_lmer, ~starting_trt * ending_trt))
+
+# Old leaf qL data
+hist(multipeq_data_light$qL) 
+qL_lmer <- lmer(qL ~ starting_trt * ending_trt * days_since_first + (1|Chamber) + (1|Second.number), 
+                  data = subset(multipeq_data_light, New == 'N'))
+plot(resid(qL_lmer) ~ fitted(qL_lmer))
+summary(qL_lmer)
+Anova(qL_lmer)
+emmeans(qL_lmer, ~starting_trt * ending_trt)
+emmeans(qL_lmer, ~ending_trt)
+emtrends(qL_lmer, ~1, var = 'days_since_first')
+emtrends(qL_lmer, ~starting_trt, var = 'days_since_first')
+emtrends(qL_lmer, ~starting_trt * ending_trt, var = 'days_since_first')
+emmeans(qL_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
+
+# New leaf Phi2 data
+hist(multipeq_data_light$qL) 
+qL_lmer <- lmer(qL ~ starting_trt * ending_trt + (1|Chamber), 
+                  data = subset(multipeq_data_light, New == 'Y'))
+plot(resid(qL_lmer) ~ fitted(qL_lmer))
+summary(qL_lmer)
+Anova(qL_lmer)
+emmeans(qL_lmer, ~starting_trt)
+emmeans(qL_lmer, ~ending_trt)
+emmeans(qL_lmer, ~starting_trt * ending_trt)
 
 
 #Licor data analysis
@@ -491,351 +388,63 @@ licor_photo_data <- licor_photo_data %>%
 
 licor_photo_data$date <- as.Date(licor_photo_data$date, format = "%Y-%m-%d")
 
-### Test data frame on vcmax data
-
+### Test data frame on old leaf jmax data
 hist(licor_photo_data$jmax_tleaf) 
-vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first+ 
+jmax_tleaf_lmer <- lmer(log(jmax_tleaf) ~ starting_trt * ending_trt * days_since_first+ 
                            (1|chamber) + (1|id), 
-                   data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
-plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
-summary(vcmax_tleaf_lmer)
-Anova(vcmax_tleaf_lmer)
-emmeans(jmax_tleaf_lmer, ~starting_trt)
-emmeans(jmax_tleaf_lmer, ~ending_trt)
-emtrends(jmax_tleaf_lmer, ~1, var = 'days_since_first')
-emmeans(jmax_tleaf_lmer, ~1, at = list(days_since_first = 0))
-emtrends(jmax_tleaf_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(jmax_tleaf_lmer, ~ending_trt, var = 'days_since_first') 
-emtrends(jmax_tleaf_lmer, ~starting_trt * ending_trt, var = 'days_since_first') # M
-data.frame( ts_data <- cld(emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14)))) ### B
-new_leaf <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
-emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
-
-
-var.test(jmax_tleaf_lmer)
-
-new_leaf <- cld(new_leaf, Letters = letters)
-
-ts_data0 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-ts_data0 <- cld(ts_data0, Letter = letters)
-ts_data0 <- ts_data0 %>%
-  mutate(days_since_first = 0)
-ts_data1 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1))
-ts_data1 <- cld(ts_data1, Letter = letters)
-ts_data1 <- ts_data1 %>%
-  mutate(days_since_first = 1)
-ts_data2 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 2))
-ts_data2 <- cld(ts_data2, Letter = letters)
-ts_data2 <- ts_data2 %>%
-  mutate(days_since_first = 2)
-ts_data3 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 3))
-ts_data3 <- cld(ts_data3, Letter = letters)
-ts_data3 <- ts_data3 %>%
-  mutate(days_since_first = 3)
-ts_data4 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 4))
-ts_data4 <- cld(ts_data4, Letter = letters)
-ts_data4 <- ts_data4 %>%
-  mutate(days_since_first = 4)
-ts_data5 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 5))
-ts_data5 <- cld(ts_data5, Letter = letters)
-ts_data5 <- ts_data5 %>%
-  mutate(days_since_first = 5)
-ts_data6 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 6))
-ts_data6 <- cld(ts_data6, Letter = letters)
-ts_data6 <- ts_data6 %>%
-  mutate(days_since_first = 6)
-ts_data7 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
-ts_data7 <- cld(ts_data7, Letter = letters)
-ts_data7 <- ts_data7 %>%
-  mutate(days_since_first = 7)
-ts_data8 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 8))
-ts_data8 <- cld(ts_data8, Letter = letters)
-ts_data8 <- ts_data8 %>%
-  mutate(days_since_first = 8)
-ts_data9 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 9))
-ts_data9 <- cld(ts_data9, Letter = letters)
-ts_data9 <- ts_data9 %>%
-  mutate(days_since_first = 9)
-ts_data10 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
-ts_data10 <- cld(ts_data10, Letter = letters)
-ts_data10 <- ts_data10 %>%
-  mutate(days_since_first = 10)
-ts_data11 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 11))
-ts_data11 <- cld(ts_data11, Letter = letters)
-ts_data11 <- ts_data11 %>%
-  mutate(days_since_first = 11)
-ts_data12 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 12))
-ts_data12 <- cld(ts_data12, Letter = letters)
-ts_data12 <- ts_data12 %>%
-  mutate(days_since_first = 12)
-ts_data13 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 13))
-ts_data13 <- cld(ts_data13, Letter = letters)
-ts_data13 <- ts_data13 %>%
-  mutate(days_since_first = 13)
-ts_data14 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14))
-ts_data14 <- cld(ts_data14, Letter = letters)
-ts_data14 <- ts_data14 %>%
-  mutate(days_since_first = 14)
-ts_data15 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 15))
-ts_data15 <- cld(ts_data15, Letter = letters)
-ts_data15 <- ts_data15 %>%
-  mutate(days_since_first = 15)
-ts_data16 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 16))
-ts_data16 <- cld(ts_data16, Letter = letters)
-ts_data16 <- ts_data16 %>%
-  mutate(days_since_first = 16)
-ts_data17 <- emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 17))
-ts_data17 <- cld(ts_data17, Letter = letters)
-ts_data17 <- ts_data17 %>%
-  mutate(days_since_first = 17)
-
-
-ts_data_all <- rbind(ts_data0, ts_data1, ts_data2, ts_data3, ts_data4, 
-                       ts_data5, ts_data6, ts_data7, ts_data8, ts_data9, 
-                       ts_data10, ts_data11, ts_data12, ts_data13, ts_data14, 
-                       ts_data15, ts_data16, ts_data17)
-
-ts_data17 <- ts_data17 %>%
-  mutate(treatment = case_when(
-    starting_trt == "low" & ending_trt == "low" ~ "lc",
-    starting_trt == "high" & ending_trt == "high" ~ "hc",
-    starting_trt == "low" & ending_trt == "high" ~ "lh",
-    starting_trt == "high" & ending_trt == "low" ~ "hl"
-  ))
-
-write.csv(ts_data_all, "ts_data_all.csv")
-
-ts_data_all <- ts_data_all %>%
-  mutate(days_since_first = as.factor(days_since_first))
-
-filtered_data <- ts_data_all %>%
-  filter(treatment %in% c("lc", "lh")) %>%
-  mutate(days_since_first = as.factor(days_since_first))
-
-
-# Create the boxplot with confidence intervals
-ggplot(ts_data_all, days_since_first == 0) 
-       aes(x = treatment, y = emmean, fill = treatment) +
-  geom_boxplot(alpha = 0.6) +
-  labs(title = "Boxplot of Estimated Marginal Means with Confidence Intervals",
-       x = "Treatment",
-       y = "Estimated Marginal Means (emmeans)",
-       fill = "Treatment") +
-  theme_minimal()
-
-plot1 <- ts_data_all %>%
-  filter(days_since_first == 0 ) %>%
-  ggplot(aes(x = treatment, y = emmean, fill = treatment)) +
-  geom_boxplot(alpha = 0.6) +
-  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2, position = position_dodge(0.75)) +
-  geom_point(position = position_dodge(0.75), size = 2) +
-  labs(title = "Boxplot of Estimated Marginal Means with Confidence Intervals",
-       x = "Treatment",
-       y = "Estimated Marginal Means (emmeans)",
-       fill = "Treatment") +
-  theme_minimal()
-
-print(plot)
-library(multcompView)
-multcompView::multcompBoxplot()
-
-multcompView::multcompBoxplot(ts_data_all)
-
-ggplot(ts_data12, aes(x = days_since_first, y = emmean, color = treatment)) +
-  geom_line() +
-  geom_point(size = 2, alpha = 0.8) +
-  labs(title = "Change in emmean Over Time by Treatment",
-       x = "Days Since First",
-       y = "emmean",
-       color = "Treatment") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),
-        strip.text = element_text(size = 12),
-        panel.spacing.x = unit(15, "pt"),
-        axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-
-# Display the plot
-
-write.csv(ts_data_all, file = "ts_data_all.csv")
-## testing out creating data frames for plotting lines
-
-xtrend = seq(0, max(subset(licor_photo_data, New == 'N')$days_since_first), 1) # X
-
-##HC
-hc_y = -0.0496*xtrend + 2.26
-
-###LH
-lh_y = -0.0633*xtrend + 3.19
-
-###HL
-hl_y = -0.0551*xtrend + 2.75
-
-###LC
-lc_y =  -0.0689*xtrend + 3.46
-
-trends <- as.data.frame(cbind(xtrend, hc_y, hl_y, lc_y, lh_y))
-
-melted_data <- trends %>%
-  pivot_longer(cols = starts_with("h") | starts_with("l"), 
-               names_to = "treatment", 
-               values_to = "value") 
-
-melted_data <- trends %>%
-  pivot_longer(cols = c(hc_y, hl_y, lc_y, lh_y), 
-               names_to = "treatment", 
-               values_to = "value")
-# Define the treatment groups
-melted_data <- melted_data %>%
-  mutate(group = case_when(
-    treatment == "hc_y" ~ "hc",
-    treatment == "hl_y" ~ "hl",
-    treatment == "lc_y" ~ "lc",
-    treatment == "lh_y" ~ "lh"))
-
-melted_data <- melted_data %>%
-  mutate(broad_group = case_when(
-    group %in% c("hc", "lh") ~ "hc and lh",
-    group %in% c("hl", "lc") ~ "lc and hl"
-  ))
-
-vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
-                          (1|chamber) + (1|id), 
-                        data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
-plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
-summary(vcmax_tleaf_lmer)
-Anova(vcmax_tleaf_lmer)
-emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
-emmeans(vcmax_tleaf_lmer, ~ending_trt)
-
-### Test data frame on jmax data
-
-hist(licor_photo_data$jmax_tleaf) 
-jmax_tleaf_lmer <- lmer(log(jmax_tleaf) ~ starting_trt * ending_trt * days_since_first + 
-                           (1|chamber) + (1|id), 
-                         data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
+                   data = subset(licor_photo_data, New == 'N')) # this is the model setup to use for old leaves 
 plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
 summary(jmax_tleaf_lmer)
 Anova(jmax_tleaf_lmer)
 emmeans(jmax_tleaf_lmer, ~starting_trt)
-emmeans(jmax_tleaf_lmer, ~ending_trt)
+emmeans(jmax_tleaf_lmer, ~starting_trt * ending_trt)
 emtrends(jmax_tleaf_lmer, ~1, var = 'days_since_first')
 emmeans(jmax_tleaf_lmer, ~1, at = list(days_since_first = 0))
 emtrends(jmax_tleaf_lmer, ~starting_trt, var = 'days_since_first')
 emtrends(jmax_tleaf_lmer, ~ending_trt, var = 'days_since_first') 
 emtrends(jmax_tleaf_lmer, ~starting_trt * ending_trt, var = 'days_since_first') # M
 data.frame( ts_data <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first =17)))
-emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
 
-##HC
-hc_y_j =  -0.0377*xtrend + 2.81
+### Test data frame on new leaf jmax data
+hist(licor_photo_data$jmax_tleaf) 
+jmax_tleaf_lmer <- lmer(log(jmax_tleaf) ~ starting_trt * ending_trt + 
+                          (1|chamber), 
+                        data = subset(licor_photo_data, New == 'Y'))
+plot(resid(jmax_tleaf_lmer) ~ fitted(jmax_tleaf_lmer))
+summary(jmax_tleaf_lmer)
+Anova(jmax_tleaf_lmer)
+emmeans(jmax_tleaf_lmer, ~starting_trt)
+emmeans(jmax_tleaf_lmer, ~ending_trt)
+emmeans(jmax_tleaf_lmer, ~starting_trt * ending_trt)
 
-###LH
-lh_y_j =  -0.0599*xtrend + 3.77
+### Test data frame on old leaf vcmax data
+hist(licor_photo_data$vcmax_tleaf) 
+vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt * days_since_first+ 
+                          (1|chamber) + (1|id), 
+                        data = subset(licor_photo_data, New == 'N')) 
+plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
+summary(vcmax_tleaf_lmer)
+Anova(vcmax_tleaf_lmer)
+emmeans(vcmax_tleaf_lmer, ~starting_trt)
+emmeans(vcmax_tleaf_lmer, ~ending_trt)
+emmeans(vcmax_tleaf_lmer, ~ending_trt * starting_trt)
+emtrends(vcmax_tleaf_lmer, ~1, var = 'days_since_first')
+emmeans(vcmax_tleaf_lmer, ~1, at = list(days_since_first = 14))
+emtrends(vcmax_tleaf_lmer, ~starting_trt, var = 'days_since_first')
+emtrends(vcmax_tleaf_lmer, ~ending_trt, var = 'days_since_first') 
+emtrends(vcmax_tleaf_lmer, ~starting_trt * ending_trt, var = 'days_since_first')
+emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7))
 
-###HL
-hl_y_j =  -0.0507*xtrend + 3.33
-
-###LC
-lc_y_j =  -0.0643*xtrend + 4.01
-
-trends_j <- as.data.frame(cbind(xtrend, hc_y_j, hl_y_j, lc_y_j, lh_y_j))
-
-melted_j_data <- trends_j %>%
-  pivot_longer(cols = starts_with("h") | starts_with("l"), 
-               names_to = "treatment", 
-               values_to = "value") 
-
-melted_j_data <- trends_j %>%
-  pivot_longer(cols = c(hc_y_j, hl_y_j, lc_y_j, lh_y_j), 
-               names_to = "treatment", 
-               values_to = "value")
-# Define the treatment groups
-melted_j_data <- melted_j_data %>%
-  mutate(group = case_when(
-    treatment == "hc_y_j" ~ "hc",
-    treatment == "hl_y_j" ~ "hl",
-    treatment == "lc_y_j" ~ "lc",
-    treatment == "lh_y_j" ~ "lh"))
-
-melted_j_data <- melted_j_data %>%
-  mutate(broad_group = case_when(
-    group %in% c("hc", "lh") ~ "hc and lh",
-    group %in% c("hl", "lc") ~ "lc and hl"
-  ))
-
-data.frame( tsj_data0 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-tsj_data0 <- tsj_data0 %>%
-  mutate(days_since_first = 0)
-data.frame( tsj_data1 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1)))) ### B
-tsj_data1 <- tsj_data1 %>%
-  mutate(days_since_first = 1)
-data.frame( tsj_data2 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 2)))) ### B
-tsj_data2 <- tsj_data2 %>%
-  mutate(days_since_first = 2)
-data.frame( tsj_data3 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 3)))) ### B
-tsj_data3 <- tsj_data3 %>%
-  mutate(days_since_first = 3)
-data.frame( tsj_data4 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 4)))) ### B
-tsj_data4 <- tsj_data4 %>%
-  mutate(days_since_first = 4)
-data.frame( tsj_data5 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 5)))) ### B
-tsj_data5 <- tsj_data5 %>%
-  mutate(days_since_first = 5)
-data.frame( tsj_data6 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 6)))) ### B
-tsj_data6 <- tsj_data6 %>%
-  mutate(days_since_first = 6)
-data.frame( tsj_data7 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7)))) ### B
-tsj_data7 <- tsj_data7 %>%
-  mutate(days_since_first = 7)
-data.frame( tsj_data8 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 8)))) ### B
-tsj_data8 <- tsj_data8 %>%
-  mutate(days_since_first = 8)
-data.frame( tsj_data9 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 9)))) ### B
-tsj_data9 <- tsj_data9 %>%
-  mutate(days_since_first = 9)
-data.frame( tsj_data10 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10)))) ### B
-tsj_data10 <- tsj_data10 %>%
-  mutate(days_since_first = 10)
-data.frame( tsj_data11 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 11)))) ### B
-tsj_data11 <- tsj_data11 %>%
-  mutate(days_since_first = 11)
-data.frame( tsj_data12 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 12)))) ### B
-tsj_data12 <- tsj_data12 %>%
-  mutate(days_since_first = 12)
-data.frame( tsj_data13 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 13)))) ### B
-tsj_data13 <- tsj_data13 %>%
-  mutate(days_since_first = 13)
-data.frame( tsj_data14 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14)))) ### B
-tsj_data14 <- tsj_data14 %>%
-  mutate(days_since_first = 14)
-data.frame( tsj_data15 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 15)))) ### B
-tsj_data15 <- tsj_data15 %>%
-  mutate(days_since_first = 15)
-data.frame( tsj_data16 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 16)))) ### B
-tsj_data16 <- tsj_data16 %>%
-  mutate(days_since_first = 16)
-data.frame( tsj_data17 <- cld(emmeans(jmax_tleaf_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 17)))) ### B
-tsj_data17 <- tsj_data17 %>%
-  mutate(days_since_first = 17)
-
-tsj_data_all <- rbind(tsj_data0, tsj_data1, tsj_data2, tsj_data3, tsj_data4, 
-                     tsj_data5, tsj_data6, tsj_data7, tsj_data8, tsj_data9, 
-                     tsj_data10, tsj_data11, tsj_data12, tsj_data13, tsj_data14, 
-                     tsj_data15, tsj_data16, tsj_data17)
-
-tsj_data_all <- tsj_data_all %>%
-  mutate(treatment = case_when(
-    starting_trt == "low" & ending_trt == "low" ~ "lc",
-    starting_trt == "high" & ending_trt == "high" ~ "hc",
-    starting_trt == "low" & ending_trt == "high" ~ "lh",
-    starting_trt == "high" & ending_trt == "low" ~ "hl"
-  ))
+### Test data frame on new leaf vcmax data
+vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt + 
+                          (1|chamber), 
+                        data = subset(licor_photo_data, New == 'Y')) 
+plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
+summary(vcmax_tleaf_lmer)
+Anova(vcmax_tleaf_lmer)
+emmeans(vcmax_tleaf_lmer, ~starting_trt)
+emmeans(vcmax_tleaf_lmer, ~ending_trt)
+emmeans(vcmax_tleaf_lmer, ~starting_trt * ending_trt)
 
 
 ### Resp data analysis
@@ -934,7 +543,7 @@ licor_resp_data <- licor_resp_data %>%
 licor_resp_data$date_multiyear <- licor_resp_data$julian_date
 
 
-### Test data frame on A values
+### Test data frame on old resp values
 
 hist(licor_resp_data$A) 
 resp_lmer <- lmer(A ~ starting_trt * ending_trt * days_since_first + (1|chamber)
@@ -944,208 +553,25 @@ plot(resid(resp_lmer) ~ fitted(resp_lmer))
 summary(resp_lmer)
 Anova(resp_lmer)
 emmeans(resp_lmer, ~starting_trt*ending_trt)
+emmeans(resp_lmer, ~ending_trt)
 emtrends(resp_lmer, ~1, var = 'days_since_first')
 emtrends(resp_lmer, ~starting_trt, var = 'days_since_first')
 emtrends(resp_lmer, ~ending_trt, var = 'days_since_first') 
-emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0))
-emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
+emmeans(resp_lmer, ~starting_trt, at =list(days_since_first = 1))
+emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1))
+cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first =4)))
 
-data.frame( tsr_data0 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-tsr_data0 <- tsr_data0 %>%
-  mutate(days_since_first = 0)
-data.frame( tsr_data1 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1)))) ### B
-tsr_data1 <- tsr_data1 %>%
-  mutate(days_since_first = 1)
-data.frame( tsr_data2 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 2)))) ### B
-tsr_data2 <- tsr_data2 %>%
-  mutate(days_since_first = 2)
-data.frame( tsr_data3 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 3)))) ### B
-tsr_data3 <- tsr_data3 %>%
-  mutate(days_since_first = 3)
-data.frame( tsr_data4 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 4)))) ### B
-tsr_data4 <- tsr_data4 %>%
-  mutate(days_since_first = 4)
-data.frame( tsr_data5 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 5)))) ### B
-tsr_data5 <- tsr_data5 %>%
-  mutate(days_since_first = 5)
-data.frame( tsr_data6 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 6)))) ### B
-tsr_data6 <- tsr_data6 %>%
-  mutate(days_since_first = 6)
-data.frame( tsr_data7 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7)))) ### B
-tsr_data7 <- tsr_data7 %>%
-  mutate(days_since_first = 7)
-data.frame( tsr_data8 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 8)))) ### B
-tsr_data8 <- tsr_data8 %>%
-  mutate(days_since_first = 8)
-data.frame( tsr_data9 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 9)))) ### B
-tsr_data9 <- tsr_data9 %>%
-  mutate(days_since_first = 9)
-data.frame( tsr_data10 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10)))) ### B
-tsr_data10 <- tsr_data10 %>%
-  mutate(days_since_first = 10)
-data.frame( tsr_data11 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 11)))) ### B
-tsr_data11 <- tsr_data11 %>%
-  mutate(days_since_first = 11)
-data.frame( tsr_data12 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 12)))) ### B
-tsr_data12 <- tsr_data12 %>%
-  mutate(days_since_first = 12)
-data.frame( tsr_data13 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 13)))) ### B
-tsr_data13 <- tsr_data13 %>%
-  mutate(days_since_first = 13)
-data.frame( tsr_data14 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14)))) ### B
-tsr_data14 <- tsr_data14 %>%
-  mutate(days_since_first = 14)
-data.frame( tsr_data15 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 15)))) ### B
-tsr_data15 <- tsr_data15 %>%
-  mutate(days_since_first = 15)
-data.frame( tsr_data16 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 16)))) ### B
-tsr_data16 <- tsr_data16 %>%
-  mutate(days_since_first = 16)
-data.frame( tsr_data17 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 17)))) ### B
-tsr_data17 <- tsr_data17 %>%
-  mutate(days_since_first = 17)
-
-tsr_data_all <- rbind(tsr_data0, tsr_data1, tsr_data2, tsr_data3, tsr_data4, 
-                      tsr_data5, tsr_data6, tsr_data7, tsr_data8, tsr_data9, 
-                      tsr_data10, tsr_data11, tsr_data12, tsr_data13, tsr_data14, 
-                      tsr_data15, tsr_data16, tsr_data17)
-
-vcmax_tleaf_lmer <- lmer(log(vcmax_tleaf) ~ starting_trt * ending_trt + 
-                           (1|chamber) + (1|id), 
-                         data = subset(licor_photo_data, New == 'Y')) # this is the model setup to use for old leaves (ngs)
-plot(resid(vcmax_tleaf_lmer) ~ fitted(vcmax_tleaf_lmer))
-summary(vcmax_tleaf_lmer)
-Anova(vcmax_tleaf_lmer)
-emmeans(vcmax_tleaf_lmer, ~starting_trt*ending_trt)
-emmeans(vcmax_tleaf_lmer, ~ending_trt)
-
-
-### Test data frame on resp data
+### Test data frame on new resp data
 
 hist(licor_resp_data$A) 
-resp_lmer <- lmer((A) ~ starting_trt * ending_trt * days_since_first + 
-                          (1|chamber) + (1|id), 
-                        data = subset(licor_resp_data, New == 'N')) # this is the model setup to use for old leaves (ngs)
+resp_lmer <- lmer(A ~ starting_trt * ending_trt + (1|chamber), 
+                  data = subset(licor_resp_data, New == 'Y'))
 plot(resid(resp_lmer) ~ fitted(resp_lmer))
 summary(resp_lmer)
 Anova(resp_lmer)
 emmeans(resp_lmer, ~starting_trt)
 emmeans(resp_lmer, ~ending_trt)
-emtrends(resp_lmer, ~1, var = 'days_since_first')
-emmeans(resp_lmer, ~1, at = list(days_since_first = 0))
-emtrends(resp_lmer, ~starting_trt, var = 'days_since_first')
-emtrends(resp_lmer, ~ending_trt, var = 'days_since_first') 
-emtrends(resp_lmer, ~starting_trt * ending_trt, var = 'days_since_first') # M
-data.frame( ts_data <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first =4)))
-emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10))
-
-xtrend = seq(0, max(subset(licor_photo_data, New == 'N')$days_since_first), 1) # X
-
-##HC
-hc_y_r = 0.0301*xtrend + -1.08
-
-###LH
-lh_y_r =   0.0331*xtrend + -1.17
-
-###HL
-hl_y_r =  0.0409*xtrend + -1.22
-
-###LC
-lc_y_r =   0.0409*xtrend + -1.27
-
-trends_r <- as.data.frame(cbind(xtrend, hc_y_r, hl_y_r, lc_y_r, lh_y_r))
-
-melted_r_data <- trends_r %>%
-  pivot_longer(cols = starts_with("h") | starts_with("l"), 
-               names_to = "treatment", 
-               values_to = "value") 
-
-melted_r_data <- trends_r %>%
-  pivot_longer(cols = c(hc_y_r, hl_y_r, lc_y_r, lh_y_r), 
-               names_to = "treatment", 
-               values_to = "value")
-# Define the treatment groups
-melted_r_data <- melted_r_data %>%
-  mutate(group = case_when(
-    treatment == "hc_y_r" ~ "hc",
-    treatment == "hl_y_r" ~ "hl",
-    treatment == "lc_y_r" ~ "lc",
-    treatment == "lh_y_r" ~ "lh"))
-
-melted_r_data <- melted_r_data %>%
-  mutate(broad_group = case_when(
-    group %in% c("hc", "lh") ~ "hc and lh",
-    group %in% c("hl", "lc") ~ "lc and hl"
-  ))
-
-data.frame( tsj_data0 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 0)))) ### B
-tsj_data0 <- tsj_data0 %>%
-  mutate(days_since_first = 0)
-data.frame( tsj_data1 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 1)))) ### B
-tsj_data1 <- tsj_data1 %>%
-  mutate(days_since_first = 1)
-data.frame( tsj_data2 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 2)))) ### B
-tsj_data2 <- tsj_data2 %>%
-  mutate(days_since_first = 2)
-data.frame( tsj_data3 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 3)))) ### B
-tsj_data3 <- tsj_data3 %>%
-  mutate(days_since_first = 3)
-data.frame( tsj_data4 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 4)))) ### B
-tsj_data4 <- tsj_data4 %>%
-  mutate(days_since_first = 4)
-data.frame( tsj_data5 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 5)))) ### B
-tsj_data5 <- tsj_data5 %>%
-  mutate(days_since_first = 5)
-data.frame( tsj_data6 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 6)))) ### B
-tsj_data6 <- tsj_data6 %>%
-  mutate(days_since_first = 6)
-data.frame( tsj_data7 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 7)))) ### B
-tsj_data7 <- tsj_data7 %>%
-  mutate(days_since_first = 7)
-data.frame( tsj_data8 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 8)))) ### B
-tsj_data8 <- tsj_data8 %>%
-  mutate(days_since_first = 8)
-data.frame( tsj_data9 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 9)))) ### B
-tsj_data9 <- tsj_data9 %>%
-  mutate(days_since_first = 9)
-data.frame( tsj_data10 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 10)))) ### B
-tsj_data10 <- tsj_data10 %>%
-  mutate(days_since_first = 10)
-data.frame( tsj_data11 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 11)))) ### B
-tsj_data11 <- tsj_data11 %>%
-  mutate(days_since_first = 11)
-data.frame( tsj_data12 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 12)))) ### B
-tsj_data12 <- tsj_data12 %>%
-  mutate(days_since_first = 12)
-data.frame( tsj_data13 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 13)))) ### B
-tsj_data13 <- tsj_data13 %>%
-  mutate(days_since_first = 13)
-data.frame( tsj_data14 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 14)))) ### B
-tsj_data14 <- tsj_data14 %>%
-  mutate(days_since_first = 14)
-data.frame( tsj_data15 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 15)))) ### B
-tsj_data15 <- tsj_data15 %>%
-  mutate(days_since_first = 15)
-data.frame( tsj_data16 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 16)))) ### B
-tsj_data16 <- tsj_data16 %>%
-  mutate(days_since_first = 16)
-data.frame( tsj_data17 <- cld(emmeans(resp_lmer, ~starting_trt*ending_trt, at =list(days_since_first = 17)))) ### B
-tsj_data17 <- tsj_data17 %>%
-  mutate(days_since_first = 17)
-
-tsj_data_all <- rbind(tsj_data0, tsj_data1, tsj_data2, tsj_data3, tsj_data4, 
-                      tsj_data5, tsj_data6, tsj_data7, tsj_data8, tsj_data9, 
-                      tsj_data10, tsj_data11, tsj_data12, tsj_data13, tsj_data14, 
-                      tsj_data15, tsj_data16, tsj_data17)
-
-tsj_data_all <- tsj_data_all %>%
-  mutate(treatment = case_when(
-    starting_trt == "low" & ending_trt == "low" ~ "lc",
-    starting_trt == "high" & ending_trt == "high" ~ "hc",
-    starting_trt == "low" & ending_trt == "high" ~ "lh",
-    starting_trt == "high" & ending_trt == "low" ~ "hl"
-  ))
+emmeans(resp_lmer, ~starting_trt * ending_trt)
 
 #Structural data analysis
 
@@ -1190,51 +616,88 @@ struc_data <- struc_data %>%
     LMA_chloro = as.numeric(LMA_chloro)
   )
 
-
-write.csv(struc_data, file = "sorted_struc_data.csv")
-
 hc <- filter(struc_data, treatment == "hc")
 lc <- filter(struc_data, treatment == "lc")
 hl <- filter(struc_data, treatment == "hl")
 lh <- filter(struc_data, treatment == "lh")
 
-# Perform t-tests between each combination
-t_test_hc_lc <- t.test(hc$chl_content.mmolm2, lc$chl_content.mmolm2)
-print(t_test_lc_hl)
-t_test_hc_hl <- t.test(hc$chl_content.mmolm2, hl$chl_content.mmolm2)
-t_test_hc_lh <- t.test(hc$chl_content.mmolm2, lh$chl_content.mmolm2)
-t_test_lc_hl <- t.test(lc$chl_content.mmolm2, hl$chl_content.mmolm2)
-t_test_lc_lh <- t.test(lc$chl_content.mmolm2, lh$chl_content.mmolm2)
-t_test_hl_lh <- t.test(hl$chl_content.mmolm2, lh$chl_content.mmolm2)
+### Chlorophyll ab ratio in new leaves
+ab_lmer <- lmer(Chl_a_b_ratio ~ starting_trt * ending_trt + 
+                           (1|chamber), 
+                         data = struc_data) 
+plot(resid(ab_lmer) ~ fitted(ab_lmer))
+summary(ab_lmer)
+Anova(ab_lmer)
+emmeans(ab_lmer, ~starting_trt)
+emmeans(ab_lmer, ~ending_trt)
+emmeans(ab_lmer, ~starting_trt * ending_trt)
 
-t_test_hc_lc_ratio <- t.test(hc$chlA.mmolm2, lc$chlA.mmolm2)
-t_test_hc_hl_ratio <- t.test(hc$chlA.mmolm2, hl$chlA.mmolm2)
-t_test_hc_lh_ratio <- t.test(hc$chlA.mmolm2, lh$chlA.mmolm2)
-t_test_lc_hl_ratio <- t.test(lc$chlA.mmolm2, hl$chlA.mmolm2)
-t_test_lc_lh_ratio <- t.test(lc$chlA.mmolm2, lh$chlA.mmolm2)
-t_test_hl_lh_ratio <- t.test(hl$chlA.mmolm2, lh$chlA.mmolm2)
+### LMA in new leaves
+lma_lmer <- lmer(log(LMA_focal) ~ starting_trt * ending_trt + 
+                  (1|chamber), 
+                data = struc_data) 
+plot(resid(lma_lmer) ~ fitted(lma_lmer))
+summary(lma_lmer)
+Anova(lma_lmer)
+emmeans(lma_lmer, ~starting_trt)
+emmeans(lma_lmer, ~ending_trt)
+emmeans(lma_lmer, ~starting_trt * ending_trt)
 
-t_test_hc_lc_LMA <- t.test(hc$LMA_focal, lc$LMA_focal)
-t_test_hc_hl_LMA <- t.test(hc$chlA.mmolm2, hl$chlA.mmolm2)
-t_test_hc_lh_LMA <- t.test(hc$LMA_focal, lh$LMA_focal)
-t_test_lc_hl_LMA <- t.test(lc$LMA_focal, hl$LMA_focal)
-t_test_lc_lh_LMA <- t.test(lc$chlA.mmolm2, lh$chlA.mmolm2)
-t_test_hl_lh_LMA <- t.test(hl$chlA.mmolm2, lh$chlA.mmolm2)
+### Total chlorophyll in new leaves
+total_lmer <- lmer(struc_data$total_area_chloro_cm ~ starting_trt * ending_trt + 
+                   (1|chamber), 
+                 data = struc_data)
+plot(resid(total_lmer) ~ fitted(total_lmer))
+summary(total_lmer)
+Anova(total_lmer)
+emmeans(total_lmer, ~starting_trt)
+emmeans(total_lmer, ~ending_trt)
+emmeans(total_lmer, ~starting_trt * ending_trt)
 
-# Print the results
-print(t_test_hc_lc_ratio)
-print(t_test_hc_hl_ratio)
-print(t_test_hc_lh_ratio)
-print(t_test_lc_hl_ratio)
-print(t_test_lc_lh_ratio)
-print(t_test_hl_lh_ratio)
+###Nutrient data
+cn_data <- nutrient_data %>%
+  extract(Sample_ID, into = c("chamber", "treatment", "first_number", "second_number"),
+          regex = "([A-Za-z]+)_([A-Za-z]+)_(\\d)_(\\d+)", convert = TRUE, remove = FALSE) %>%
+  mutate(across(c(chamber, treatment, first_number, second_number), as.character))
 
-### Test boxplot
+cn_data$starting_trt <- NA
+cn_data$starting_trt[cn_data$treatment == 'lc' | cn_data$treatment == 'lh'] <- 'low'
+cn_data$starting_trt[cn_data$treatment == 'hc' | cn_data$treatment == 'hl'] <- 'high'
+
+cn_data$ending_trt <- NA
+cn_data$ending_trt[cn_data$treatment == 'lc' | cn_data$treatment == 'hl'] <- 'low'
+cn_data$ending_trt[cn_data$treatment == 'hc' | cn_data$treatment == 'lh'] <- 'high'
+
+n_lmer <- lmer(Total_N ~ starting_trt * ending_trt + 
+                     (1|chamber), 
+                   data = cn_data) 
+plot(resid(n_lmer) ~ fitted(n_lmer))
+summary(n_lmer)
+Anova(n_lmer)
+emmeans(n_lmer, ~starting_trt)
+emmeans(n_lmer, ~ending_trt)
+emmeans(n_lmer, ~starting_trt * ending_trt)
+
+c_lmer <- lmer(Total_C ~ starting_trt * ending_trt + 
+                 (1|chamber), 
+               data = cn_data) 
+plot(resid(c_lmer) ~ fitted(n_lmer))
+summary(c_lmer)
+Anova(c_lmer)
+emmeans(c_lmer, ~starting_trt)
+emmeans(c_lmer, ~ending_trt)
+emmeans(c_lmer, ~starting_trt * ending_trt)
+
+cld(emmeans(ab_lmer, ~starting_trt*ending_trt))
+Anova(c_lmer)
+cld(emmeans(c_lmer, ~starting_trt*ending_trt))
+
+### New leaf boxplots
 
 ###SPAD
-
-ggplot(subset(multipeq_data_light, New == "Y"), aes(x = Treatment, y = SPAD, fill = Treatment)) +
-  geom_boxplot (size = 0.5) +
+ggplot(subset(multipeq_data_light, New == "Y"), 
+       aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = SPAD, fill = Treatment)) +
+  geom_boxplot(size = 0.5) +
   labs(title = "New SPAD by treatment",
        x = "Treatment",
        y = "SPAD",
@@ -1248,14 +711,116 @@ ggplot(subset(multipeq_data_light, New == "Y"), aes(x = Treatment, y = SPAD, fil
         strip.text = element_text(size = 12)) +
   scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
 
-###Vcmax
+###Fv'/Fm'
+ggplot(subset(multipeq_data_light, New == "Y"), 
+       aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = FvP_over_FmP, fill = Treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "New Fv'/Fm' by treatment",
+       x = "Treatment",
+       y = "Fv'/Fm'",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
 
-ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
-  geom_boxplot (size = 0.5) +
+###Phi2
+ggplot(subset(multipeq_data_light, New == "Y"), 
+       aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = Phi2, fill = Treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "New PhiPSII by treatment",
+       x = "Treatment",
+       y = "PhiPSII",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+
+###Phi2
+ggplot(subset(multipeq_data_light, New == "Y"), 
+       aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = Phi2, fill = Treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "New PhiPSII by treatment",
+       x = "Treatment",
+       y = "PhiPSII",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+
+###NPQt
+ggplot(subset(multipeq_data_light, New == "Y"), 
+       aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = NPQt, fill = Treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "New NPQt by treatment",
+       x = "Treatment",
+       y = "NPQt",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+
+###Leaf Thickness
+ggplot(subset(multipeq_data_light, New == "Y"), 
+       aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = leaf_thickness, fill = Treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "New Leaf Thickness by treatment",
+       x = "Treatment",
+       y = "Leaf Thickness",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+
+###chl content
+ggplot(struc_data, 
+       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = chl_content.mmolm2, fill = treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "New Leaf total chl content by treatment",
+       x = "Treatment",
+       y = "Total chl content",
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+
+###LMA
+ggplot(struc_data, 
+       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = LMA_focal, fill = treatment)) +
+  geom_boxplot(size = 0.5) +
   labs(title = "",
        x = "Treatment",
-       y = "Vcmax (25°C)",
-       fill = "Treatment") +
+       y = "Leaf mass per area (LMA)",
+       fill = "") +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),  
         panel.grid.major = element_blank(),  
@@ -1265,205 +830,119 @@ ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = vcmax_tleaf,
         strip.text = element_text(size = 12)) +
   scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
 
-
-
-vcmax0 <- ggplot(subset(licor_photo_data, days_since_first == 0 & New == "N"), 
-                aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
+###Vcmax
+ggplot(subset(licor_photo_data, New == "Y"), 
+       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = vcmax_tleaf, fill = treatment)) +
   geom_boxplot(size = 0.5) +
   labs(title = "",
-       x = "Day 0",
-       y = "Vcmax (25°C)",
+       x = "Treatment",
+       y = expression(V[cmax] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
        fill = "") +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),  
         panel.grid.major = element_blank(),  
         panel.grid.minor = element_blank(),  
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),  
-        strip.text = element_text(size = 12),
-        legend.position = "none") +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
-
-vcmax14 <- ggplot(subset(licor_photo_data, days_since_first == 14 & New == "N"), 
-                 aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
-  geom_boxplot(size = 0.5) +
-  labs(title = "",
-       x = "Day 14",
-       y = "",
-       fill = "") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),  
-        panel.grid.major = element_blank(),  
-        panel.grid.minor = element_blank(),  
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),  
-        strip.text = element_text(size = 12),
-        legend.position = "none") +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
-
-# Combine the plots using patchwork
-combined_plot <- vcmax0 + vcmax14 + plot_layout(nrow = 1)
-plot(combined_plot)
-
-licor_photo_data$treatment <- factor(licor_photo_data$treatment, levels = c("hc", "lh", "lc", "hl"))
-
-# Create the first plot for day 0
-vcmax0 <- ggplot(subset(licor_photo_data, days_since_first == 0 & New == "N"), 
-                 aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
-  geom_boxplot(size = 0.5) +
-  labs(title = "",
-       x = "Day 0",
-       y = "Vcmax (25°C)",
-       fill = "") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),  
-        panel.grid.major = element_blank(),  
-        panel.grid.minor = element_blank(),  
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),  
-        strip.text = element_text(size = 12),
-        legend.position = "none") +
-        ylim(0,89) +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
-
-
-# Create the second plot for day 14
-vcmax14 <- ggplot(subset(licor_photo_data, days_since_first == 14 & New == "N"), 
-                  aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
-  geom_boxplot(size = 0.5) +
-  labs(title = "",
-       x = "Day 14",
-       y = "",
-       fill = "") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),  
-        panel.grid.major = element_blank(),  
-        panel.grid.minor = element_blank(),  
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),  
-        strip.text = element_text(size = 12),
-        legend.position = "none") +
-        ylim(0,89) +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
-
-
-
-# Combine the plots using patchwork
-combined_plot <- vcmax0 + vcmax14 + plot_layout(nrow = 1)
-
-# Display the combined plot
-print(combined_plot)
-# Plot for New == "N"
-vcmax_new_N <- ggplot(subset(licor_photo_data, New == "N"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
-  geom_boxplot(size = 0.5) +
-  labs(title = "",
-       x = "Old leaf",
-       y = "vcmax",
-       fill = "") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),  
-        panel.grid.major = element_blank(),  
-        panel.grid.minor = element_blank(),  
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),  
-        strip.text = element_text(size = 12),
-        legend.position = "none") +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
-
-# Plot for New == "Y"
-vcmax_new_Y <- ggplot(subset(licor_photo_data, New == "Y"), aes(x = treatment, y = vcmax_tleaf, fill = treatment)) +
-  geom_boxplot(size = 0.5) +
-  labs(title = "",
-       x = "New leaf",
-       y = "",
-       fill = "") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),  
-        panel.grid.major = element_blank(),  
-        panel.grid.minor = element_blank(),
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
   scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
 
-combined_plot <- vcmax_new_N + vcmax_new_Y + plot_layout(ncol = 2, widths = c(1, 1))
-
-# Display the combined plot
-print(combined_plot)
-
-### Good plot multi-panel
-ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
-  geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  # Larger points with some transparency
-  geom_smooth(aes(color = treatment), method = "lm", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
-  labs(title = "Vcmax by date across all treatments",
-       x = "Days since Baseline",
-       y = "Vcmax at 25°C",
-       shape = "Treatment",
-       color = "Treatment") +
-  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
-  theme_bw(base_size = 18) +  
-  theme(panel.border = element_rect(size = 1),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
+###Jmax
+ggplot(subset(licor_photo_data, New == "Y"), 
+       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = jmax_tleaf, fill = treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "",
+       x = "Treatment",
+       y = expression(J[max] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
         panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),
-        strip.text = element_text(size = 12),
-        panel.spacing.x = unit(15, "pt"),
-        axis.text.x = (element_text(size = 12)),
-        axis.text.y = (element_text(size = 12))) +
-  facet_wrap(~ treatment, scales = "free_y") 
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
 
-### Trends
-
-write_csv(hl_trend, file = "hl_trend.csv")
-write_csv(licor_photo_data, file = "licor_photo_data.csv")
-
-ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = log(vcmax_tleaf))) +
-  geom_point(aes(shape = treatment), size = 2, alpha = 0.8) +  # Larger points with some transparency
-  labs(title = "Old leaf Vcmax by date across all treatments",
-       x = "Days since Baseline",
-       y = "Vcmax at 25°C",
-       shape = "Treatment",
-       color = "Treatment") +
-  scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
-  geom_line(data = hc_trend, aes(x = xtrend, y = hc_y), color = "orangered4", size = 1.2) +  # hc trend line
-  geom_line(data = hl_trend, aes(x = xtrend, y = hl_y), color = "skyblue2", size = 1.2) +  # hl trend line
-  geom_line(data = lc_trend, aes(x = xtrend, y = lc_y), color = "royalblue4", size = 1.2) +  # lc trend line
-  geom_line(data = lh_trend, aes(x = xtrend, y = lh_y), color = "lightcoral", size = 1.2) +  # lh trend line
-  theme_bw(base_size = 18) +  
-  theme(panel.border = element_rect(size = 1),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
+###Resp
+ggplot(subset(licor_resp_data, New == "Y"), 
+       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = abs(A), fill = treatment)) +
+  geom_boxplot(size = 0.5) +
+  labs(title = "",
+       x = "Treatment",
+       y = expression(R[d] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
+       fill = "") +
+  theme_bw(base_size = 18) +
+  theme(panel.border = element_rect(size = 1),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
         panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),
-        strip.text = element_text(size = 12),
-        panel.spacing.x = unit(15, "pt"),
-        axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12)) +
-  facet_wrap(~ treatment, scales = "free_y")
+        strip.background = element_blank(),  
+        strip.text = element_text(size = 12)) +
+  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
 
-write.csv(trends, file = "trends.csv")
- 
-# Plotting with ggplot
+# Create groups to split graphs
 
 licor_photo_data <- licor_photo_data %>%
   mutate(broad_group = case_when(
-    treatment %in% c("hc", "hl") ~ "hc and hl",
-    treatment %in% c("lh", "lc") ~ "lc and lh"))
+    treatment %in% c("hc", "lh") ~ "hc and lh",
+    treatment %in% c("lc", "hl") ~ "lc and hl"))
+
+licor_resp_data <- licor_resp_data %>%
+  mutate(broad_group = case_when(
+    treatment %in% c("hc", "lh") ~ "hc and lh",
+    treatment %in% c("lc", "hl") ~ "lc and hl"))
 
 
 ### Vcmax est means plot
+xtrend = seq(0, max(subset(licor_photo_data, New == 'N')$days_since_first), 1) # X
+
+##HC
+hc_y = -0.0496*xtrend + 2.26
+
+###LH
+lh_y = -0.0633*xtrend + 3.19
+
+###HL
+hl_y = -0.0551*xtrend + 2.75
+
+###LC
+lc_y =  -0.0689*xtrend + 3.46
+
+trends <- as.data.frame(cbind(xtrend, hc_y, hl_y, lc_y, lh_y))
+
+melted_data <- trends %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "treatment", 
+               values_to = "value") 
+
+melted_data <- trends %>%
+  pivot_longer(cols = c(hc_y, hl_y, lc_y, lh_y), 
+               names_to = "treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_data <- melted_data %>%
+  mutate(group = case_when(
+    treatment == "hc_y" ~ "hc",
+    treatment == "hl_y" ~ "hl",
+    treatment == "lc_y" ~ "lc",
+    treatment == "lh_y" ~ "lh"))
+
+melted_data <- melted_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("hc", "lh") ~ "hc and lh",
+    group %in% c("hl", "lc") ~ "lc and hl"
+  ))
+
 ggplot() +
   geom_point(data = licor_photo_data %>% filter(New == "N"), 
              aes(x = days_since_first, y = (vcmax_tleaf), shape = treatment, color = treatment), 
              size = 1, alpha = 0.5) +
   geom_line(data = melted_data, aes( x = xtrend, y = exp(value), color = group), size = 1.2) +
-  labs(title = "      Vcmax in old leaves over time",
+  labs(title = "",
        x = "Days since baseline",
-       y = "Vcmax (25°C)",
-       shape = "Vcmax data",
+       y = expression(V[cmax] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
+       shape = expression(V[cmax] ~ "data"),
        color = "Estimated means") +
   scale_shape_manual(values = c("hc" = 3, "lh" = 16, "lc" = 4, "hl" = 15)) +
   scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
@@ -1478,18 +957,57 @@ ggplot() +
         axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12),
         legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "free_y")
+  facet_wrap(~ broad_group, scales = "fixed") 
+
 
 ### jmax est means plot
+
+##HC
+hc_y_j =  -0.0377*xtrend + 2.81
+
+###LH
+lh_y_j =  -0.0599*xtrend + 3.77
+
+###HL
+hl_y_j =  -0.0507*xtrend + 3.33
+
+###LC
+lc_y_j =  -0.0643*xtrend + 4.01
+
+trends_j <- as.data.frame(cbind(xtrend, hc_y_j, hl_y_j, lc_y_j, lh_y_j))
+
+melted_j_data <- trends_j %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "treatment", 
+               values_to = "value") 
+
+melted_j_data <- trends_j %>%
+  pivot_longer(cols = c(hc_y_j, hl_y_j, lc_y_j, lh_y_j), 
+               names_to = "treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_j_data <- melted_j_data %>%
+  mutate(group = case_when(
+    treatment == "hc_y_j" ~ "hc",
+    treatment == "hl_y_j" ~ "hl",
+    treatment == "lc_y_j" ~ "lc",
+    treatment == "lh_y_j" ~ "lh"))
+
+melted_j_data <- melted_j_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("hc", "lh") ~ "hc and lh",
+    group %in% c("hl", "lc") ~ "lc and hl"
+  ))
+
 ggplot() +
   geom_point(data = licor_photo_data %>% filter(New == "N"), 
              aes(x = days_since_first, y = (jmax_tleaf), shape = treatment, color = treatment), 
              size = 1, alpha = 0.5) +
   geom_line(data = melted_j_data, aes( x = xtrend, y = exp(value), color = group), size = 1.2) +
-  labs(title = "      Jmax in old leaves over time",
+  labs(title = "",
        x = "Days since baseline",
-       y = "jmax (25°C)",
-       shape = "jmax data",
+       y = expression(J[max] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
+       shape = expression(J[max] ~ "data"),
        color = "Estimated means") +
   scale_shape_manual(values = c("hc" = 3, "lh" = 16, "lc" = 4, "hl" = 15)) +
   scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
@@ -1504,19 +1022,60 @@ ggplot() +
         axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12),
         legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "free_y")
+  facet_wrap(~ broad_group, scales = "fixed") 
+#+
+ # facet_wrap(~ broad_group, scales = "free_y")
 
 ### Resp est mean plot
 
+##HC
+hc_y_r = 0.0301*xtrend + -1.08
+
+###LH
+lh_y_r =   0.0331*xtrend + -1.17
+
+###HL
+hl_y_r =  0.0409*xtrend + -1.22
+
+###LC
+lc_y_r =   0.0409*xtrend + -1.27
+
+trends_r <- as.data.frame(cbind(xtrend, hc_y_r, hl_y_r, lc_y_r, lh_y_r))
+
+melted_r_data <- trends_r %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "treatment", 
+               values_to = "value") 
+
+melted_r_data <- trends_r %>%
+  pivot_longer(cols = c(hc_y_r, hl_y_r, lc_y_r, lh_y_r), 
+               names_to = "treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_r_data <- melted_r_data %>%
+  mutate(group = case_when(
+    treatment == "hc_y_r" ~ "hc",
+    treatment == "hl_y_r" ~ "hl",
+    treatment == "lc_y_r" ~ "lc",
+    treatment == "lh_y_r" ~ "lh"))
+
+melted_r_data <- melted_r_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("hc", "lh") ~ "hc and lh",
+    group %in% c("hl", "lc") ~ "lc and hl"
+  ))
+
+
 ggplot() +
-  geom_point(data = licor_resp_data %>% filter(New == "N"), 
-             aes(x = days_since_first, y = (A), shape = treatment, color = treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_r_data, aes( x = xtrend, y = exp(value), color = group), size = 1.2) +
-  labs(title = "      Resp in old leaves over time",
+  geom_point(data = licor_resp_data %>% filter(New == "N", !is.na(broad_group)), 
+             aes(x = days_since_first, y = abs(A), shape = treatment, color = treatment), 
+             size = 1, alpha = 0.5) + 
+  geom_line(data = melted_r_data %>% filter(!is.na(group)), 
+            aes(x = xtrend, y = abs(value), color = group), size = 1.2) +
+  labs(title = "",
        x = "Days since baseline",
-       y = "A",
-       shape = "Resp data",
+       y = expression(R[d] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
+       shape = expression(R[d] ~ "data"),
        color = "Estimated means") +
   scale_shape_manual(values = c("hc" = 3, "lh" = 16, "lc" = 4, "hl" = 15)) +
   scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
@@ -1531,18 +1090,65 @@ ggplot() +
         axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12),
         legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "free_y")
+  facet_wrap(~ broad_group, scales = "fixed")
+
 
 ### SPAD est means plot
+xtrend_fluro = seq(0, max(17)) # X
+
+##HC
+hc_y_s =  -0.02645*xtrend + 3.78
+
+###LH
+lh_y_s =    -0.01852*xtrend + 3.75
+
+###HL
+hl_y_s =     -0.00892*xtrend + 3.69
+
+###LC
+lc_y_s =     -0.00366*xtrend + 3.66
+
+trends_s <- as.data.frame(cbind(xtrend_fluro, hc_y_s, hl_y_s, lc_y_s, lh_y_s))
+
+melted_s_data <- trends_s %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "Treatment", 
+               values_to = "value") 
+
+melted_s_data <- trends_s %>%
+  pivot_longer(cols = c(hc_y_s, hl_y_s, lc_y_s, lh_y_s), 
+               names_to = "Treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_s_data <- melted_s_data %>%
+  mutate(group = case_when(
+    Treatment == "hc_y_s" ~ "HC",
+    Treatment == "hl_y_s" ~ "HL",
+    Treatment == "lc_y_s" ~ "LC",
+    Treatment == "lh_y_s" ~ "LH"))
+
+melted_s_data <- melted_s_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("HL", "LC") ~ "LC and HL"
+  ))
+
+multipeq_data_light <- multipeq_data_light %>%
+  mutate(broad_group = case_when(
+    Treatment %in% c("HC", "LH") ~ "HC and LH",
+    Treatment %in% c("HL", "LC") ~ "LC and HL"
+  ))
+
+
 ggplot() +
   geom_point(data = multipeq_data_light %>% filter(New == "N"), 
              aes(x = days_since_first, y = (SPAD), shape = Treatment, color = Treatment), 
              size = 1, alpha = 0.5) +
-  geom_line(data = melted_s_data, aes( x = xtrend, y = exp(value), color = group), size = 1.2) +
-  labs(title = "      Vcmax in old leaves over time",
+  geom_line(data = melted_s_data, aes( x = xtrend_fluro, y = exp(value), color = group), size = 1.2) +
+  labs(title = "SPAD in old leaves over time",
        x = "Days since baseline",
-       y = "Vcmax (25°C)",
-       shape = "Vcmax data",
+       y = "SPAD",
+       shape = "SPAD data",
        color = "Estimated means") +
   scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
   scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
@@ -1557,8 +1163,270 @@ ggplot() +
         axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12),
         legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "free_y")
+  facet_wrap(~ broad_group, scales = "fixed")
 
+## NPQt
+##HC
+xtrend_npq = seq(0, max(17)) # X
+
+
+hc_y_npq =     0.611*xtrend_npq + 3.97
+
+###LH
+lh_y_npq =     0.178*xtrend_npq + 2.75
+
+###HL
+hl_y_npq =      0.244*xtrend_npq + 1.07
+
+###LC
+lc_y_npq =     0.192*xtrend_npq + 0.31
+
+trends_npq <- as.data.frame(cbind(xtrend_npq, hc_y_npq, hl_y_npq, lc_y_npq, lh_y_npq))
+
+melted_npq_data <- trends_npq %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "Treatment", 
+               values_to = "value") 
+
+melted_npq_data <- trends_npq %>%
+  pivot_longer(cols = c(hc_y_npq, hl_y_npq, lc_y_npq, lh_y_npq), 
+               names_to = "Treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_npq_data <- melted_npq_data %>%
+  mutate(group = case_when(
+    Treatment == "hc_y_npq" ~ "HC",
+    Treatment == "hl_y_npq" ~ "HL",
+    Treatment == "lc_y_npq" ~ "LC",
+    Treatment == "lh_y_npq" ~ "LH"))
+
+melted_npq_data <- melted_npq_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("HL", "LC") ~ "LC and HL"
+  ))
+
+
+ggplot() +
+  geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_npq)), 
+             aes(x = days_since_first, y = (NPQt), shape = Treatment, color = Treatment), 
+             size = 1, alpha = 0.5) +
+  geom_line(data = melted_npq_data, aes( x = xtrend_npq, y = value, color = group), size = 1.2) +
+  labs(title = "                        NPQt in old leaves over time",
+       x = "Days since baseline",
+       y = "NPQt",
+       shape = "NPQt data",
+       color = "Estimated means") +
+  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.title = element_text(size = 14))  +
+  facet_wrap(~ broad_group, scales = "fixed")
+
+### FvP est means plot
+xtrend_fluro = seq(0, max(17)) # X
+
+##HC
+hc_y_qe =    -0.0114*xtrend_fluro + 0.472
+
+###LH
+lh_y_qe =    -0.0124*xtrend_fluro + 0.601
+
+###HL
+hl_y_qe =     -0.0112*xtrend_fluro +  0.705
+
+###LC
+lc_y_qe =     -0.0138*xtrend_fluro + 0.799
+
+trends_qe <- as.data.frame(cbind(xtrend_fluro, hc_y_qe, hl_y_qe, lc_y_qe, lh_y_qe))
+
+melted_qe_data <- trends_qe %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "Treatment", 
+               values_to = "value") 
+
+melted_qe_data <- trends_qe %>%
+  pivot_longer(cols = c(hc_y_qe, hl_y_qe, lc_y_qe, lh_y_qe), 
+               names_to = "Treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_qe_data <- melted_qe_data %>%
+  mutate(group = case_when(
+    Treatment == "hc_y_qe" ~ "HC",
+    Treatment == "hl_y_qe" ~ "HL",
+    Treatment == "lc_y_qe" ~ "LC",
+    Treatment == "lh_y_qe" ~ "LH"))
+
+melted_qe_data <- melted_qe_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("HL", "LC") ~ "LC and HL"
+  ))
+
+
+ggplot() +
+  geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_fluro)), 
+             aes(x = days_since_first, y = (FvP_over_FmP), shape = Treatment, color = Treatment), 
+             size = 1, alpha = 0.5) +
+  geom_line(data = melted_qe_data, aes( x = xtrend_fluro, y = value, color = group), size = 1.2) +
+  labs(title = "                        Fv'/Fm' in old leaves over time",
+       x = "Days since baseline",
+       y = "Fv'/Fm'",
+       shape = "Fv'/Fm' data",
+       color = "Estimated means") +
+  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.title = element_text(size = 14))  +
+  facet_wrap(~ broad_group, scales = "fixed")
+
+### Phi2 est means plot
+xtrend_fluro = seq(0, max(17)) # X
+
+##HC
+hc_y_p2 =    -0.00258*xtrend_fluro + 0.0915
+
+###LH
+lh_y_p2 =    -0.00822*xtrend_fluro + 0.1681
+
+###HL
+hl_y_p2 =     -0.00584*xtrend_fluro +  0.1550
+
+###LC
+lc_y_p2 =     -0.01208*xtrend_fluro + 0.2743
+
+trends_p2 <- as.data.frame(cbind(xtrend_fluro, hc_y_p2, hl_y_p2, lc_y_p2, lh_y_p2))
+
+melted_p2_data <- trends_p2 %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "Treatment", 
+               values_to = "value") 
+
+melted_p2_data <- trends_p2 %>%
+  pivot_longer(cols = c(hc_y_p2, hl_y_p2, lc_y_p2, lh_y_p2), 
+               names_to = "Treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_p2_data <- melted_p2_data %>%
+  mutate(group = case_when(
+    Treatment == "hc_y_p2" ~ "HC",
+    Treatment == "hl_y_p2" ~ "HL",
+    Treatment == "lc_y_p2" ~ "LC",
+    Treatment == "lh_y_p2" ~ "LH"))
+
+melted_p2_data <- melted_p2_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("HL", "LC") ~ "LC and HL"
+  ))
+
+ggplot() +
+  geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_fluro)), 
+             aes(x = days_since_first, y = (Phi2), shape = Treatment, color = Treatment), 
+             size = 1, alpha = 0.5) +
+  geom_line(data = melted_p2_data, aes( x = xtrend_fluro, y = value, color = group), size = 1.2) +
+  labs(title = "                        Phi2 in old leaves over time",
+       x = "Days since baseline",
+       y = "PhiPSII",
+       shape = "PhiPSII data",
+       color = "Estimated means") +
+  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.title = element_text(size = 14))  +
+  facet_wrap(~ broad_group, scales = "fixed")
+
+### Leaf thickness est means plot
+xtrend_fluro = seq(0, max(17)) # X
+
+##HC
+hc_y_lt =     -0.00807*xtrend_fluro + 0.476
+
+###LH
+lh_y_lt =     -0.00922*xtrend_fluro +  0.477
+
+###HL
+hl_y_lt =     -0.00719*xtrend_fluro + 0.438
+
+###LC
+lc_y_lt =     -0.00642*xtrend_fluro + 0.449
+
+trends_lt <- as.data.frame(cbind(xtrend_fluro, hc_y_lt, hl_y_lt, lc_y_lt, lh_y_lt))
+
+melted_lt_data <- trends_lt %>%
+  pivot_longer(cols = starts_with("h") | starts_with("l"), 
+               names_to = "Treatment", 
+               values_to = "value") 
+
+melted_lt_data <- trends_lt %>%
+  pivot_longer(cols = c(hc_y_lt, hl_y_lt, lc_y_lt, lh_y_lt), 
+               names_to = "Treatment", 
+               values_to = "value")
+# Define the treatment groups
+melted_lt_data <- melted_lt_data %>%
+  mutate(group = case_when(
+    Treatment == "hc_y_lt" ~ "HC",
+    Treatment == "hl_y_lt" ~ "HL",
+    Treatment == "lc_y_lt" ~ "LC",
+    Treatment == "lh_y_lt" ~ "LH"))
+
+melted_lt_data <- melted_lt_data %>%
+  mutate(broad_group = case_when(
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("HL", "LC") ~ "LC and HL"
+  ))
+
+ggplot() +
+  geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_fluro)), 
+             aes(x = days_since_first, y = (leaf_thickness), shape = Treatment, color = Treatment), 
+             size = 1, alpha = 0.5) +
+  geom_line(data = melted_lt_data, aes( x = xtrend_fluro, y = value, color = group), size = 1.2) +
+  labs(title = "                        Leaf thickness in old leaves over time",
+       x = "Days since baseline",
+       y = "Leaf Thickness",
+       shape = "Leaf Thickness data",
+       color = "Estimated means") +
+  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
+  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  theme_bw(base_size = 18) +  
+  theme(panel.border = element_rect(size = 1),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 12),
+        panel.spacing.x = unit(15, "pt"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.title = element_text(size = 14))  +
+  facet_wrap(~ broad_group, scales = "fixed")
 
 ### Good plot one-panel
 ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
@@ -1583,7 +1451,7 @@ ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax
         axis.text.y = (element_text(size = 12)))
 
 ### Plot for trends with Multispeq data
-ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = SPAD)) +
+ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = NPQt)) +
   geom_point(aes(shape = Treatment), size = 2, alpha = 0.8) +  
   geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +  # Trend lines with confidence intervals
   labs(title = "Old leaf SPAD by date across all treatments",
@@ -1609,7 +1477,7 @@ ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = SP
 ### Plotting Phi2,PhiNO, PhiNPQ not combined
 multipeq_data_long <- pivot_longer(
   subset(multipeq_data_light, New == "N"),
-  cols = c(Phi2, PhiNO, PhiNPQ),
+  cols = c(Phi2, PhiNPQ),
   names_to = "Variable",
   values_to = "Value"
 )
@@ -1642,7 +1510,7 @@ ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
 multipeq_data_long$trt_group <- ifelse(multipeq_data_long$Treatment %in% c("HC", "LH"), "HC and LH", "LC and HL")
 
 multipeq_data_long <- multipeq_data_long %>%
-  mutate(Variable = factor(Variable, levels = c("Phi2", "PhiNPQ", "PhiNO")))
+  mutate(Variable = factor(Variable, levels = c("Phi2", "PhiNPQ")))
 
 ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
   geom_point(aes(shape = Treatment), size = 1, alpha = 0.5) +
@@ -1669,7 +1537,7 @@ ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
 
 ###SPAD
 
-ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = qL)) +
+ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = NPQt)) +
   geom_point(aes(shape = Treatment), size = 1, alpha = 0.5) +
   geom_smooth(aes(color = Treatment), method = "loess", se = TRUE, size = 1.5) +
   labs(title = "Old leaf qL",
@@ -1773,7 +1641,7 @@ licor_resp_data$trt_group <- ifelse(licor_resp_data$treatment %in% c("hc", "lh")
 ggplot(subset(licor_resp_data, New == "N"), aes(x = days_since_first, y = A)) +
   geom_point(aes(shape = treatment), size = 1, alpha = 0.5) +
   geom_smooth(aes(color = treatment), method = "loess", se = TRUE, size = 1.5) +
-  labs(title = "Old leaf resp",
+  labs(title = "",
        x = "Days Since First",
        y = "Resp",
        shape = "Treatment",
@@ -1815,19 +1683,3 @@ ggplot2(struc_data) aes(x = treatment, y = vcmax_tleaf) +
         axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12)) +
   facet_wrap(~ treatment, scales = "free_y")
-
-# Extended data to show a gradual change
-time <- c(0, 1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13,14,15,16)  # More days from start
-A <- c(14, 14.1, 14.1, 13, 11.4, 10.3, 10, 9.9, 10, 10.8, 12, 13, 13.6,14,14.1,14.1,14.13)  # Net photosynthesis values with gradual decrease and increase
-
-# Creating a data frame
-df <- data.frame(Time = time, A = A)
-
-# Plotting
-ggplot(df, aes(x = Time, y = A)) +
-  geom_line() +
-  geom_point() +  # Add points at data points
-  labs(x = "Time", y = "Net Photosynthesis (A)") +
-  ggtitle("Potential acclimation response to light") +
-  theme_bw()
-
