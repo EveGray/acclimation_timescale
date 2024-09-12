@@ -29,30 +29,22 @@ chamber_4_day <- chamber_4_data %>% filter(Time < "01:10" | Time > "09:00")
 chamber_5_night <- chamber_5_data %>% filter(Time >= "01:10" & Time <= "09:00")
 chamber_5_day <- chamber_5_data %>% filter(Time < "01:10" | Time > "09:00")
 
-### Calculate daytime mean and SD for RH and Temp 
-chamber_3_day_stats <- chamber_3_day %>% 
-  summarise(Temp_Mean = mean(Temperature), Temp_SD = sd(Temperature), RH_Mean = mean(RH), RH_SD = sd(RH))
+### Combine daytime data from all chambers
+combined_day <- bind_rows(chamber_3_day, chamber_4_day, chamber_5_day)
 
-chamber_4_day_stats <- chamber_4_day %>% 
-  summarise(Temp_Mean = mean(Temperature), Temp_SD = sd(Temperature), RH_Mean = mean(RH), RH_SD = sd(RH))
+### Combine nighttime data from all chambers
+combined_night <- bind_rows(chamber_3_night, chamber_4_night, chamber_5_night)
 
-chamber_5_day_stats <- chamber_5_day %>% 
-  summarise(Temp_Mean = mean(Temperature), Temp_SD = sd(Temperature), RH_Mean = mean(RH), RH_SD = sd(RH))
+### Calculate daytime mean and SD for all chambers
+day_stats <- combined_day %>% 
+  summarise(Temp_Mean = mean(Temperature, na.rm = TRUE), Temp_SD = sd(Temperature, na.rm = TRUE), 
+            RH_Mean = mean(RH, na.rm = TRUE), RH_SD = sd(RH, na.rm = TRUE))
 
-### Calculate nighttime summary statistics mean and SD for RH and Temp 
-chamber_3_night_stats <- chamber_3_night %>% 
-  summarise(Temp_Mean = mean(Temperature), Temp_SD = sd(Temperature), RH_Mean = mean(RH), RH_SD = sd(RH))
+### Calculate nighttime mean and SD for all chambers
+night_stats <- combined_night %>% 
+  summarise(Temp_Mean = mean(Temperature, na.rm = TRUE), Temp_SD = sd(Temperature, na.rm = TRUE), 
+            RH_Mean = mean(RH, na.rm = TRUE), RH_SD = sd(RH, na.rm = TRUE))
 
-chamber_4_night_stats <- chamber_4_night %>% 
-  summarise(Temp_Mean = mean(Temperature), Temp_SD = sd(Temperature), RH_Mean = mean(RH), RH_SD = sd(RH))
-
-chamber_5_night_stats <- chamber_5_night %>% 
-  summarise(Temp_Mean = mean(Temperature), Temp_SD = sd(Temperature), RH_Mean = mean(RH), RH_SD = sd(RH))
-
-
-print(chamber_3_day_stats)
-print(chamber_4_day_stats)
-print(chamber_5_day_stats)
-print(chamber_3_night_stats)
-print(chamber_4_night_stats)
-print(chamber_5_night_stats)
+### Print summary statistics for daytime and nighttime
+print(day_stats)
+print(night_stats)
