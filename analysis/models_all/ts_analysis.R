@@ -134,7 +134,7 @@ NPQt_lmer <- lmer(NPQt ~ starting_trt * ending_trt + (1|Chamber),
 plot(resid(NPQt_lmer) ~ fitted(NPQt_lmer))
 summary(NPQt_lmer)
 Anova(NPQt_lmer)
-emmeans(NPQt_lmer, ~starting_trt)
+emmeans(NPQt_lmer, ~starting_trt * ending_trt)
 emmeans(NPQt_lmer, ~ending_trt)
 cld(emmeans(NPQt_lmer, ~starting_trt * ending_trt))
 
@@ -185,7 +185,7 @@ FvP_over_FmP_lmer <- lmer(FvP_over_FmP ~ starting_trt * ending_trt + (1|Chamber)
 plot(resid(FvP_over_FmP_lmer) ~ fitted(FvP_over_FmP_lmer))
 summary(FvP_over_FmP_lmer)
 Anova(FvP_over_FmP_lmer)
-emmeans(FvP_over_FmP_lmer, ~starting_trt)
+emmeans(FvP_over_FmP_lmer, ~starting_trt * ending_trt)
 emmeans(FvP_over_FmP_lmer, ~ending_trt)
 cld(emmeans(FvP_over_FmP_lmer, ~starting_trt * ending_trt))
 
@@ -213,6 +213,7 @@ Anova(leaf_thickness)
 emmeans(leaf_thickness, ~starting_trt)
 emmeans(leaf_thickness, ~ending_trt)
 emmeans(leaf_thickness, ~starting_trt * ending_trt)
+cld(emmeans(leaf_thickness, ~starting_trt * ending_trt))
 
 # Old leaf SPAD data
 hist(multipeq_data_light$SPAD) 
@@ -261,7 +262,7 @@ Phi2_lmer <- lmer(Phi2 ~ starting_trt * ending_trt + (1|Chamber),
 plot(resid(Phi2_lmer) ~ fitted(Phi2_lmer))
 summary(Phi2_lmer)
 Anova(Phi2_lmer)
-emmeans(Phi2_lmer, ~starting_trt)
+emmeans(Phi2_lmer, ~starting_trt * ending_trt)
 emmeans(Phi2_lmer, ~ending_trt)
 cld(emmeans(Phi2_lmer, ~starting_trt * ending_trt))
 
@@ -572,6 +573,7 @@ Anova(resp_lmer)
 emmeans(resp_lmer, ~starting_trt)
 emmeans(resp_lmer, ~ending_trt)
 emmeans(resp_lmer, ~starting_trt * ending_trt)
+cld(emmeans(resp_lmer, ~starting_trt*ending_trt))
 
 #Structural data analysis
 
