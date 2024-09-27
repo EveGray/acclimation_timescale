@@ -18,7 +18,7 @@ multipeq_data <- read.csv('../../data/multispeq/multi_speq_data_cleaned.csv')
 licor_photo_data <- read.csv('../../data/aci_output/all_curve_fits.csv')
 licor_resp_data <- read.csv('../../data/licor/licor_cleaned/tsrd_merged_all.csv')
 struc_data <- read.csv('../../data/Structual/ts_structural_data.csv')
-nutrient_data <- read.csv("ts_cn_data.csv")
+nutrient_data <- read.csv("'../../data/Structual/ts_cn_data.csv")
 
 ## multispeq data analysis
 colnames(multipeq_data)
@@ -172,7 +172,7 @@ plot(resid(FvP_over_FmP_lmer) ~ fitted(FvP_over_FmP_lmer))
 summary(FvP_over_FmP_lmer)
 Anova(FvP_over_FmP_lmer)
 emmeans(FvP_over_FmP_lmer, ~starting_trt * ending_trt)
-emmeans(FvP_over_FmP_lmer, ~ending_trt)
+emmeans(FvP_over_FmP_lmer, ~starting_trt)
 emtrends(FvP_over_FmP_lmer, ~1, var = 'days_since_first')
 emtrends(FvP_over_FmP_lmer, ~starting_trt, var = 'days_since_first')
 emtrends(FvP_over_FmP_lmer, ~starting_trt * ending_trt, var = 'days_since_first')
@@ -273,7 +273,7 @@ qL_lmer <- lmer(qL ~ starting_trt * ending_trt * days_since_first + (1|Chamber) 
 plot(resid(qL_lmer) ~ fitted(qL_lmer))
 summary(qL_lmer)
 Anova(qL_lmer)
-emmeans(qL_lmer, ~starting_trt * ending_trt)
+emmeans(qL_lmer, ~starting_trt)
 emmeans(qL_lmer, ~ending_trt)
 emtrends(qL_lmer, ~1, var = 'days_since_first')
 emtrends(qL_lmer, ~starting_trt, var = 'days_since_first')
@@ -298,16 +298,17 @@ emmeans(qL_lmer, ~starting_trt * ending_trt)
  licor_photo_data <- licor_photo_data %>%
   extract(id, into = c("chamber", "treatment", "first_number", "second_number"),
           regex = "([a-zA-Z]{4})\\.([a-zA-Z]{2})\\.(\\d)\\.(\\d+)", convert = TRUE, remove = FALSE) %>%
-  mutate(across(c(chamber, treatment, first_number, second_number), as.character))
+  mutate(across(c(chamber, treatment, first_number, second_number), as.character) %>%
+           mutate(treatment = toupper(treatment)))
 
 ### separate out staring and ending light treatments
 licor_photo_data$starting_trt <- NA
-licor_photo_data$starting_trt[licor_photo_data$treatment == 'lc' | licor_photo_data$treatment == 'lh'] <- 'low'
-licor_photo_data$starting_trt[licor_photo_data$treatment == 'hc' | licor_photo_data$treatment == 'hl'] <- 'high'
+licor_photo_data$starting_trt[licor_photo_data$treatment == 'LC' | licor_photo_data$treatment == 'LH'] <- 'low'
+licor_photo_data$starting_trt[licor_photo_data$treatment == 'HC' | licor_photo_data$treatment == 'HL'] <- 'high'
 
 licor_photo_data$ending_trt <- NA
-licor_photo_data$ending_trt[licor_photo_data$treatment == 'lc' | licor_photo_data$treatment == 'hl'] <- 'low'
-licor_photo_data$ending_trt[licor_photo_data$treatment == 'hc' | licor_photo_data$treatment == 'lh'] <- 'high'
+licor_photo_data$ending_trt[licor_photo_data$treatment == 'LC' | licor_photo_data$treatment == 'HL'] <- 'low'
+licor_photo_data$ending_trt[licor_photo_data$treatment == 'HC' | licor_photo_data$treatment == 'LH'] <- 'high'
 
 ### assign group numbers
 licor_photo_data <- licor_photo_data %>%
@@ -453,16 +454,17 @@ emmeans(vcmax_tleaf_lmer, ~starting_trt * ending_trt)
 licor_resp_data <- licor_resp_data %>%
   extract(id, into = c("chamber", "treatment", "first_number", "second_number"),
           regex = "([a-zA-Z]{4})\\.([a-zA-Z]{2})\\.(\\d)\\.(\\d+)", convert = TRUE, remove = FALSE) %>%
-  mutate(across(c(chamber, treatment, first_number, second_number), as.character))
+  mutate(across(c(chamber, treatment, first_number, second_number), as.character) %>%
+           mutate(treatment = toupper(treatment)))
 
 ### separate out staring and ending light treatments
 licor_resp_data$starting_trt <- NA
-licor_resp_data$starting_trt[licor_resp_data$treatment == 'lc' | licor_resp_data$treatment == 'lh'] <- 'low'
-licor_resp_data$starting_trt[licor_resp_data$treatment == 'hc' | licor_resp_data$treatment == 'hl'] <- 'high'
+licor_resp_data$starting_trt[licor_resp_data$treatment == 'LC' | licor_resp_data$treatment == 'LH'] <- 'low'
+licor_resp_data$starting_trt[licor_resp_data$treatment == 'HC' | licor_resp_data$treatment == 'HL'] <- 'high'
 
 licor_resp_data$ending_trt <- NA
-licor_resp_data$ending_trt[licor_resp_data$treatment == 'lc' | licor_resp_data$treatment == 'hl'] <- 'low'
-licor_resp_data$ending_trt[licor_resp_data$treatment == 'hc' | licor_resp_data$treatment == 'lh'] <- 'high'
+licor_resp_data$ending_trt[licor_resp_data$treatment == 'LC' | licor_resp_data$treatment == 'HL'] <- 'low'
+licor_resp_data$ending_trt[licor_resp_data$treatment == 'HC' | licor_resp_data$treatment == 'LH'] <- 'high'
 
 ### assign group numbers
 licor_resp_data <- licor_resp_data %>%
@@ -581,16 +583,18 @@ cld(emmeans(resp_lmer, ~starting_trt*ending_trt))
 struc_data <- struc_data %>%
   extract(ID, into = c("chamber", "treatment", "first_number", "second_number"),
           regex = "([a-zA-Z]{4})\\.([a-zA-Z]{2})\\.(\\d)\\.(\\d+)", convert = TRUE, remove = FALSE) %>%
-  mutate(across(c(chamber, treatment, first_number, second_number), as.character))
+  mutate(across(c(chamber, treatment, first_number, second_number), as.character) %>%
+           mutate(treatment = toupper(treatment)))
+
 
 ### separate out staring and ending light treatments
 struc_data$starting_trt <- NA
-struc_data$starting_trt[struc_data$treatment == 'lc' | struc_data$treatment == 'lh'] <- 'low'
-struc_data$starting_trt[struc_data$treatment == 'hc' | struc_data$treatment == 'hl'] <- 'high'
+struc_data$starting_trt[struc_data$treatment == 'LC' | struc_data$treatment == 'LH'] <- 'low'
+struc_data$starting_trt[struc_data$treatment == 'HC' | struc_data$treatment == 'HL'] <- 'high'
 
 struc_data$ending_trt <- NA
-struc_data$ending_trt[struc_data$treatment == 'lc' | struc_data$treatment == 'hl'] <- 'low'
-struc_data$ending_trt[struc_data$treatment == 'hc' | struc_data$treatment == 'lh'] <- 'high'
+struc_data$ending_trt[struc_data$treatment == 'LC' | struc_data$treatment == 'HL'] <- 'low'
+struc_data$ending_trt[struc_data$treatment == 'HC' | struc_data$treatment == 'LH'] <- 'high'
 
 struc_data <- struc_data %>%
   mutate(Chl_a_b_ratio = chlA.mmolm2 / chlB.mmolm2)
@@ -618,10 +622,10 @@ struc_data <- struc_data %>%
     LMA_chloro = as.numeric(LMA_chloro)
   )
 
-hc <- filter(struc_data, treatment == "hc")
-lc <- filter(struc_data, treatment == "lc")
-hl <- filter(struc_data, treatment == "hl")
-lh <- filter(struc_data, treatment == "lh")
+hc <- filter(struc_data, treatment == "HC")
+lc <- filter(struc_data, treatment == "LC")
+hl <- filter(struc_data, treatment == "HL")
+lh <- filter(struc_data, treatment == "LH")
 
 ### Chlorophyll ab ratio in new leaves
 ab_lmer <- lmer(Chl_a_b_ratio ~ starting_trt * ending_trt + 
@@ -655,6 +659,7 @@ Anova(total_lmer)
 emmeans(total_lmer, ~starting_trt)
 emmeans(total_lmer, ~ending_trt)
 emmeans(total_lmer, ~starting_trt * ending_trt)
+cld(emmeans(total_lmer, ~starting_trt * ending_trt))
 
 ###Nutrient data
 cn_data <- nutrient_data %>%
@@ -700,7 +705,7 @@ cld(emmeans(c_lmer, ~starting_trt*ending_trt))
 ggplot(subset(multipeq_data_light, New == "Y"), 
        aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = SPAD, fill = Treatment)) +
   geom_boxplot(size = 0.5) +
-  labs(title = "New SPAD by treatment",
+  labs(title = "",
        x = "Treatment",
        y = "SPAD",
        fill = "") +
@@ -710,14 +715,16 @@ ggplot(subset(multipeq_data_light, New == "Y"),
         panel.grid.minor = element_blank(),  
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
-        strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+        strip.text = element_text(size = 12), 
+        axis.title.x = element_text(size = 17),
+        axis.title.y = element_text(size = 17)) +
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###Fv'/Fm'
 ggplot(subset(multipeq_data_light, New == "Y"), 
        aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = FvP_over_FmP, fill = Treatment)) +
   geom_boxplot(size = 0.5) +
-  labs(title = "New Fv'/Fm' by treatment",
+  labs(title = "",
        x = "Treatment",
        y = "Fv'/Fm'",
        fill = "") +
@@ -727,14 +734,16 @@ ggplot(subset(multipeq_data_light, New == "Y"),
         panel.grid.minor = element_blank(),  
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
-        strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+        strip.text = element_text(size = 12), 
+        axis.title.x = element_text(size = 17),
+        axis.title.y = element_text(size = 17)) +
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###Phi2
 ggplot(subset(multipeq_data_light, New == "Y"), 
        aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = Phi2, fill = Treatment)) +
   geom_boxplot(size = 0.5) +
-  labs(title = "New PhiPSII by treatment",
+  labs(title = "",
        x = "Treatment",
        y = "PhiPSII",
        fill = "") +
@@ -744,8 +753,10 @@ ggplot(subset(multipeq_data_light, New == "Y"),
         panel.grid.minor = element_blank(),  
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
-        strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+        strip.text = element_text(size = 12), 
+        axis.title.x = element_text(size = 17),
+        axis.title.y = element_text(size = 17)) +
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###Phi2
 ggplot(subset(multipeq_data_light, New == "Y"), 
@@ -755,20 +766,21 @@ ggplot(subset(multipeq_data_light, New == "Y"),
        x = "Treatment",
        y = "PhiPSII",
        fill = "") +
-  theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),  
         panel.grid.major = element_blank(),  
         panel.grid.minor = element_blank(),  
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
-        strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+        strip.text = element_text(size = 12), 
+        axis.title.x = element_text(size = 17),
+        axis.title.y = element_text(size = 17)) +
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###NPQt
 ggplot(subset(multipeq_data_light, New == "Y"), 
        aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = NPQt, fill = Treatment)) +
   geom_boxplot(size = 0.5) +
-  labs(title = "New NPQt by treatment",
+  labs(title = "",
        x = "Treatment",
        y = "NPQt",
        fill = "") +
@@ -779,13 +791,13 @@ ggplot(subset(multipeq_data_light, New == "Y"),
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###Leaf Thickness
 ggplot(subset(multipeq_data_light, New == "Y"), 
        aes(x = factor(Treatment, levels = c("HC", "LH", "LC", "HL")), y = leaf_thickness, fill = Treatment)) +
   geom_boxplot(size = 0.5) +
-  labs(title = "New Leaf Thickness by treatment",
+  labs(title = "",
        x = "Treatment",
        y = "Leaf Thickness",
        fill = "") +
@@ -796,13 +808,13 @@ ggplot(subset(multipeq_data_light, New == "Y"),
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2"))
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###chl content
 ggplot(struc_data, 
-       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = chl_content.mmolm2, fill = treatment)) +
+       aes(x = factor(treatment, levels = c("HC", "LH", "LC", "HL")), y = chl_content.mmolm2, fill = treatment)) +
   geom_boxplot(size = 0.5) +
-  labs(title = "New Leaf total chl content by treatment",
+  labs(title = "",
        x = "Treatment",
        y = "Total chl content",
        fill = "") +
@@ -813,28 +825,12 @@ ggplot(struc_data,
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
-###LMA
-ggplot(struc_data, 
-       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = LMA_focal, fill = treatment)) +
-  geom_boxplot(size = 0.5) +
-  labs(title = "",
-       x = "Treatment",
-       y = "Leaf mass per area (LMA)",
-       fill = "") +
-  theme_bw(base_size = 18) +
-  theme(panel.border = element_rect(size = 1),  
-        panel.grid.major = element_blank(),  
-        panel.grid.minor = element_blank(),  
-        panel.background = element_rect(fill = "white"),
-        strip.background = element_blank(),  
-        strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
 
 ###Vcmax
 ggplot(subset(licor_photo_data, New == "Y"), 
-       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = vcmax_tleaf, fill = treatment)) +
+       aes(x = factor(treatment, levels = c("HC", "LH", "LC", "HL")), y = vcmax_tleaf, fill = treatment)) +
   geom_boxplot(size = 0.5) +
   labs(title = "",
        x = "Treatment",
@@ -847,11 +843,11 @@ ggplot(subset(licor_photo_data, New == "Y"),
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###Jmax
 ggplot(subset(licor_photo_data, New == "Y"), 
-       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = jmax_tleaf, fill = treatment)) +
+       aes(x = factor(treatment, levels = c("HC", "LH", "LC", "HL")), y = jmax_tleaf, fill = treatment)) +
   geom_boxplot(size = 0.5) +
   labs(title = "",
        x = "Treatment",
@@ -864,11 +860,11 @@ ggplot(subset(licor_photo_data, New == "Y"),
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 ###Resp
 ggplot(subset(licor_resp_data, New == "Y"), 
-       aes(x = factor(treatment, levels = c("hc", "lh", "lc", "hl")), y = abs(A), fill = treatment)) +
+       aes(x = factor(treatment, levels = c("HC", "LH", "LC", "HL")), y = abs(A), fill = treatment)) +
   geom_boxplot(size = 0.5) +
   labs(title = "",
        x = "Treatment",
@@ -881,19 +877,19 @@ ggplot(subset(licor_resp_data, New == "Y"),
         panel.background = element_rect(fill = "white"),
         strip.background = element_blank(),  
         strip.text = element_text(size = 12)) +
-  scale_fill_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2"))
+  scale_fill_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2"))
 
 # Create groups to split graphs
 
 licor_photo_data <- licor_photo_data %>%
   mutate(broad_group = case_when(
-    treatment %in% c("hc", "lh") ~ "hc and lh",
-    treatment %in% c("lc", "hl") ~ "lc and hl"))
+    treatment %in% c("HC", "LH") ~ "HC and LH",
+    treatment %in% c("LC", "HL") ~ "LC and HL"))
 
 licor_resp_data <- licor_resp_data %>%
   mutate(broad_group = case_when(
-    treatment %in% c("hc", "lh") ~ "hc and lh",
-    treatment %in% c("lc", "hl") ~ "lc and hl"))
+    treatment %in% c("HC", "LH") ~ "HC and LH",
+    treatment %in% c("LC", "HL") ~ "LC and HL"))
 
 
 ### Vcmax est means plot
@@ -925,29 +921,27 @@ melted_data <- trends %>%
 # Define the treatment groups
 melted_data <- melted_data %>%
   mutate(group = case_when(
-    treatment == "hc_y" ~ "hc",
-    treatment == "hl_y" ~ "hl",
-    treatment == "lc_y" ~ "lc",
-    treatment == "lh_y" ~ "lh"))
+    treatment == "hc_y" ~ "HC",
+    treatment == "hl_y" ~ "HL",
+    treatment == "lc_y" ~ "LC",
+    treatment == "lh_y" ~ "LH"))
 
 melted_data <- melted_data %>%
   mutate(broad_group = case_when(
-    group %in% c("hc", "lh") ~ "hc and lh",
-    group %in% c("hl", "lc") ~ "lc and hl"
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("HL", "LC") ~ "LC and HL"
   ))
 
 ggplot() +
   geom_point(data = licor_photo_data %>% filter(New == "N"), 
-             aes(x = days_since_first, y = (vcmax_tleaf), shape = treatment, color = treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_data, aes( x = xtrend, y = exp(value), color = group), size = 1.2) +
+             aes(x = days_since_first, y = (vcmax_tleaf), color = treatment), 
+             size = 3, alpha = 0.75, shape = 2) +
+  geom_line(data = melted_data, aes( x = xtrend, y = exp(value), color = group), size = 2) +
   labs(title = "",
        x = "Days since baseline",
        y = expression(V[cmax] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
-       shape = expression(V[cmax] ~ "data"),
-       color = "Estimated means") +
-  scale_shape_manual(values = c("hc" = 3, "lh" = 16, "lc" = 4, "hl" = 15)) +
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -957,9 +951,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "fixed") 
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 
 ### jmax est means plot
@@ -990,29 +989,27 @@ melted_j_data <- trends_j %>%
 # Define the treatment groups
 melted_j_data <- melted_j_data %>%
   mutate(group = case_when(
-    treatment == "hc_y_j" ~ "hc",
-    treatment == "hl_y_j" ~ "hl",
-    treatment == "lc_y_j" ~ "lc",
-    treatment == "lh_y_j" ~ "lh"))
+    treatment == "hc_y_j" ~ "HC",
+    treatment == "hl_y_j" ~ "HL",
+    treatment == "lc_y_j" ~ "LC",
+    treatment == "lh_y_j" ~ "LH"))
 
 melted_j_data <- melted_j_data %>%
   mutate(broad_group = case_when(
-    group %in% c("hc", "lh") ~ "hc and lh",
-    group %in% c("hl", "lc") ~ "lc and hl"
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("LC", "HL") ~ "LC and HL"
   ))
 
 ggplot() +
   geom_point(data = licor_photo_data %>% filter(New == "N"), 
-             aes(x = days_since_first, y = (jmax_tleaf), shape = treatment, color = treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_j_data, aes( x = xtrend, y = exp(value), color = group), size = 1.2) +
+             aes(x = days_since_first, y = (jmax_tleaf), color = treatment), 
+             size = 3, alpha = 0.75, shape = 2) +
+  geom_line(data = melted_j_data, aes( x = xtrend, y = exp(value), color = group), size = 2) +
   labs(title = "",
        x = "Days since baseline",
        y = expression(J[max] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
-       shape = expression(J[max] ~ "data"),
-       color = "Estimated means") +
-  scale_shape_manual(values = c("hc" = 3, "lh" = 16, "lc" = 4, "hl" = 15)) +
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1022,11 +1019,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "fixed") 
-#+
- # facet_wrap(~ broad_group, scales = "free_y")
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 ### Resp est mean plot
 
@@ -1056,31 +1056,29 @@ melted_r_data <- trends_r %>%
 # Define the treatment groups
 melted_r_data <- melted_r_data %>%
   mutate(group = case_when(
-    treatment == "hc_y_r" ~ "hc",
-    treatment == "hl_y_r" ~ "hl",
-    treatment == "lc_y_r" ~ "lc",
-    treatment == "lh_y_r" ~ "lh"))
+    treatment == "hc_y_r" ~ "HC",
+    treatment == "hl_y_r" ~ "HL",
+    treatment == "lc_y_r" ~ "LC",
+    treatment == "lh_y_r" ~ "LH"))
 
 melted_r_data <- melted_r_data %>%
   mutate(broad_group = case_when(
-    group %in% c("hc", "lh") ~ "hc and lh",
-    group %in% c("hl", "lc") ~ "lc and hl"
+    group %in% c("HC", "LH") ~ "HC and LH",
+    group %in% c("LC", "HL") ~ "LC and HL"
   ))
 
 
 ggplot() +
   geom_point(data = licor_resp_data %>% filter(New == "N", !is.na(broad_group)), 
-             aes(x = days_since_first, y = abs(A), shape = treatment, color = treatment), 
-             size = 1, alpha = 0.5) + 
+             aes(x = days_since_first, y = abs(A), color = treatment), 
+             size = 3, alpha = 0.7, shape = 2) + 
   geom_line(data = melted_r_data %>% filter(!is.na(group)), 
-            aes(x = xtrend, y = abs(value), color = group), size = 1.2) +
+            aes(x = xtrend, y = abs(value), color = group), size = 2) +
   labs(title = "",
        x = "Days since baseline",
        y = expression(R[d] ~ "(" ~ mu ~ mol ~ m^-2 ~ s^-1 ~ ")"),
-       shape = expression(R[d] ~ "data"),
-       color = "Estimated means") +
-  scale_shape_manual(values = c("hc" = 3, "lh" = 16, "lc" = 4, "hl" = 15)) +
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1090,9 +1088,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "fixed")
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 
 ### SPAD est means plot
@@ -1144,16 +1147,14 @@ multipeq_data_light <- multipeq_data_light %>%
 
 ggplot() +
   geom_point(data = multipeq_data_light %>% filter(New == "N"), 
-             aes(x = days_since_first, y = (SPAD), shape = Treatment, color = Treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_s_data, aes( x = xtrend_fluro, y = exp(value), color = group), size = 1.2) +
-  labs(title = "SPAD in old leaves over time",
+             aes(x = days_since_first, y = (SPAD), color = Treatment), 
+             size = 3, alpha = 0.75, shape = 2) +
+  geom_line(data = melted_s_data, aes( x = xtrend_fluro, y = exp(value), color = group), size = 2) +
+  labs(title = "",
        x = "Days since baseline",
        y = "SPAD",
-       shape = "SPAD data",
-       color = "Estimated means") +
-  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1163,9 +1164,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14)) +
-  facet_wrap(~ broad_group, scales = "fixed")
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 ## NPQt
 ##HC
@@ -1211,16 +1217,14 @@ melted_npq_data <- melted_npq_data %>%
 
 ggplot() +
   geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_npq)), 
-             aes(x = days_since_first, y = (NPQt), shape = Treatment, color = Treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_npq_data, aes( x = xtrend_npq, y = value, color = group), size = 1.2) +
-  labs(title = "                        NPQt in old leaves over time",
+             aes(x = days_since_first, y = (NPQt), color = Treatment), 
+             size = 3, alpha = 0.75, shape = 2) +
+  geom_line(data = melted_npq_data, aes( x = xtrend_npq, y = value, color = group), size = 2) +
+  labs(title = "",
        x = "Days since baseline",
        y = "NPQt",
-       shape = "NPQt data",
-       color = "Estimated means") +
-  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1230,9 +1234,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14))  +
-  facet_wrap(~ broad_group, scales = "fixed")
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 ### FvP est means plot
 xtrend_fluro = seq(0, max(17)) # X
@@ -1277,16 +1286,14 @@ melted_qe_data <- melted_qe_data %>%
 
 ggplot() +
   geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_fluro)), 
-             aes(x = days_since_first, y = (FvP_over_FmP), shape = Treatment, color = Treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_qe_data, aes( x = xtrend_fluro, y = value, color = group), size = 1.2) +
-  labs(title = "                        Fv'/Fm' in old leaves over time",
+             aes(x = days_since_first, y = (FvP_over_FmP), color = Treatment), 
+             size = 3, alpha = 0.75, shape = 2) +
+  geom_line(data = melted_qe_data, aes( x = xtrend_fluro, y = value, color = group), size = 2) +
+  labs(title = "",
        x = "Days since baseline",
        y = "Fv'/Fm'",
-       shape = "Fv'/Fm' data",
-       color = "Estimated means") +
-  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1296,9 +1303,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14))  +
-  facet_wrap(~ broad_group, scales = "fixed")
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 ### Phi2 est means plot
 xtrend_fluro = seq(0, max(17)) # X
@@ -1342,16 +1354,14 @@ melted_p2_data <- melted_p2_data %>%
 
 ggplot() +
   geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_fluro)), 
-             aes(x = days_since_first, y = (Phi2), shape = Treatment, color = Treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_p2_data, aes( x = xtrend_fluro, y = value, color = group), size = 1.2) +
-  labs(title = "                        Phi2 in old leaves over time",
+             aes(x = days_since_first, y = (Phi2), color = Treatment), 
+             size = 3, alpha = 0.75, shape = 2) +
+  geom_line(data = melted_p2_data, aes( x = xtrend_fluro, y = value, color = group), size = 2) +
+  labs(title = "",
        x = "Days since baseline",
        y = "PhiPSII",
-       shape = "PhiPSII data",
-       color = "Estimated means") +
-  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1361,9 +1371,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14))  +
-  facet_wrap(~ broad_group, scales = "fixed")
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 ### Leaf thickness est means plot
 xtrend_fluro = seq(0, max(17)) # X
@@ -1407,16 +1422,14 @@ melted_lt_data <- melted_lt_data %>%
 
 ggplot() +
   geom_point(data = multipeq_data_light %>% filter(New == "N" & days_since_first <= max(xtrend_fluro)), 
-             aes(x = days_since_first, y = (leaf_thickness), shape = Treatment, color = Treatment), 
-             size = 1, alpha = 0.5) +
-  geom_line(data = melted_lt_data, aes( x = xtrend_fluro, y = value, color = group), size = 1.2) +
-  labs(title = "                        Leaf thickness in old leaves over time",
+             aes(x = days_since_first, y = (leaf_thickness), color = Treatment), 
+             size = 3, alpha = 0.75, shape = 2) +
+  geom_line(data = melted_lt_data, aes( x = xtrend_fluro, y = value, color = group), size = 2) +
+  labs(title = "",
        x = "Days since baseline",
        y = "Leaf Thickness",
-       shape = "Leaf Thickness data",
-       color = "Estimated means") +
-  scale_shape_manual(values = c("HC" = 3, "LH" = 16, "LC" = 4, "HL" = 15)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+       color = "") +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1426,9 +1439,14 @@ ggplot() +
         strip.text = element_text(size = 12),
         panel.spacing.x = unit(15, "pt"),
         axis.text.x = element_text(size = 12),
+        plot.caption = element_text(size = 12),
         axis.text.y = element_text(size = 12),
-        legend.title = element_text(size = 14))  +
-  facet_wrap(~ broad_group, scales = "fixed")
+        axis.title.y = element_text(size = 17),
+        axis.title.x = element_text(size = 17), 
+        legend.title = element_text(size = 13),
+        legend.text = element_text(size = 13)) +
+  facet_wrap(~ broad_group, scales = "fixed") +
+  theme(strip.text.x = element_text(size = 16))
 
 ### Good plot one-panel
 ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax_tleaf)) +
@@ -1440,7 +1458,7 @@ ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +  # Custom colors for lines
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1462,7 +1480,7 @@ ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = NP
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +  # Custom shapes for treatments
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +  # Custom colors for lines
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +  # Custom colors for lines
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1493,7 +1511,7 @@ ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1523,7 +1541,7 @@ ggplot(multipeq_data_long, aes(x = days_since_first, y = Value)) +
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1548,7 +1566,7 @@ ggplot(subset(multipeq_data_light, New == "N"), aes(x = days_since_first, y = NP
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("HC" = 15, "LH" = 16, "LC" = 17, "HL" = 18)) +
-  scale_color_manual(values = c("HC" = "orangered4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "skyblue2")) +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1573,7 +1591,7 @@ ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +  # Custom colors for lines
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1598,7 +1616,7 @@ ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1622,7 +1640,7 @@ ggplot(subset(licor_photo_data, New == "N"), aes(x = days_since_first, y = vcmax
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1649,7 +1667,7 @@ ggplot(subset(licor_resp_data, New == "N"), aes(x = days_since_first, y = A)) +
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +
   theme_bw(base_size = 18) +
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
@@ -1673,7 +1691,7 @@ ggplot2(struc_data) aes(x = treatment, y = vcmax_tleaf) +
        shape = "Treatment",
        color = "Treatment") +
   scale_shape_manual(values = c("hc" = 15, "lh" = 16, "lc" = 17, "hl" = 18)) +  # Custom shapes for treatments
-  scale_color_manual(values = c("hc" = "orangered4", "lh" = "lightcoral", "lc" = "royalblue4", "hl" = "skyblue2")) +  # Custom colors for lines
+  scale_color_manual(values = c("HC" = "firebrick4", "LH" = "lightcoral", "LC" = "royalblue4", "HL" = "deepskyblue2")) +  # Custom colors for lines
   theme_bw(base_size = 18) +  
   theme(panel.border = element_rect(size = 1),
         panel.grid.major = element_blank(),
